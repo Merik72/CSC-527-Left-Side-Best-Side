@@ -108,7 +108,25 @@ public class Place {
 	public final String getDescription() {
 		return f_description;
 	}
-
+	
+	/**
+	 * Value determining if the game has been won by visiting this Place.
+	 */
+	private boolean f_arrivalWinsGame;
+	
+	/**
+	 * Gets the value for this place determining if the game is won by 
+	 * visiting this Place
+	 */
+	public final boolean arrivalWinsGame() {
+		return f_arrivalWinsGame;
+	}
+	/**
+	 * Sets the condition for whether the player wins by moving to this location.
+	 */
+	public final void setArrivalWinsGame(boolean value) {
+		f_arrivalWinsGame = value;
+	}
 	/**
 	 * A mapping of directions of travel to the neighboring places. The map is
 	 * ragged in the sense that if a direction is not legal to travel in a

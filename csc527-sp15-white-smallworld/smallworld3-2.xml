@@ -13,7 +13,7 @@
     <description>You are inside a building, a well house for a large spring.</description>
     <travel direction="W">Road</travel>
   </place>
-  <place name="Shimmering Room" article="the">
+  <place name="Shimmering Room" article="the" arrivalWinsGame="Y">
     <description>You are in a room of shimmering bright white.</description>
     <travel direction="S">Hall of Mists</travel>
   </place>
