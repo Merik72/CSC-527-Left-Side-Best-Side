@@ -124,7 +124,7 @@ public final class WorldController {
 			Place newPlayerLocation = playerLocation
 					.getTravelDestinationToward(direction);
 			if (newPlayerLocation.arrivalWinsGame()) {
-				f_world.addToMessage("You win!");
+				f_world.addToMessage("Game Finished!");
 				f_world.setGameOver();
 			}
 			/*

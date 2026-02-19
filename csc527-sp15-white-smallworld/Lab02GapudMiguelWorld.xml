@@ -1,27 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <smallworld version="1.0">
   <place name="barely awake" article="You're">
-    <description>The sun pokes through the blinds, stinging your. You sink comfortably into a pile of mostly clean laundry on your bed as you reacquaint yourself with consciousness.</description>
+    <description>The sun pokes through the blinds, stinging your photoreceptors. You sink comfortably into a pile of mostly clean laundry on your bed as you reacquaint yourself with consciousness. No matter how well you made it through yesterday, you really just gotta do it all again today. Work today, work tomorrow. When work is over, long live the work.</description>
     <travel direction="W">Bathroom</travel>
     <travel direction="E">Hallway</travel>
   </place>
   <place name="Bathroom" article="your">
-    <description> It's good to wash up every few weeks. Toilet, sink, shower, mirror, window. Yep, everyone is here. Why is there a window in the bathroom? In the mirror, you notice your screenface is a bit blurry this morning, and your skirt is a bit crumpled. Your bow sticker is still glossy on the corner of your face, and your sweater has no loose threads, so you're presentable enough for the day.</description>
+    <description> It's good to wash up every few weeks. Toilet, sink, shower, mirror, window - why is there a window in the bathroom? Anyway, yep, everyone is here. In the mirror, you notice your screenface is a bit blurry this morning, and your skirt is a bit crumpled. The bow sticker is still nice and glossy on the corner of your face, and your sweater has no visibly loose threads, so you decide you're presentable enough for the world.</description>
     <travel direction="E">Bedroom</travel>
     <travel direction="W">Lawn</travel>
   </place>
   <place name="Bedroom" article="your">
-    <description>This place is a mess, but it's your mess. On the north side of the room, your alarm clock blinks 12:00 on the nightstand. You doubt it can actually tell time. Abandond craft projects are strewn about on the floor like dirty laundry, which is also strewn about the floor. On a row of hooks hanging on the door to the hallway, you see your daily essentials: Backpack, purses, belts, corsets, rechargeable emp burst device, cleaning cloth, and cleansing spray. The windowsill is patterned with marks in permanent marker that are going to become the start of a 360-degree mural. Someday.</description>
+    <description>This place is a mess, but it's your mess. On the north side of the room, your alarm clock blinks 12:00 on the nightstand. Something deep in your gut tells you that that's probably not the time. Abandond craft projects are strewn about on the floor like dirty laundry, which is also strewn about the floor. On a row of hooks hanging on the door to the hallway, you see your daily essentials: Backpack, purses, belts, corsets, rechargeable emp burst device, cleaning cloth, and cleansing spray. The windowsill is patterned with marks in permanent marker that are going to become the beginnings of a 360-degree mural. Someday.</description>
     <travel direction="W">Bathroom</travel>
     <travel direction="E">Hallway</travel>
   </place>
   <place name="Hallway" article="the">
-    <description>Empty</description>
+    <description>Your roommates' doors line the hallway. Hanging on your own door is a small whiteboard with a drawing of your head with your name, "Tivie", on your facescreen. The dots on the i's are flowers :) Sizzling sounds and smells of cooking waft into the hallway from the kitchen, along with bouncy 80s hip hop beats.</description>
+    <travel direction="N">Kitchen</travel>
     <travel direction="W">Bedroom</travel>
+    <travel direction="E">Bock's Room</travel>
+    <travel direction="S">Cidi's Room</travel>
+  </place>
+  <place name="Kitchen" article="the">
+    <description>Bock is jamming out in the kitchen as he makes bacon and eggs on the stove. When he's really getting into it this hard, you won't be able to get his attention no matter what you do. All the counters are clean and the sink is empty. The kitchen table has a plate in your spot with bacon, eggs, and graham crackers on it. On the east side of the same room is a small living area with two sofas and a stool facing an upright piano. Natural light fills the room from the north side.</description>
+    <travel direction="N">Lawn</travel>
+    <travel direction="S">Hallway</travel>
+  </place>
+  <place name="Bock's Room" article="">
+    <description>You really feel like you shouldn't be in here. It's not your room. Nothing is on the floor. Cassette tapes and records line his shelves, all labeled. His bed is in a cubby on the floor, with a platform above it for a drum machine, keyboard, electric guitars, microphone stands, and other musical equipment. On his desk are a few piles of papers alongside office supplies and a landline telephone.</description>
+    <travel direction="W">Hallway</travel>
+  </place>
+  <place name="Cidi's Room" article="">
+    <description>You really feel like you shouldn't be in here. It's not your room. Everything in here is black. Heavy black curtains cover the only window in the room, and the lightbulb on the overhead light was unscrewed and put away somewhere. Soft rainbow glows from LCD strips peek out from underneath everything more than a foot over the ground. Cidi keeps a red and blue lava lamp on the nightstands on either side of her bed. Her Macbook sits open on the floor, with a loose audio jack plugged into it. There's some 6-hour ASMR forest sounds video playing on it. A pile of random magazines and tangled spools of yarn sit on the floor next to it.</description>
+    <travel direction="N">Hallway</travel>
   </place>
   <place name="Lawn" article="the">
-    <description>Empty</description>
-    <travel direction="W">Bathroom</travel>
+    <description>You walk out in front of your apartment building, and appreciate the "Lawn." Cidi and Bock started calling this your "Lawn" as a joke, and it kinda just stuck. There's just a bit under a foot of grass between this apartment building and the next one over on the west and a luxurious foot and a half of grass between your front door and the parking lot to the north. That's where your car lives. Further than that is suburban sprawl in all directions, about as far as the eye may see.</description>
+    <travel direction="N">Car</travel>
+    <travel direction="S">Kitchen</travel>
+  </place>
+  <place name="Car" article="your">
+    <description>You slog through the sweltering summer heat radiating both overhead from the summer sun and underfoot from the black asphalt. You push the junk from the driver's seat to the passenger seat and start your car. Blasting the AC full blast with the door open, you lean back in your chair, recovering from the heat. You check the time. 11:32AM. Classes are so early in the morning. The lot empties as people head out for lunch. Eventually, you close the door and the car reaches a livable degree of toaster oven. Now that you're all the way here, it's too late to turn back.</description>
+    <travel direction="N">Main Road (N)</travel>
+  </place>
+  <place name="Main Road (N)" article="the">
+    <description>Vroom vrooooom. This drive feels like it gets longer and longer every time you make it. Maybe it's good to take a break somewhere before you go to class. You slowly turn the radio dial to find something good to listen to. "The brand new Plorian Sitris Twist! Refreshing and-" "-ask your doctor before taking Thranduil. If you experience extreme side-effects incl-" "-the Cleaning Power of Oxy Clean!" *Slam*. Ugh, nothing good.</description>
+    <travel direction="E">Library</travel>
+    <travel direction="W">Coffee Shop</travel>
+    <travel direction="S">Crash</travel>
+  </place>
+  <place name="Library" article="the">
+    <description>Back to the public library. This is really a nice spot. Infinite free books! Books and books, you love books! I bet you can't wait to get in and read some! </description>
+    <travel direction="N">College</travel>
+    <travel direction="S">Main Street (S)</travel>
+  </place>
+  <place name="Coffee Shop" article="the">
+    <description>It's not your favorite coffee shop. I mean, it's not the worst coffee shop in the world. It's definitely there. Since it's sort of on your way to class, you really can't stop yourself from just ording a little something. They offer all that matcha stuff you love. For as long as you could remember, you wished you could just dive facescreen first into a field and eat grass without anyone judging you. It looks so crunchy and fibrous. A free range salad. Actually wild greens. Just rip it from the- "Uhhh vanilla berry matcha iced tea for uhh Tivie?" I guess it's time to grab your grass and go already.</description>
+    <travel direction="W">City Park</travel>
+    <travel direction="N">College</travel>
+    <travel direction="S">Main Street (S)</travel>
+  </place>
+  <place name="City Park" article="the">
+    <description>Taking a walk through the park, you notice it's much nicer than you remember. The leaves are vibrant, vibrant nearly to the point of being neon. The trees themselves are tall. Taller than the nearby buildings. Actually, there seems to be a gap there. The leaning trunks seem to be beckoning you.</description>
+    <travel direction="N">Grove</travel>
+  </place>
+  <place name="Grove" article="the">
+    <description>You put one foot in front of the other. Somehow, even as the trees grow thicker around you, it doesn't get any darker. A soft green glow envelops everything you see. People kneel along the side of the path, praying over sprouts barely growing their first leaves. You go deeper still. The air gets thicker with every step. Suddenly, you step into a thick sunbeam. There's a gap in the canopy as the trees part. In front of you is a great oak. 
+    </description>
+    <travel direction="S">City Park</travel>
+    <travel direction="N">Great Oak</travel>
+  </place>
+  <place name="Great Oak" article="the" arrivalWinsGame="Y">
+    <description>You start to count how many multiples of your entire apartment building it would take to wrap around its trunk, but you've been skipping a lot of classes, so you lose count quickly. Fireflies float lazily through the air, sending signals of love. Crickets and cicadas serenade each other. You continue walking, and you realize that the clearing is maybe only halfway to its roots from the entrance of the grove. Stepping over toadstools and flowers, you approach the foot of the tree. Placing your palm on the bark, you take a deep breath, and release the burdens in your soul.</description>
+    <travel direction="S">Grove</travel>
+  </place>
+  <place name="Main Street (S)" article="the">
+    <description>Yeah, who needs to go to college anyway?? Just go the exact opposite way, and it'll be fine. There's actually some good stuff on the radio right now, so you wouldn't mind just driving back and forth a  </description>
+    <travel direction="N">Crash</travel>
+    <travel direction="S">Apartment parking lot</travel>
+    <travel direction="W">Coffee Shop</travel>
+    <travel direction="E">Library</travel>
+  </place>
+  <place name="Crash" article="a" arrivalWinsGame="Y">
+    <description>sCREEECH!!!! CRASH! tumble tumble tumble SLAM! WHY DID YOU MAKE A 180 IN THE MIDDLE OF THE STREET?? YOU CRASHED AND DIED! Type quit and start again. Drive safer, please.</description>
+  </place>
+  <place name="Apartment parking lot" article="the">
+    <description>After pulling into your parking spot you kill the engine, crack the windows and slouch in your car seat. Just leaving the house is pretty exhausting. Can you imagine if you actually went all the way to class? That might kill you fr.</description>
+    <travel direction="S">Apartment</travel>
+    <travel direction="N">Main Street</travel>
+  </place>
+  <place name="Apartment" article="the" arrivalWinsGame="Y">
+    <description>It's empty in here. The living area is spotless, aside from your uneaten breakfast. You take your food and wander back through the hallway and into your room. Today really wasn't your day, but hey, you really gave it your all this time, right? You actually left the house, got in your car and did something! That's a huge accomplisment for the efforts of a day. You'll get 'em next time, for sure. 
+    End of game. Type quit, and start again. Find your way to a good ending.</description>
+  </place>
+  <place name="Main Street" article="the">
+    <description>NO! Today is YOUR DAY. Time to rise and grind, girlboss education queen. You're up and you're at'em and it's 'em's problem, not yours! You accelerate down the street at 60mph in front of school zones. Nothing's gonna stop you today!</description>
+    <travel direction="N">College</travel>
+  </place>
+  <place name="College" article="the" arrivalWinsGame="Y">
+    <description>You make it to class, barely on time. You smile and buzz nervously. It's not flashy, it's not exciting, but it's your way forward. There's a lot to learn here.</description>
+    <travel direction="S">Main Street (S)</travel>
   </place>
   <player location="barely awake" />
 </smallworld>
