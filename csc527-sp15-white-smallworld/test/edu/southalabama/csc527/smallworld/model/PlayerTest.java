@@ -19,7 +19,7 @@ public class PlayerTest extends TestCase {
 		super.setUp();
 		f_world = new World();
 		f_world.createPlace("city of Dayton", "the",
-				"You are in the glamorous mid-west city of Dayton");
+				"You are in the glamorous mid-west city of Dayton", false);
 		f_player = f_world.getPlayer();
 	}
 

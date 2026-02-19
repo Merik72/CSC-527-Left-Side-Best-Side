@@ -28,7 +28,7 @@ public class WorldPersistence {
 	/**
 	 * The version of the game as defined by the XML save file format.
 	 */
-	public static final String SAVEFILE_VERSION = "1.0";
+	public static final String SAVEFILE_VERSION = "1.1";
 
 	/**
 	 * The full location, on the Java classpath, of the default world file.
@@ -172,6 +172,7 @@ public class WorldPersistence {
 		Element placeElement = new Element(PLACE_TAG);
 		placeElement.setAttribute(NAME_TAG, place.getName());
 		placeElement.setAttribute(ARTICLE_TAG, place.getArticle());
+		placeElement.setAttribute(WIN_TAG, place.getArrivalWinsGame() ? "Y" : "N");
 		Element description = new Element(DESCRIPTION_TAG);
 		placeElement.addContent(description);
 		description.setText(place.getDescription());
@@ -226,12 +227,15 @@ public class WorldPersistence {
 		for (Element placeElement : placeList) {
 			String name = placeElement.getAttributeValue(NAME_TAG);
 			String article = placeElement.getAttributeValue(ARTICLE_TAG);
+			String arrivalWinsGameString = placeElement.getAttributeValue(WIN_TAG);
 			String description = placeElement.getChild(DESCRIPTION_TAG)
 					.getText();
 			if (name == null || article == null || description == null)
 				throw new IllegalStateException();
 
-			world.createPlace(name, article, description);
+			boolean arrivalWinsGame = arrivalWinsGameString != null && arrivalWinsGameString.equalsIgnoreCase("Y");
+
+            world.createPlace(name, article, description, arrivalWinsGame);
 		}
 		/*
 		 * Second Pass: Next, we need to connect the places into a map as
@@ -314,4 +318,6 @@ public class WorldPersistence {
 	private static final String TRAVEL_TAG = "travel";
 
 	private static final String VERSION_TAG = "version";
+
+	private static final String WIN_TAG = "arrivalWinsGame";
 }

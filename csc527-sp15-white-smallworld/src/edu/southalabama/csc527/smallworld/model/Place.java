@@ -28,7 +28,7 @@ public class Place {
 	 *            a long, possibly mult-line, non-null description of this
 	 *            thing.
 	 */
-	Place(World world, String name, String article, String description) {
+	Place(World world, String name, String article, String description, boolean arrivalWinsGame) {
 		assert (world != null);
 		assert (name != null);
 		assert (article != null);
@@ -37,6 +37,7 @@ public class Place {
 		f_name = name;
 		f_article = article;
 		f_description = description;
+		f_arrivalWinsGame = arrivalWinsGame;
 	}
 
 	/**
@@ -107,6 +108,16 @@ public class Place {
 	 */
 	public final String getDescription() {
 		return f_description;
+	}
+
+	private boolean f_arrivalWinsGame;
+
+	public boolean getArrivalWinsGame() {
+		return f_arrivalWinsGame;
+	}
+
+	public void setArrivalWinsGame(boolean arrivalWinsGame) {
+		f_arrivalWinsGame = arrivalWinsGame;
 	}
 
 	/**

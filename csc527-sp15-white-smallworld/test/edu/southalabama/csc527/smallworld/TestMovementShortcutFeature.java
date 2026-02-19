@@ -35,11 +35,11 @@ public class TestMovementShortcutFeature extends TestCase implements
 		f_parser = new UserCommandParser(f_wc, this);
 
 		// create a simple world
-		Place c = f_w.createPlace("C", "the", "C");
-		Place n = f_w.createPlace("N", "the", "N");
-		Place s = f_w.createPlace("S", "the", "S");
-		Place e = f_w.createPlace("E", "the", "E");
-		Place w = f_w.createPlace("W", "the", "W");
+		Place c = f_w.createPlace("C", "the", "C", false);
+		Place n = f_w.createPlace("N", "the", "N", false);
+		Place s = f_w.createPlace("S", "the", "S", false);
+		Place e = f_w.createPlace("E", "the", "E", false);
+		Place w = f_w.createPlace("W", "the", "W", true);
 
 		c.setTravelDestination(Direction.NORTH, n);
 		n.setTravelDestination(Direction.SOUTH, c);

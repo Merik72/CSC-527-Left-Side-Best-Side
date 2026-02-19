@@ -29,7 +29,7 @@ public final class World {
 	 * nowhere.
 	 */
 	private final Place f_nowhere = createPlace("Very Remote Place", "a",
-			"You are in a very remote place.");
+			"You are in a very remote place.", false);
 
 	/**
 	 * Gets the {@link Place} representing nowhere. This place always exists in
@@ -143,7 +143,7 @@ public final class World {
 	 * @throws IllegalStateException
 	 *             if the specified name already exists within this world.
 	 */
-	public Place createPlace(String name, String article, String description) {
+	public Place createPlace(String name, String article, String description, boolean arrivalWinsGame) {
 		assert (name != null);
 		assert (article != null);
 		assert (description != null);
@@ -153,7 +153,7 @@ public final class World {
 							+ name
 							+ "\" failed because the specified name already exists");
 		}
-		Place newPlace = new Place(this, name, article, description);
+		Place newPlace = new Place(this, name, article, description, arrivalWinsGame);
 		f_keyToPlace.put(name.toUpperCase(), newPlace);
 		return newPlace;
 	}

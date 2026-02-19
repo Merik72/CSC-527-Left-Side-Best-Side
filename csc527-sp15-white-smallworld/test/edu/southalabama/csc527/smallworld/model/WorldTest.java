@@ -47,7 +47,7 @@ public class WorldTest extends TestCase {
 		name = "Hall";
 		article = "the";
 		description = "You are standing in a large hall";
-		Place l1 = f_world.createPlace(name, article, description);
+		Place l1 = f_world.createPlace(name, article, description, false);
 		assertEquals(f_world, l1.getWorld());
 		assertEquals(l1, f_world.getPlace("HALL"));
 		assertEquals(l1, f_world.getPlace("hAll"));
@@ -57,7 +57,7 @@ public class WorldTest extends TestCase {
 		name = "Room";
 		article = "the";
 		description = "You are standing in a room";
-		Place l2 = f_world.createPlace(name, article, description);
+		Place l2 = f_world.createPlace(name, article, description, false);
 		assertEquals(f_world, l2.getWorld());
 		assertEquals(l2, f_world.getPlace("ROOM"));
 		assertEquals(l2, f_world.getPlace("room"));
@@ -75,7 +75,7 @@ public class WorldTest extends TestCase {
 		assertFalse(places.equals(f_world.getPlaces()));
 
 		try {
-			f_world.createPlace("room", article, description);
+			f_world.createPlace("room", article, description, false);
 			fail();
 		} catch (IllegalStateException e) {
 			// ignore, the creation of a duplicate location should fail

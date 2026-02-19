@@ -136,6 +136,10 @@ public final class WorldController {
 					+ direction.toString().toLowerCase() + " from here.");
 			// addShortLocationDescription("You are at");
 		}
+		if (playerLocation.getArrivalWinsGame()) {
+			f_world.addToMessage("You win!");
+			f_world.setGameOver();
+		}
 		f_world.turnOver();
 	}
 

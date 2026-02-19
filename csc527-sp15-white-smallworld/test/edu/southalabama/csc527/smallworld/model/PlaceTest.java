@@ -20,31 +20,31 @@ public class PlaceTest extends TestCase {
 		f_world = new World();
 		f_nowhere = f_world.getNowherePlace();
 		f_Dayton = new Place(f_world, "city of Dayton", "the",
-				"You are in the charming Midwest town of Dayton, Ohio.");
+				"You are in the charming Midwest town of Dayton, Ohio.", false);
 		f_Columbus = new Place(f_world, "city of Columbus", "the",
-				"You are in Columbus, the capital of Ohio");
+				"You are in Columbus, the capital of Ohio", false);
 		f_Dayton.setTravelDestination(Direction.EAST, f_Columbus);
 		f_Columbus.setTravelDestination(Direction.WEST, f_Dayton);
 	}
 
 	public void testPlace() {
 		try {
-			new Place(null, "somewhere", "", "you are somewhere");
+			new Place(null, "somewhere", "", "you are somewhere", false);
 			fail();
 		} catch (AssertionError e) {
 		}
 		try {
-			new Place(f_world, null, "", "you are somewhere");
+			new Place(f_world, null, "", "you are somewhere",false);
 			fail();
 		} catch (AssertionError e) {
 		}
 		try {
-			new Place(f_world, "somewhere", null, "you are somewhere");
+			new Place(f_world, "somewhere", null, "you are somewhere", false);
 			fail();
 		} catch (AssertionError e) {
 		}
 		try {
-			new Place(f_world, "somewhere", "", null);
+			new Place(f_world, "somewhere", "", null, false);
 			fail();
 		} catch (AssertionError e) {
 		}
