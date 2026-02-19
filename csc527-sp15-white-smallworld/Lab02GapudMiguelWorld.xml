@@ -6,24 +6,24 @@
     <travel direction="E">Hallway</travel>
   </place>
   <place name="Bathroom" article="your">
-    <description> It's good to wash up every few weeks. Toilet, sink, shower, mirror, window - why is there a window in the bathroom? Anyway, yep, everyone is here. In the mirror, you notice your screenface is a bit blurry this morning, and your skirt is a bit crumpled. The bow sticker is still nice and glossy on the corner of your face, and your sweater has no visibly loose threads, so you decide you're presentable enough for the world.</description>
+    <description> It's good to wash up every few weeks. Everyone is here: toilet, sink, shower, mirror, window- why is there a window in a bathroom? In the mirror, your TV head doesn't look so obnoxiously square this morning. You notice your facescreen is a bit blurry this morning, and your skirt is a bit crumpled. Still, your bow sticker is still nice and glossy on your facescreen's corner, and your sweater has no visibly loose threads, so you're probably presentable enough for the world.</description>
     <travel direction="E">Bedroom</travel>
     <travel direction="W">Lawn</travel>
   </place>
   <place name="Bedroom" article="your">
-    <description>This place is a mess, but it's your mess. On the north side of the room, your alarm clock blinks 12:00 on the nightstand. Something deep in your gut tells you that that's probably not the time. Abandond craft projects are strewn about on the floor like dirty laundry, which is also strewn about the floor. On a row of hooks hanging on the door to the hallway, you see your daily essentials: Backpack, purses, belts, corsets, rechargeable emp burst device, cleaning cloth, and cleansing spray. The windowsill is patterned with marks in permanent marker that are going to become the beginnings of a 360-degree mural. Someday.</description>
+    <description>This place is a mess, but it's your mess. On the north side of the room, your alarm clock blinks 12:00 on the nightstand. Something deep in your gut tells you that that might not be the time. The windowsill is patterned with marks in permanent marker that are going to become the beginnings of a 360-degree mural. Someday. Abandond craft projects are strewn about on the floor like dirty laundry, which is also strewn about the floor. On a row of hooks hanging on the door to the hallway, you see your daily essentials: Backpack, purses, corsets, rechargeable emp burst device, cleaning cloth, and cleansing spray. </description>
     <travel direction="W">Bathroom</travel>
     <travel direction="E">Hallway</travel>
   </place>
   <place name="Hallway" article="the">
-    <description>Your roommates' doors line the hallway. Hanging on your own door is a small whiteboard with a drawing of your head with your name, "Tivie", on your facescreen. The dots on the i's are flowers :) Sizzling sounds and smells of cooking waft into the hallway from the kitchen, along with bouncy 80s hip hop beats.</description>
+    <description>Your roommates' doors line the hallway. Hanging on your own door is a small whiteboard where you drew yourself with your name, "Tivie", on your facescreen. Cute as ever, the dots on the i's are flowers. Sizzling sounds and smells of cooking waft into the hallway from the kitchen, along with bouncy 80s hip hop beats.</description>
     <travel direction="N">Kitchen</travel>
     <travel direction="W">Bedroom</travel>
     <travel direction="E">Bock's Room</travel>
     <travel direction="S">Cidi's Room</travel>
   </place>
   <place name="Kitchen" article="the">
-    <description>Bock is jamming out in the kitchen as he makes bacon and eggs on the stove. When he's really getting into it this hard, you won't be able to get his attention no matter what you do. All the counters are clean and the sink is empty. The kitchen table has a plate in your spot with bacon, eggs, and graham crackers on it. On the east side of the same room is a small living area with two sofas and a stool facing an upright piano. Natural light fills the room from the north side.</description>
+    <description>Bock is jamming out in the kitchen as he makes bacon and eggs on the stove. He's a chunky boombox headed dude. You're not even sure how someone who isn't 50 could have a boombox head. When he's really getting into it this hard, you won't be able to get his attention no matter what you do. The sink is empty, and all the counters are clean, aside from the eggs and bacon that Bock is still grabbing from. The kitchen table has a plate in your spot with bacon, eggs, and peeled apple slices on it. On the east side of the same room is a small living area with two sofas and a stool facing an upright piano. Natural light fills the room from the north side.</description>
     <travel direction="N">Lawn</travel>
     <travel direction="S">Hallway</travel>
   </place>
@@ -83,7 +83,7 @@
     <travel direction="E">Library</travel>
   </place>
   <place name="Crash" article="a" arrivalWinsGame="Y">
-    <description>sCREEECH!!!! CRASH! tumble tumble tumble SLAM! WHY DID YOU MAKE A 180 IN THE MIDDLE OF THE STREET?? YOU CRASHED AND DIED! 
+    <description>sCREEECH!!!! CRASH! tumbletumbletumble SLAM! WHY DID YOU MAKE A 180 IN THE MIDDLE OF THE STREET?? YOU CRASHED AND DIED! 
 Start again, and next time drive safer, please.</description>
   </place>
   <place name="Apartment parking lot" article="the">
@@ -92,15 +92,15 @@ Start again, and next time drive safer, please.</description>
     <travel direction="N">Main Street</travel>
   </place>
   <place name="Apartment" article="the" arrivalWinsGame="Y">
-    <description>It's empty in here. The living area is spotless, aside from your uneaten breakfast. You take your food and wander back through the hallway and into your room. Today really wasn't your day, but hey, you really gave it your all this time, right? You actually left the house, got in your car and did something! That's a huge accomplisment for the efforts of a day. You'll get 'em next time, for sure. 
+    <description>It's empty in here. The living area is spotless, aside from your uneaten breakfast. The apple slices are turning brown. You take your food and wander back through the hallway and into your room. Today really wasn't your day, but hey, you really gave it your all this time, right? You actually left the house, got in your car, and did something! That's a huge accomplishment for you. You'll get 'em next time, for sure. For now, there's a new season of garbage anime to spend the next 15 hours watching, and a soft pile of laundry with your name on it. 
 Start again, and find your way to a good ending.</description>
   </place>
   <place name="Main Street" article="the">
-    <description>NO! Today is YOUR DAY. Time to rise and grind, girlboss education queen. You're up and you're at'em and it's 'em's problem, not yours! You accelerate down the street at 60mph right through school zones. Nothing's gonna stop you today!</description>
+    <description>NO! Today is YOUR DAY. Time to rise and grind, educated girlboss queen. You're up and you're at'em, and it's 'em's problem, not yours! You accelerate down the street at 60mph right through school zones. Nothing's gonna stop you today!</description>
     <travel direction="N">College</travel>
   </place>
   <place name="College" article="the" arrivalWinsGame="Y">
-    <description>You make it to class, barely on time. You smile and buzz nervously. It's not flashy, it's not exciting, but it's your way forward. There's a lot to learn here.</description>
+    <description>The professor calls your name as you open the door to class. "Here!" You smile and buzz nervously. Made it this time. You feel drained but proud. It's not flashy. It's not exciting. But, it's your way forward. </description>
   </place>
   <player location="barely awake" />
 </smallworld>
