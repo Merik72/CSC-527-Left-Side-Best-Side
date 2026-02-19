@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<smallworld version="1.0">
+  <place name="Observation Deck" article="the">
+    <description>You stand beneath a vast glass dome overlooking a swirling nebula. Stars burn silently in every direction. A damaged antenna array flickers nearby. A transport tube hums softly.</description>
+    <travel direction="N">Docking Ring</travel>
+  </place>
+
+  <place name="Asteroid Chasm" article="an">
+    <description>You drift inside a fractured asteroid tunnel lit by glowing mineral veins. Loose debris floats lazily in zero gravity.</description>
+    <travel direction="S">Engineering Bay</travel>
+    <travel direction="E">Cryo Chamber</travel>
+  </place>
+
+  <place name="Plasma Conduit" article="the">
+    <description>A narrow maintenance corridor crackles with exposed plasma streams contained behind flickering energy shields.</description>
+    <travel direction="W">Cargo Hold</travel>
+    <travel direction="N">Airlock Exterior</travel>
+  </place>
+
+  <place name="Docking Ring" article="the">
+    <description>You are inside a rotating docking ring. Through reinforced windows you see distant stars and a nearby moon. Escape pods line the walls.</description>
+    <travel direction="E">Hydroponics Lab</travel>
+    <travel direction="S">Observation Deck</travel>
+    <travel direction="W">Navigation Core</travel>
+  </place>
+
+  <place name="Cryo Chamber" article="the">
+    <description>Rows of cryogenic pods glow faint blue. Frost clings to the floor panels. One pod stands open.</description>
+    <travel direction="N">Asteroid Chasm</travel>
+    <travel direction="W">Quantum Hall</travel>
+  </place>
+
+  <place name="Airlock Exterior" article="the">
+    <description>You cling to the outer hull of the station. Below you stretches an endless void scattered with distant galaxies.</description>
+    <travel direction="E">Plasma Conduit</travel>
+    <travel direction="S">Reactor Core</travel>
+  </place>
+
+  <place name="Reactor Core" article="the">
+    <description>A towering fusion reactor pulses with brilliant light. Energy surges through massive conduits.</description>
+    <travel direction="N">Airlock Exterior</travel>
+    <travel direction="W">Maintenance Shaft</travel>
+  </place>
+
+  <place name="Hydroponics Lab" article="the">
+    <description>Alien plants grow in nutrient mist beneath artificial sunlight. The scent of oxygen and damp soil fills the air.</description>
+    <travel direction="W">Docking Ring</travel>
+  </place>
+
+  <place name="Engineering Bay" article="the">
+    <description>Tools float freely in microgravity. A diagnostic console flashes a warning: "WARP MATRIX UNSTABLE."</description>
+    <travel direction="N">Maintenance Shaft</travel>
+    <travel direction="W">Asteroid Chasm</travel>
+  </place>
+
+  <place name="Quantum Nexus" article="the" arrivalWinsGame="Y">
+    <description>You enter a chamber of shifting light and distorted space-time. Reality bends inward toward a radiant singularity.</description>
+    <travel direction="S">Quantum Hall</travel>
+  </place>
+
+  <place name="Maintenance Shaft" article="the">
+    <description>A cramped vertical shaft lined with cables and blinking relays. The hum of machinery vibrates through the metal walls.</description>
+    <travel direction="E">Reactor Core</travel>
+    <travel direction="S">Engineering Bay</travel>
+  </place>
+
+  <place name="Cargo Hold" article="the">
+    <description>Massive containers drift in a cavernous bay. A cracked crate reveals strange alien artifacts.</description>
+    <travel direction="E">Plasma Conduit</travel>
+    <travel direction="N">Navigation Core</travel>
+  </place>
+
+  <place name="Navigation Core" article="the">
+    <description>A spherical chamber filled with holographic star maps. Constellations rotate slowly in midair.</description>
+    <travel direction="S">Cargo Hold</travel>
+    <travel direction="E">Docking Ring</travel>
+  </place>
+
+  <place name="Quantum Hall" article="the">
+    <description>A long corridor where the walls shimmer like liquid glass. Time feels unstable here.</description>
+    <travel direction="N">Quantum Nexus</travel>
+    <travel direction="E">Cryo Chamber</travel>
+  </place>
+
+  <player location="Docking Ring"/>
+</smallworld>
