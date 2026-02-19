@@ -41,7 +41,7 @@
     <travel direction="S">Kitchen</travel>
   </place>
   <place name="Car" article="your">
-    <description>You slog through the sweltering summer heat radiating both overhead from the summer sun and underfoot from the black asphalt. You push the junk from the driver's seat to the passenger seat and start your car. Blasting the AC with the door open, you lean back in your chair, recovering from the heat. You check the time. 11:32AM. Classes are so early in the morning. The lot empties as people head out for lunch. Eventually, you close the door when the car reaches a livable degree of toaster oven. Now that you're all the way here, it's too late to turn back.</description>
+    <description>You slog through the sweltering heat radiating both overhead from the summer sun and underfoot from the black asphalt. You push the junk from the driver's seat to the passenger seat and start your car. Blasting the AC with the door open, you lean back in your chair, recovering from the heat. You check the time. 11:32AM. Classes are so early in the morning. The lot empties as people head out for lunch. Eventually, you close the door when the car reaches a livable degree of toaster oven. Now that you're all the way here, it's too late to turn back.</description>
     <travel direction="N">Main Road (N)</travel>
   </place>
   <place name="Main Road (N)" article="the">
@@ -73,7 +73,7 @@
     <travel direction="N">Great Oak</travel>
   </place>
   <place name="Great Oak" article="the" arrivalWinsGame="Y">
-    <description>You start to count how many multiples of your entire apartment building it would take to wrap around its trunk, but you've been skipping a lot of classes, so you lose count quickly. Fireflies float lazily through the air, sending signals of love. Crickets and cicadas serenade each other. You continue walking, and you realize that the clearing is maybe only halfway to its roots from the entrance of the grove. Stepping over toadstools and flowers, you approach the foot of the tree. Placing your palm on the bark, you take a deep breath, and release the burdens in your soul.</description>
+    <description>You start to count how many multiples of your entire apartment building it would take to wrap around its trunk, but you've been skipping a lot of classes, so you lose count quickly. Fireflies float lazily through the air, sending signals of love. You continue walking. Crickets and cicadas serenade each other as children chase them raucously. Each next step makes it clearer that your walk from the entrance of the grove to the edge of this clearing was maybe only half the trek to the trunk of the great oak. Rays of sunlight fall around you like spears from heaven, each resting on a diverse panoply of flowers someone is tending to. Stepping over frogs and toadstools, you finally approach the foot of the great oak. At this distance, you notice many people sitting or standing in groups around the trunk, pulling weeds, giving offerings, talking to the oak, and paying their respects. Placing your palm on the bark, you take a deep breath, and release the burdens of your soul.</description>
   </place>
   <place name="Main Street (S)" article="the">
     <description>Yeah, who needs to go to college anyway? Doing stuff is overrated. It'll be fine. There's actually some good stuff on the radio right now, so you wouldn't mind just driving a while longer anyway.</description>
