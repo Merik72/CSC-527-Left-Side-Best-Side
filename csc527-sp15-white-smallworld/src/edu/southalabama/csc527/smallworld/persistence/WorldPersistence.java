@@ -172,6 +172,9 @@ public class WorldPersistence {
 		Element placeElement = new Element(PLACE_TAG);
 		placeElement.setAttribute(NAME_TAG, place.getName());
 		placeElement.setAttribute(ARTICLE_TAG, place.getArticle());
+		if(place.arrivalWinsGame()) {
+			placeElement.setAttribute(WIN_TAG, "Y");			
+		}
 		Element description = new Element(DESCRIPTION_TAG);
 		placeElement.addContent(description);
 		description.setText(place.getDescription());
