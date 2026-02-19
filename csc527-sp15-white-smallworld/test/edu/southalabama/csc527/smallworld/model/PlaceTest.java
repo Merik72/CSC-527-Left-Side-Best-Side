@@ -12,7 +12,7 @@ public class PlaceTest extends TestCase {
 
 	private World f_world;
 
-	private Place f_Dayton, f_Columbus, f_nowhere;
+	private Place f_Dayton, f_Columbus, f_nowhere, f_Goldmine;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -23,6 +23,9 @@ public class PlaceTest extends TestCase {
 				"You are in the charming Midwest town of Dayton, Ohio.");
 		f_Columbus = new Place(f_world, "city of Columbus", "the",
 				"You are in Columbus, the capital of Ohio");
+		f_Goldmine = new Place(f_world, "Goldmine", "the", 
+				"You are in a goldmine, and all the money is yours.");
+		f_Goldmine.setArrivalWinsGame(true);
 		f_Dayton.setTravelDestination(Direction.EAST, f_Columbus);
 		f_Columbus.setTravelDestination(Direction.WEST, f_Dayton);
 	}
@@ -92,6 +95,22 @@ public class PlaceTest extends TestCase {
 				.getDescription());
 		assertEquals("You are in the charming Midwest town of Dayton, Ohio.",
 				f_Dayton.getDescription());
+	}
+	/*
+	 * Test method for
+	 * 'edu.southalabama.csc527.smallworld.model.Place.arrivalWinsGame()'
+	 */
+	public void testArrivalWinsGame() {
+		assertTrue(!f_Dayton.arrivalWinsGame());
+	}
+
+	/*
+	 * Test method for
+	 * 'edu.southalabama.csc527.smallworld.model.Place.setArrivalWinsGame()'
+	 */
+	public void testSetArrivalWinsGame() {
+		// If this fails, then the setArrivalWinsGame() function failed in setUp()
+		assertTrue(f_Goldmine.arrivalWinsGame());
 	}
 
 	/*
