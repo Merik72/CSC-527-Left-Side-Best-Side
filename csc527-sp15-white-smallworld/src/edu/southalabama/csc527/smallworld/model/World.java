@@ -139,6 +139,43 @@ public final class World {
 	 * @param description
 	 *            a long, possibly mult-line, non-null description of this
 	 *            thing.
+	 * @param arrivalWinsGame
+	 * 			  a value which is Y if the player wins by navigating here
+	 * @return the new {@link Place} instance.
+	 * @throws IllegalStateException
+	 *             if the specified name already exists within this world.
+	 */
+	public Place createPlace(String name, String article, String description, String arrivalWinsGame) {
+		assert (name != null);
+		assert (article != null);
+		assert (description != null);
+		if (isNameUsed(name)) {
+			throw new IllegalStateException(
+					"Construction of a new place named \""
+							+ name
+							+ "\" failed because the specified name already exists");
+		}
+		Place newPlace = new Place(this, name, article, description);
+		if(arrivalWinsGame != null) {
+			newPlace.setArrivalWinsGame(arrivalWinsGame.equals("Y"));
+		}
+		f_keyToPlace.put(name.toUpperCase(), newPlace);
+		return newPlace;
+	}
+	/**
+	 * Constructs a new place within this world.
+	 * 
+	 * @param name
+	 *            a non-null unique name for the instance. The uniqueness of the
+	 *            name can't be dependent upon case, e.g., "Hall" is considered
+	 *            the same as "hall".
+	 * @param article
+	 *            the appropriate non-null indefinite article with which to
+	 *            prefix the name so as to form a proper short description,
+	 *            e.g., "the" or "a".
+	 * @param description
+	 *            a long, possibly mult-line, non-null description of this
+	 *            thing.
 	 * @return the new {@link Place} instance.
 	 * @throws IllegalStateException
 	 *             if the specified name already exists within this world.

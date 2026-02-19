@@ -123,10 +123,15 @@ public final class WorldController {
 		if (playerLocation.isTravelAllowedToward(direction)) {
 			Place newPlayerLocation = playerLocation
 					.getTravelDestinationToward(direction);
+			if (newPlayerLocation.arrivalWinsGame()) {
+				f_world.addToMessage("Game Finished!");
+				f_world.setGameOver();
+			}
 			/*
 			 * Move the player
 			 */
 			player.setLocation(newPlayerLocation);
+			
 		} else {
 			/*
 			 * Travel is not allowed from the player's location in the specified
