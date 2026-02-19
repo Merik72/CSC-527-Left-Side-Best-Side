@@ -41,7 +41,7 @@
     <travel direction="S">Kitchen</travel>
   </place>
   <place name="Car" article="your">
-    <description>You slog through the sweltering summer heat radiating both overhead from the summer sun and underfoot from the black asphalt. You push the junk from the driver's seat to the passenger seat and start your car. Blasting the AC full blast with the door open, you lean back in your chair, recovering from the heat. You check the time. 11:32AM. Classes are so early in the morning. The lot empties as people head out for lunch. Eventually, you close the door and the car reaches a livable degree of toaster oven. Now that you're all the way here, it's too late to turn back.</description>
+    <description>You slog through the sweltering summer heat radiating both overhead from the summer sun and underfoot from the black asphalt. You push the junk from the driver's seat to the passenger seat and start your car. Blasting the AC with the door open, you lean back in your chair, recovering from the heat. You check the time. 11:32AM. Classes are so early in the morning. The lot empties as people head out for lunch. Eventually, you close the door when the car reaches a livable degree of toaster oven. Now that you're all the way here, it's too late to turn back.</description>
     <travel direction="N">Main Road (N)</travel>
   </place>
   <place name="Main Road (N)" article="the">
@@ -64,6 +64,7 @@
   <place name="City Park" article="the">
     <description>Taking a walk through the park, you notice it's much nicer than you remember. The leaves are vibrant, vibrant nearly to the point of being neon. The trees themselves are tall. Taller than the nearby buildings. Actually, there seems to be a gap there. The leaning trunks seem to be beckoning you.</description>
     <travel direction="N">Grove</travel>
+    <travel direction="S">Main Street (S)</travel>
   </place>
   <place name="Grove" article="the">
     <description>You put one foot in front of the other. Somehow, even as the trees grow thicker around you, it doesn't get any darker. A soft green glow envelops everything you see. People kneel along the side of the path, praying over sprouts barely growing their first leaves. You go deeper still. The air gets thicker with every step. Suddenly, you step into a thick sunbeam. There's a gap in the canopy as the trees part. In front of you is a great oak. 
@@ -73,34 +74,33 @@
   </place>
   <place name="Great Oak" article="the" arrivalWinsGame="Y">
     <description>You start to count how many multiples of your entire apartment building it would take to wrap around its trunk, but you've been skipping a lot of classes, so you lose count quickly. Fireflies float lazily through the air, sending signals of love. Crickets and cicadas serenade each other. You continue walking, and you realize that the clearing is maybe only halfway to its roots from the entrance of the grove. Stepping over toadstools and flowers, you approach the foot of the tree. Placing your palm on the bark, you take a deep breath, and release the burdens in your soul.</description>
-    <travel direction="S">Grove</travel>
   </place>
   <place name="Main Street (S)" article="the">
-    <description>Yeah, who needs to go to college anyway?? Just go the exact opposite way, and it'll be fine. There's actually some good stuff on the radio right now, so you wouldn't mind just driving back and forth a  </description>
+    <description>Yeah, who needs to go to college anyway? Doing stuff is overrated. It'll be fine. There's actually some good stuff on the radio right now, so you wouldn't mind just driving a while longer anyway.</description>
     <travel direction="N">Crash</travel>
     <travel direction="S">Apartment parking lot</travel>
     <travel direction="W">Coffee Shop</travel>
     <travel direction="E">Library</travel>
   </place>
   <place name="Crash" article="a" arrivalWinsGame="Y">
-    <description>sCREEECH!!!! CRASH! tumble tumble tumble SLAM! WHY DID YOU MAKE A 180 IN THE MIDDLE OF THE STREET?? YOU CRASHED AND DIED! Type quit and start again. Drive safer, please.</description>
+    <description>sCREEECH!!!! CRASH! tumble tumble tumble SLAM! WHY DID YOU MAKE A 180 IN THE MIDDLE OF THE STREET?? YOU CRASHED AND DIED! 
+Start again, and next time drive safer, please.</description>
   </place>
   <place name="Apartment parking lot" article="the">
-    <description>After pulling into your parking spot you kill the engine, crack the windows and slouch in your car seat. Just leaving the house is pretty exhausting. Can you imagine if you actually went all the way to class? That might kill you fr.</description>
+    <description>After pulling into your parking spot, you kill the engine, crack the windows and slouch in your car seat. Just leaving the house is pretty exhausting. Can you imagine if you actually went all the way to class? That might kill you for real.</description>
     <travel direction="S">Apartment</travel>
     <travel direction="N">Main Street</travel>
   </place>
   <place name="Apartment" article="the" arrivalWinsGame="Y">
     <description>It's empty in here. The living area is spotless, aside from your uneaten breakfast. You take your food and wander back through the hallway and into your room. Today really wasn't your day, but hey, you really gave it your all this time, right? You actually left the house, got in your car and did something! That's a huge accomplisment for the efforts of a day. You'll get 'em next time, for sure. 
-    End of game. Type quit, and start again. Find your way to a good ending.</description>
+Start again, and find your way to a good ending.</description>
   </place>
   <place name="Main Street" article="the">
-    <description>NO! Today is YOUR DAY. Time to rise and grind, girlboss education queen. You're up and you're at'em and it's 'em's problem, not yours! You accelerate down the street at 60mph in front of school zones. Nothing's gonna stop you today!</description>
+    <description>NO! Today is YOUR DAY. Time to rise and grind, girlboss education queen. You're up and you're at'em and it's 'em's problem, not yours! You accelerate down the street at 60mph right through school zones. Nothing's gonna stop you today!</description>
     <travel direction="N">College</travel>
   </place>
   <place name="College" article="the" arrivalWinsGame="Y">
     <description>You make it to class, barely on time. You smile and buzz nervously. It's not flashy, it's not exciting, but it's your way forward. There's a lot to learn here.</description>
-    <travel direction="S">Main Street (S)</travel>
   </place>
   <player location="barely awake" />
 </smallworld>
