@@ -35,3 +35,6 @@ hs_err_pid*
 replay_pid*
 
 bin
+
+# For individual aspects of lab assignemnts
+**/my_**/
