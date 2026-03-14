@@ -1,5 +1,7 @@
 package edu.southalabama.csc527.smallworld.model;
 
+import java.util.List;
+
 /**
  * An avatar that is controlled by, and represents, the user of the game. At
  * present there is one {@link Player} roaming around per {@link World}
@@ -100,4 +102,24 @@ public final class Player {
 		assert (location != null);
 		f_location = location;
 	}
+
+	private int f_experience = 0;
+
+	public int getExperience() { return f_experience; }
+
+	public void addExperience(int experience) { this.f_experience += experience; }
+
+	public void subtractExperience(int experience) { this.f_experience -= experience; }
+
+	/**
+	 * A list of all the player's currently held items
+	 */
+	private List<Item> inventory;
+
+	/**
+	 * Returns the list of items the player is holding
+	 *
+	 * @return the player's list of items
+	 */
+	public List<Item> getInventory() { return inventory; }
 }
