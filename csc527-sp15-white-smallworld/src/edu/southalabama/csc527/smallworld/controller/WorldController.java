@@ -143,6 +143,23 @@ public final class WorldController {
 		f_world.turnOver();
 	}
 
+	public void interactItem(ItemAction itemAction, Item item) {
+		Player player = f_world.getPlayer();
+		Place currentLocation = player.getLocation();
+		switch (itemAction) {
+			case DROP -> {
+				player.getInventory().removeItem(item);
+				currentLocation.getInventory().addItem(item);
+				player.addExperience(item.calculatePointValue(currentLocation, ItemAction.DROP));
+			}
+			case PICKUP -> {
+				player.getInventory().addItem(item);
+				currentLocation.getInventory().removeItem(item);
+				player.addExperience(item.calculatePointValue(currentLocation, ItemAction.PICKUP));
+			}
+		}
+	}
+
 	/**
 	 * @param e
 	 */

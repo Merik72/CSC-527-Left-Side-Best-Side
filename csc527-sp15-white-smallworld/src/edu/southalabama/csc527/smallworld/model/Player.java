@@ -114,12 +114,7 @@ public final class Player {
 	/**
 	 * A list of all the player's currently held items
 	 */
-	private List<Item> inventory;
+	private Inventory inventory;
 
-	/**
-	 * Returns the list of items the player is holding
-	 *
-	 * @return the player's list of items
-	 */
-	public List<Item> getInventory() { return inventory; }
+	public Inventory getInventory(){ return inventory; }
 }
