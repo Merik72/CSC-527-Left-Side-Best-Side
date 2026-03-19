@@ -60,8 +60,18 @@ public final class UserCommandParser {
          * in the game.
          */
         boolean commandExecuted = false;
-
-        if (words[0].equals("GO") || words[0].equals("MOVE")) {
+        
+        if (Direction.getInstance(words[0]) != null) {
+        	Direction direction = Direction.getInstance(words[0]);
+        	if (direction == null) {
+                f_pwo.display(
+                    words[0] + " is not a direction I recognize. "
+                    + "Please type \"help\" if you need more help.");
+            } else {
+                f_wc.travel(direction);
+            }
+            commandExecuted = true;
+        } else if (words[0].equals("GO") || words[0].equals("MOVE")) {
             /*
              * "GO <direction>" command
              */
