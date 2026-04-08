@@ -295,20 +295,33 @@ public class WorldPersistence {
 			}
 		}
 	}
+	
+	// Item related tags ?
+	private static final String ITEM_TAG = "item";
+	
+	private static final String NEEDED_TO_ENTER_TAG = "neededToEnter";
 
-	private static final String ARTICLE_TAG = "article";
+	private static final String TAKE_POINTS_TAG = "takePoints";
 
+	private static final String DROP_POINTS_TAG = "dropPoints";
+	
+	private static final String BLOCKED_MSG_TAG = "blockedMsg";
+	
+	// Place tags ?
 	private static final String DESCRIPTION_TAG = "description";
 
 	private static final String DIRECTION_TAG = "direction";
 
 	private static final String PLACE_TAG = "place";
 
+	private static final String WIN_TAG = "arrivalWinsGame";
+	
+	// General purpose tags ?
+	private static final String ARTICLE_TAG = "article";
+
 	private static final String LOCATION_TAG = "location";
 
 	private static final String NAME_TAG = "name";
-
-	private static final String WIN_TAG = "arrivalWinsGame";
 
 	private static final String PLAYER_TAG = "player";
 
