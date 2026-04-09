@@ -251,6 +251,7 @@ public class WorldPersistence {
 		return playerElement;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static void loadItemXML(Element root, World world) {
 		List<Element> itemList = root.getChildren(ITEM_TAG);
 		for (Element itemElement : itemList) {
@@ -260,21 +261,21 @@ public class WorldPersistence {
 			String takePoints = itemElement.getAttributeValue(TAKE_POINTS_TAG);
 			String dropPoints = itemElement.getAttributeValue(DROP_POINTS_TAG);
 			
-			// world.createItem(name, article, location, takePoints, dropPoints);
-			world.createItem();
+			world.createItem(name, article, location, takePoints, dropPoints);
+			// world.createItem();
 			List<Element> placesOfInterest = itemElement.getChildren();
 			Item i = world.getItem(itemElement.getAttributeValue(NAME_TAG));
-			for(Element s : placesOfInterest) {
-				// Get all of these
-				String s_name = s.getText();
-				String s_neededToEnter = s.getAttributeValue(NEEDED_TO_ENTER_TAG);
-				String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
-				String s_location = s.getAttributeValue(LOCATION_TAG);
-				String f_takePoints = s.getAttributeValue(TAKE_POINTS_TAG);
-				String f_dropPoints = s.getAttributeValue(DROP_POINTS_TAG);
-				
-				Subplace subPlace = new Subplace();
-				if (i != null) i.addSubplace(subPlace);
+			if (i!= null) {
+				for(Element s : placesOfInterest) {
+					// Get all of these
+					String s_name = s.getText();
+					String s_neededToEnter = s.getAttributeValue(NEEDED_TO_ENTER_TAG);
+					String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
+					String s_takePoints = s.getAttributeValue(TAKE_POINTS_TAG);
+					String s_dropPoints = s.getAttributeValue(DROP_POINTS_TAG);
+					
+					i.createSubplace(s_name, s_neededToEnter, s_blockedMsg, s_takePoints, s_dropPoints);
+				}
 			}
 		}
 		// Done?

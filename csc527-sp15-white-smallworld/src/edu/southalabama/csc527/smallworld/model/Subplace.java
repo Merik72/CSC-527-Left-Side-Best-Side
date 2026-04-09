@@ -7,7 +7,6 @@ public class Subplace {
 	private String f_name;
 	private boolean f_neededToEnter;
 	private String f_blockedMsg = "";
-	private String f_location;
 	// This is bad and ugly idk
 	private Integer f_takePoints = null;
 	private Integer f_dropPoints = null;
@@ -15,15 +14,18 @@ public class Subplace {
 	public Subplace(){
 		f_neededToEnter = true;
 		f_blockedMsg = "You're mom is so fat she blocked the way.";
-		f_location = "testcation";
 		f_name = "filler!";
 		f_takePoints = 531;
 		f_dropPoints = 8008;
-		
 	}
 	
+	/*
+	public Subplace(String name, String neededToEnter, String blockedMsg, String takePoints,  String dropPoints) {
+		f_name = name;
+	}
+	*/
 	public Subplace(String name){
-		setPlaceName(name);
+		f_name = name;
 	}
 	
 	public boolean getNeededToEnter() {
@@ -37,12 +39,6 @@ public class Subplace {
 	}
 	public void setBlockedMsg(String f_blockedMsg) {
 		this.f_blockedMsg = f_blockedMsg;
-	}
-	public String getLocation() {
-		return f_location;
-	}
-	public void setLocation(String f_location) {
-		this.f_location = f_location;
 	}
 	public Integer getTakePoints() {
 		return f_takePoints;

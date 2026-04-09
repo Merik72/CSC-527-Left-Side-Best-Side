@@ -225,6 +225,20 @@ public final class World {
 		return PLACEHOLDER;
 	}
 	
+	// UNSTUB
+	public Item createItem(String name, String article, String location, String takePoints, String dropPoints) {
+		assert (name != null);
+		assert (article!= null);
+		assert (location != null);
+		assert (takePoints != null);
+		assert (dropPoints != null);
+		// Is it okay for there to be duplicate names?
+		// Does an item need a world?
+		Item newItem = new Item(name, article, location, Integer.valueOf(takePoints),Integer.valueOf(dropPoints));
+		f_keyToItem.put(newItem.getName(), newItem);
+		return newItem;
+	}
+	
 	/**
 	 * A non-null mutable string message.
 	 */
