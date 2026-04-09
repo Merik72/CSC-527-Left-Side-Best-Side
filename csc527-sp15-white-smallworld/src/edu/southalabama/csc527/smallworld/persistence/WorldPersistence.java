@@ -28,7 +28,7 @@ public class WorldPersistence {
 	/**
 	 * The version of the game as defined by the XML save file format.
 	 */
-	public static final String SAVEFILE_VERSION = "1.1";
+	public static final String SAVEFILE_VERSION = "1.2"; // 1.2 : The Items update :^)
 
 	/**
 	 * The full location, on the Java classpath, of the default world file.
@@ -159,6 +159,45 @@ public class WorldPersistence {
 			// something went wrong
 			throw new IllegalStateException("Unable to write world file", e);
 		}
+	}
+	
+
+	// Item is a stub
+	// Creates an XML tree for an Item
+	private static void createItemXML(Item item) {
+		Element itemElement = new Element(ITEM_TAG);
+		itemElement.setAttribute(NAME_TAG, item.getName());
+		itemElement.setAttribute(ARTICLE_TAG, item.getArticle());
+		itemElement.setAttribute(LOCATION_TAG, item.getLocation());
+		itemElement.setAttribute(TAKE_POINTS_TAG, item.getTakePoints());
+		itemElement.setAttribute(DROP_POINTS_TAG, item.getDropPoints());
+		
+		// All subplace tags are optional, aside from the place name
+		// un-tagged place name
+		// Needed to enter
+		// blockedMsg
+		// description
+		// /location?
+		// Take points and drop points
+		
+		Element subplaceElement = new Element(PLACE_TAG);
+		for (Subplace subplace : item.getSubplaces()) {
+			if(subplace.getTakePoints() != null) {
+				subplaceElement.setAttribute(TAKE_POINTS_TAG, subplace.getTakePoints().toString());
+			}
+			if(subplace.getDropPoints() != null) {
+				subplaceElement.setAttribute(DROP_POINTS_TAG, subplace.getDropPoints().toString());
+			}
+			if(subplace.getNeededToEnter()) {
+				subplaceElement.setAttribute(NEEDED_TO_ENTER_TAG, "Y");
+			}
+			if(subplace.getBlockedMsg() != "") {
+				subplaceElement.setAttribute(BLOCKED_MSG_TAG, subplace.getBlockedMsg());
+			}
+			subplaceElement.setText(subplace.getName());
+		}
+		
+		
 	}
 
 	/**
