@@ -23,7 +23,10 @@ public final class World {
 	 * be <code>name.toUpperCase()</code>.
 	 */
 	private final Map<String, Place> f_keyToPlace = new HashMap<String, Place>();
-
+	
+	// AAAA
+	private final Map<String, Item> f_keyToItem = new HashMap<String, Item>();
+	
 	/**
 	 * A place that always exists in every world. It represents a thing being
 	 * nowhere.
@@ -97,6 +100,12 @@ public final class World {
 		return f_keyToPlace.get(name.toUpperCase());
 	}
 
+	// AAA
+	public Item getItemByName(String name) {
+		assert (name != null);
+		return f_keyToItem.get(name.toUpperCase());
+	}
+
 	/**
 	 * Returns a copy of all the Places in this world.
 	 * 
@@ -105,7 +114,10 @@ public final class World {
 	public Set<Place> getPlaces() {
 		return new HashSet<Place>(f_keyToPlace.values());
 	}
-
+	
+	public Set<Item> getItems(){
+		return new HashSet<Item>(f_keyToItem.values());
+	}
 	/**
 	 * Gets the appropriate {@link Place} instance with the specified name.
 	 * 
@@ -124,6 +136,17 @@ public final class World {
 		else
 			return null;
 	}
+	
+	// STUB: needs to implement a search through a hash or smth
+	public Item getItem(String name) {
+		assert (name != null);
+		Item result = getItemByName(name);
+		if (result instanceof Item)
+			return (Item) result;
+		else
+			return null;
+	}
+		
 
 	/**
 	 * Constructs a new place within this world.
@@ -194,7 +217,14 @@ public final class World {
 		f_keyToPlace.put(name.toUpperCase(), newPlace);
 		return newPlace;
 	}
-
+	
+	// STUB: needs fixing to add robustness and adding to dict
+	public Item createItem() {
+		Item PLACEHOLDER = new Item();
+		f_keyToItem.put(PLACEHOLDER.getName(), PLACEHOLDER);
+		return PLACEHOLDER;
+	}
+	
 	/**
 	 * A non-null mutable string message.
 	 */

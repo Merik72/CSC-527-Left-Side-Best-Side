@@ -2,6 +2,9 @@ package edu.southalabama.csc527.smallworld.model;
 
 // Stub?
 public class Subplace {
+	// This field is the name of a place, but
+	// It doesn't take a NAME_TAG, it appears as text?
+	private String f_name;
 	private boolean f_neededToEnter;
 	private String f_blockedMsg = "";
 	private String f_location;
@@ -9,15 +12,20 @@ public class Subplace {
 	private Integer f_takePoints = null;
 	private Integer f_dropPoints = null;
 	
-	// This field is the name of a place, but
-	// It doesn't take a NAME_TAG, it appears as text?
-	private String f_name;
-	Subplace(String name){
+	public Subplace(){
+		f_neededToEnter = true;
+		f_blockedMsg = "You're mom is so fat she blocked the way.";
+		f_location = "testcation";
+		f_name = "filler!";
+		f_takePoints = 531;
+		f_dropPoints = 8008;
+		
+	}
+	
+	public Subplace(String name){
 		setPlaceName(name);
 	}
-	Subplace(){
-		setPlaceName("filler!");
-	}
+	
 	public boolean getNeededToEnter() {
 		return f_neededToEnter;
 	}

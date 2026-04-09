@@ -95,6 +95,8 @@ public class WorldPersistence {
 			Element root = saveXML.getRootElement();
 
 			loadPlaceXML(root, world);
+			
+			loadItemXML(root, world);
 
 			loadPlayerXML(root, world);
 
@@ -138,7 +140,10 @@ public class WorldPersistence {
 				worldElement.addContent(createPlaceXML(l));
 			}
 		}
-
+		for (Item i : world.getItems()) {
+			if (i != null)
+				worldElement.addContent(createItemXML(i));
+		}
 		/*
 		 * Create XML for the Player
 		 */
@@ -164,13 +169,13 @@ public class WorldPersistence {
 
 	// Item is a stub
 	// Creates an XML tree for an Item
-	private static void createItemXML(Item item) {
+	private static Element createItemXML(Item item) {
 		Element itemElement = new Element(ITEM_TAG);
 		itemElement.setAttribute(NAME_TAG, item.getName());
 		itemElement.setAttribute(ARTICLE_TAG, item.getArticle());
 		itemElement.setAttribute(LOCATION_TAG, item.getLocation());
-		itemElement.setAttribute(TAKE_POINTS_TAG, item.getTakePoints());
-		itemElement.setAttribute(DROP_POINTS_TAG, item.getDropPoints());
+		itemElement.setAttribute(TAKE_POINTS_TAG, String.valueOf(item.getTakePoints()));
+		itemElement.setAttribute(DROP_POINTS_TAG, String.valueOf(item.getDropPoints()));
 		
 		// All subplace tags are optional, aside from the place name
 		// un-tagged place name
@@ -195,9 +200,9 @@ public class WorldPersistence {
 				subplaceElement.setAttribute(BLOCKED_MSG_TAG, subplace.getBlockedMsg());
 			}
 			subplaceElement.setText(subplace.getName());
+			itemElement.addContent(subplaceElement);
 		}
-		
-		
+		return itemElement;		
 	}
 
 	/**
@@ -245,7 +250,35 @@ public class WorldPersistence {
 				+ player.getLocation().getName());
 		return playerElement;
 	}
-
+	
+	private static void loadItemXML(Element root, World world) {
+		List<Element> itemList = root.getChildren(ITEM_TAG);
+		for (Element itemElement : itemList) {
+			String name = itemElement.getAttributeValue(NAME_TAG);
+			String article = itemElement.getAttributeValue(ARTICLE_TAG);
+			String location = itemElement.getAttributeValue(LOCATION_TAG);
+			String takePoints = itemElement.getAttributeValue(TAKE_POINTS_TAG);
+			String dropPoints = itemElement.getAttributeValue(DROP_POINTS_TAG);
+			
+			// world.createItem(name, article, location, takePoints, dropPoints);
+			world.createItem();
+			List<Element> placesOfInterest = itemElement.getChildren();
+			Item i = world.getItem(itemElement.getAttributeValue(NAME_TAG));
+			for(Element s : placesOfInterest) {
+				// Get all of these
+				String s_name = s.getText();
+				String s_neededToEnter = s.getAttributeValue(NEEDED_TO_ENTER_TAG);
+				String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
+				String s_location = s.getAttributeValue(LOCATION_TAG);
+				String f_takePoints = s.getAttributeValue(TAKE_POINTS_TAG);
+				String f_dropPoints = s.getAttributeValue(DROP_POINTS_TAG);
+				
+				Subplace subPlace = new Subplace();
+				if (i != null) i.addSubplace(subPlace);
+			}
+		}
+		// Done?
+	}
 	/**
 	 * Loads all places found within the root XML element into the world under
 	 * construction.
