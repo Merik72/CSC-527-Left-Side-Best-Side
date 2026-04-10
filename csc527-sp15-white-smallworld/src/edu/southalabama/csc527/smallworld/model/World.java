@@ -83,7 +83,8 @@ public final class World {
 	 */
 	public boolean isNameUsed(String name) {
 		assert (name != null);
-		return f_keyToPlace.containsKey(name.toUpperCase());
+		// !!!! THIS IS VERY BAD AND NON-EXTENSIBLE?
+		return f_keyToPlace.containsKey(name.toUpperCase()) || f_keyToItem.containsKey(name.toUpperCase()) ;
 	}
 
 	/**
@@ -233,9 +234,15 @@ public final class World {
 		assert (takePoints != null);
 		assert (dropPoints != null);
 		// Is it okay for there to be duplicate names?
+		if (isNameUsed(name)) {
+			throw new IllegalStateException(
+					"Construction of a new place named \""
+							+ name
+							+ "\" failed because the specified name already exists");
+		}
 		// Does an item need a world?
 		Item newItem = new Item(name, article, location, Integer.valueOf(takePoints),Integer.valueOf(dropPoints));
-		f_keyToItem.put(newItem.getName(), newItem);
+		f_keyToItem.put(name.toUpperCase(), newItem);
 		return newItem;
 	}
 	

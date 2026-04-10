@@ -185,8 +185,9 @@ public class WorldPersistence {
 		// /location?
 		// Take points and drop points
 		
-		Element subplaceElement = new Element(PLACE_TAG);
 		for (Subplace subplace : item.getSubplaces()) {
+			Element subplaceElement = new Element(PLACE_TAG);
+			itemElement.addContent(subplaceElement);
 			if(subplace.getTakePoints() != null) {
 				subplaceElement.setAttribute(TAKE_POINTS_TAG, subplace.getTakePoints().toString());
 			}
@@ -200,8 +201,8 @@ public class WorldPersistence {
 				subplaceElement.setAttribute(BLOCKED_MSG_TAG, subplace.getBlockedMsg());
 			}
 			subplaceElement.setText(subplace.getName());
-			itemElement.addContent(subplaceElement);
 		}
+		
 		return itemElement;		
 	}
 
@@ -260,22 +261,30 @@ public class WorldPersistence {
 			String location = itemElement.getAttributeValue(LOCATION_TAG);
 			String takePoints = itemElement.getAttributeValue(TAKE_POINTS_TAG);
 			String dropPoints = itemElement.getAttributeValue(DROP_POINTS_TAG);
-			
+			if (name == null || article == null)
+				throw new IllegalStateException();
 			world.createItem(name, article, location, takePoints, dropPoints);
+		}
+		for (Element itemElement : itemList)
+		{
 			// world.createItem();
-			List<Element> placesOfInterest = itemElement.getChildren();
+			List<Element> placesOfInterest = itemElement.getChildren(PLACE_TAG);
 			Item i = world.getItem(itemElement.getAttributeValue(NAME_TAG));
-			if (i!= null) {
-				for(Element s : placesOfInterest) {
-					// Get all of these
-					String s_name = s.getText();
-					String s_neededToEnter = s.getAttributeValue(NEEDED_TO_ENTER_TAG);
-					String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
-					String s_takePoints = s.getAttributeValue(TAKE_POINTS_TAG);
-					String s_dropPoints = s.getAttributeValue(DROP_POINTS_TAG);
-					
-					i.createSubplace(s_name, s_neededToEnter, s_blockedMsg, s_takePoints, s_dropPoints);
-				}
+			if (i == null)
+				throw new IllegalStateException(
+						"Unable to find an Item named \""
+								+ itemElement.getAttributeValue(NAME_TAG)
+								+ "\" during the second pass through the file..."
+								+ "did the file change while we were reading it?");
+			for(Element s : placesOfInterest) {
+				// Get all of these
+				String s_name = s.getText();
+				String s_neededToEnter = s.getAttributeValue(NEEDED_TO_ENTER_TAG);
+				String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
+				String s_takePoints = s.getAttributeValue(TAKE_POINTS_TAG);
+				String s_dropPoints = s.getAttributeValue(DROP_POINTS_TAG);
+				
+				i.createSubplace(s_name, s_neededToEnter, s_blockedMsg, s_takePoints, s_dropPoints);
 			}
 		}
 		// Done?
