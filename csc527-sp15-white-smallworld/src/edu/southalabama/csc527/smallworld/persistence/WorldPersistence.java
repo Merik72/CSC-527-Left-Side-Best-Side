@@ -140,15 +140,12 @@ public class WorldPersistence {
 				worldElement.addContent(createPlaceXML(l));
 			}
 		}
-		/*
-		 * Create XML for the Player
-		 */
-		worldElement.addContent(createPlayerXML(world.getPlayer()));
 
 		for (Item i : world.getItems()) {
 			if (i != null)
 				worldElement.addContent(createItemXML(i));
 		}
+		
 		/*
 		 * Create XML for the Player
 		 */

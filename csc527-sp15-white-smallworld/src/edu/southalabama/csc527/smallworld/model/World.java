@@ -117,7 +117,7 @@ public final class World {
 	
 	public Set<Item> getItems(){
 		return f_worldElements.values().stream()
-				.filter(Place.class::isInstance)
+				.filter(Item.class::isInstance)
 				.map(Item.class::cast)
 				.collect(Collectors.toSet());
 	}
