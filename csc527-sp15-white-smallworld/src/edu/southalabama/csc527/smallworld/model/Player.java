@@ -21,6 +21,7 @@ public final class Player {
 		f_world = world;
 		f_name = "Player";
 		f_location = f_world.getNowherePlace();
+		f_inventory = new Inventory();
 	}
 
 	/**
@@ -28,6 +29,11 @@ public final class Player {
 	 * within.
 	 */
 	private final World f_world;
+
+	/**
+	 * Contains all the {@link Item}s that the player is currently holding.
+	 */
+	private Inventory f_inventory;
 
 	/**
 	 * Gets the world this exists in.
@@ -99,5 +105,9 @@ public final class Player {
 	public void setLocation(Place location) {
 		assert (location != null);
 		f_location = location;
+	}
+
+	public Inventory getInventory() {
+		return f_inventory;
 	}
 }

@@ -1,6 +1,7 @@
 package edu.southalabama.csc527.smallworld.model;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * The simulated world in which simulated players lead their short, simulated
@@ -22,10 +23,7 @@ public final class World {
 	 * corresponding {@link Place} instance. Typically the key to this map will
 	 * be <code>name.toUpperCase()</code>.
 	 */
-	private final Map<String, Place> f_keyToPlace = new HashMap<String, Place>();
-	
-	// AAAA
-	private final Map<String, Item> f_keyToItem = new HashMap<String, Item>();
+	private final Map<String, WorldElement> f_worldElements = new HashMap<>();
 	
 	/**
 	 * A place that always exists in every world. It represents a thing being
@@ -83,8 +81,7 @@ public final class World {
 	 */
 	public boolean isNameUsed(String name) {
 		assert (name != null);
-		// !!!! THIS IS VERY BAD AND NON-EXTENSIBLE?
-		return f_keyToPlace.containsKey(name.toUpperCase()) || f_keyToItem.containsKey(name.toUpperCase()) ;
+		return f_worldElements.containsKey(name.toUpperCase());
 	}
 
 	/**
@@ -98,13 +95,12 @@ public final class World {
 	 */
 	public Place getPlaceByName(String name) {
 		assert (name != null);
-		return f_keyToPlace.get(name.toUpperCase());
+		return (Place) f_worldElements.get(name.toUpperCase());
 	}
 
-	// AAA
 	public Item getItemByName(String name) {
 		assert (name != null);
-		return f_keyToItem.get(name.toUpperCase());
+		return (Item) f_worldElements.get(name.toUpperCase());
 	}
 
 	/**
@@ -112,12 +108,18 @@ public final class World {
 	 * 
 	 * @return a copy of the set of all Places in this world.
 	 */
-	public Set<Place> getPlaces() {
-		return new HashSet<Place>(f_keyToPlace.values());
+	public Set<Place> getAllPlaces() {
+		return f_worldElements.values().stream()
+				.filter(Place.class::isInstance)
+				.map(Place.class::cast)
+				.collect(Collectors.toSet());
 	}
 	
-	public Set<Item> getItems(){
-		return new HashSet<Item>(f_keyToItem.values());
+	public Set<Item> getAllItems(){
+		return f_worldElements.values().stream()
+				.filter(Place.class::isInstance)
+				.map(Item.class::cast)
+				.collect(Collectors.toSet());
 	}
 	/**
 	 * Gets the appropriate {@link Place} instance with the specified name.
@@ -183,7 +185,7 @@ public final class World {
 		if(arrivalWinsGame != null) {
 			newPlace.setArrivalWinsGame(arrivalWinsGame.equals("Y"));
 		}
-		f_keyToPlace.put(name.toUpperCase(), newPlace);
+		f_worldElements.put(name.toUpperCase(), newPlace);
 		return newPlace;
 	}
 	/**
@@ -215,14 +217,14 @@ public final class World {
 							+ "\" failed because the specified name already exists");
 		}
 		Place newPlace = new Place(this, name, article, description);
-		f_keyToPlace.put(name.toUpperCase(), newPlace);
+		f_worldElements.put(name.toUpperCase(), newPlace);
 		return newPlace;
 	}
 	
 	// STUB: needs fixing to add robustness and adding to dict
 	public Item createItem() {
 		Item PLACEHOLDER = new Item();
-		f_keyToItem.put(PLACEHOLDER.getName(), PLACEHOLDER);
+		f_worldElements.put(PLACEHOLDER.getName(), PLACEHOLDER);
 		return PLACEHOLDER;
 	}
 	
@@ -242,7 +244,7 @@ public final class World {
 		}
 		// Does an item need a world?
 		Item newItem = new Item(name, article, location, Integer.valueOf(takePoints),Integer.valueOf(dropPoints));
-		f_keyToItem.put(name.toUpperCase(), newItem);
+		f_worldElements.put(name.toUpperCase(), newItem);
 		return newItem;
 	}
 	

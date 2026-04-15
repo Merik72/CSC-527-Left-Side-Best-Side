@@ -142,7 +142,15 @@ public final class UserCommandParser {
                 f_wc.saveWorld(fileName);
             }
             commandExecuted = true;
-        }
+        } else if (words[0].equals("INVENTORY") || words[0].equals("INV") || words[0].equals("I")) {
+            f_wc.inventory();
+            commandExecuted = true;
+        } /*else if (words[0].equals("TAKE")) {
+            f_wc.getWorld().getItem();
+            f_wc.take();
+        } else if (words[0].equals("DROP")) {
+            f_wc.drop();
+        }*/
 
         if (!commandExecuted) {
             /*
@@ -188,6 +196,15 @@ public final class UserCommandParser {
         helpMessage.append(LINESEP2);
         helpMessage.append("\"save <filename>\" saves the current game state "
                 + "to the specified filename. Example \"save C:\\save1.xml\"");
+        helpMessage.append(LINESEP2);
+        helpMessage.append("\"inventory\" or \"inv\" or \"i\" to show the players current inventory.");
+        helpMessage.append(LINESEP2);
+        helpMessage.append("\"take <item name>\" picks up the item that has the specified name in the current room.");
+        helpMessage.append(LINESEP2);
+        helpMessage.append("\"take\" picks up all the items that are in the current room");
+        helpMessage.append(LINESEP2);
+        helpMessage.append("\"drop <item name>\" drops the specified item from the players inventory.");
+
         return helpMessage.toString();
     }
 }

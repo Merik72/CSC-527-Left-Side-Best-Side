@@ -178,4 +178,42 @@ public final class WorldController {
 	 * be changed via the {@link #setWorld(World)} method.
 	 */
 	private World f_world;
+
+	/**
+	 * Removes the specified item from the player's location and places
+	 * it in the player's inventory.
+	 *
+	 * @param item
+	 * the item to take.
+	 */
+	public void take(Item item) {
+
+	}
+
+	/**
+	 * Removes all items from the player's location and places them in the
+	 * player's inventory.
+	 */
+
+	/**
+	 * Drops the specified item from the player's inventory.
+	 *
+	 * @param item
+	 * the item to drop.
+	 */
+	public void drop(Item item) {  }
+
+	/**
+	 * Examines the items in the player's inventory.
+	 */
+	public void inventory() {
+		Inventory currentInventory = f_world.getPlayer().getInventory();
+
+		if (currentInventory.getItems().isEmpty()) {
+			f_world.addToMessage("You are not carrying any items.");
+		} else {
+			f_world.addToMessage("The player is holding: " + currentInventory);
+		}
+		f_world.turnOver();
+	}
 }

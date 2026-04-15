@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 // This is a stub.
-public class Item {
+public class Item extends WorldElement {
 	private String f_name;
 	private String f_article;
 	private String f_location;

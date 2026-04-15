@@ -2,10 +2,6 @@ package edu.southalabama.csc527.smallworld.model;
 
 import java.util.Set;
 
-import edu.southalabama.csc527.smallworld.model.IWorldObserver;
-import edu.southalabama.csc527.smallworld.model.Place;
-import edu.southalabama.csc527.smallworld.model.World;
-
 import junit.framework.TestCase;
 
 /**
@@ -23,7 +19,7 @@ public class WorldTest extends TestCase {
 	}
 
 	public void testWorld() {
-		assertEquals(1, f_world.getPlaces().size());
+		assertEquals(1, f_world.getAllPlaces().size());
 		assertNotNull(f_world.getNowherePlace());
 		assertNotNull(f_world.getPlayer());
 		try {
@@ -67,12 +63,12 @@ public class WorldTest extends TestCase {
 		assertTrue(f_world.isNameUsed("HALL"));
 		assertFalse(f_world.isNameUsed("UNKNOWN"));
 
-		Set<Place> places = f_world.getPlaces();
+		Set<Place> places = f_world.getAllPlaces();
 		assertEquals(3, places.size());
 		assertTrue(places.contains(l1));
 		assertTrue(places.contains(l2));
 		places.remove(l1);
-		assertFalse(places.equals(f_world.getPlaces()));
+		assertFalse(places.equals(f_world.getAllPlaces()));
 
 		try {
 			f_world.createPlace("room", article, description);

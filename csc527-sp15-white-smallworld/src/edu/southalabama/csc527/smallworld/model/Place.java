@@ -9,7 +9,7 @@ import java.util.Map;
  * single {@link World} instance.
  * 
  */
-public class Place {
+public class Place extends WorldElement {
 
 	/**
 	 * Constructs a new instance. Only to be invoked by the {@link World} class.
