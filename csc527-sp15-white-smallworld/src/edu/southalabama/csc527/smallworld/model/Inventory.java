@@ -1,28 +1,31 @@
 package edu.southalabama.csc527.smallworld.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 public class Inventory {
-    private List<Item> f_items;
+	private Map<String, Item> f_keyToItem = new HashMap<String, Item>();
+	// private String f_location;
 
-    Inventory(){
-        f_items = new ArrayList<>();
-    }
+	public void addItem(Item item) {
+		f_keyToItem.put(item.getName().toUpperCase(), item);
+	}
 
-    public List<Item> getItems(){ return f_items; }
+	// should solve the Get Inventory issue?
+	public HashSet<Item> getItems() {
+		return new HashSet<Item>(f_keyToItem.values());
+	}
 
-    public void addItem(Item item){ f_items.add(item); }
-
-    public void removeItem(Item item) {
-        f_items.removeIf(i -> i.getName().equalsIgnoreCase(item.getName()));
-    }
+	public void removeItem(Item item) {
+		// Stub
+	}
 
     @Override
     public String toString() {
         String items = "";
-        if (!f_items.isEmpty()){
-            for (Item i : f_items) {
+        if (!f_keyToItem.isEmpty()){
+            for (Item i : f_keyToItem.values()) {
                 items.concat(i.getName() + "\n");
             }
         }

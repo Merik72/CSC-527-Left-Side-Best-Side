@@ -108,14 +108,14 @@ public final class World {
 	 * 
 	 * @return a copy of the set of all Places in this world.
 	 */
-	public Set<Place> getAllPlaces() {
+	public Set<Place> getPlaces() {
 		return f_worldElements.values().stream()
 				.filter(Place.class::isInstance)
 				.map(Place.class::cast)
 				.collect(Collectors.toSet());
 	}
 	
-	public Set<Item> getAllItems(){
+	public Set<Item> getItems(){
 		return f_worldElements.values().stream()
 				.filter(Place.class::isInstance)
 				.map(Item.class::cast)
