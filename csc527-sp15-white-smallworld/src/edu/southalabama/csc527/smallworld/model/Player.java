@@ -100,4 +100,10 @@ public final class Player {
 		assert (location != null);
 		f_location = location;
 	}
+	
+	private Inventory f_inventory = new Inventory();
+	
+	public Inventory getInventory() {
+		return f_inventory;
+	}
 }

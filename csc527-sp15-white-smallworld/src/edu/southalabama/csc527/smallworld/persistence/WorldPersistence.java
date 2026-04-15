@@ -96,9 +96,9 @@ public class WorldPersistence {
 
 			loadPlaceXML(root, world);
 			
-			loadItemXML(root, world);
-
 			loadPlayerXML(root, world);
+
+			loadItemXML(root, world);
 
 		} catch (IOException e) {
 			throw new IllegalStateException(
@@ -140,14 +140,15 @@ public class WorldPersistence {
 				worldElement.addContent(createPlaceXML(l));
 			}
 		}
-		for (Item i : world.getItems()) {
-			if (i != null)
-				worldElement.addContent(createItemXML(i));
-		}
 		/*
 		 * Create XML for the Player
 		 */
 		worldElement.addContent(createPlayerXML(world.getPlayer()));
+		
+		for (Item i : world.getItems()) {
+			if (i != null)
+				worldElement.addContent(createItemXML(i));
+		}
 
 		Document gameStateInformation = new Document(worldElement);
 
@@ -261,7 +262,7 @@ public class WorldPersistence {
 			String location = itemElement.getAttributeValue(LOCATION_TAG);
 			String takePoints = itemElement.getAttributeValue(TAKE_POINTS_TAG);
 			String dropPoints = itemElement.getAttributeValue(DROP_POINTS_TAG);
-			if (name == null || article == null)
+			if (name == null || article == null || takePoints == null || dropPoints == null)
 				throw new IllegalStateException();
 			world.createItem(name, article, location, takePoints, dropPoints);
 		}
@@ -276,6 +277,11 @@ public class WorldPersistence {
 								+ itemElement.getAttributeValue(NAME_TAG)
 								+ "\" during the second pass through the file..."
 								+ "did the file change while we were reading it?");
+			if(i.getLocation().toUpperCase().equals("PLAYER")) {
+				world.getPlayer().getInventory().addItem(world.getItem(i.getName()));
+			} else {
+				world.getPlace(i.getLocation()).getInventory().addItem(world.getItem(i.getName()));
+			}
 			for(Element s : placesOfInterest) {
 				// Get all of these
 				String s_name = s.getText();

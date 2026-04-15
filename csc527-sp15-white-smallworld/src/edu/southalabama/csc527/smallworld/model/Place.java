@@ -177,4 +177,10 @@ public class Place {
 		assert (l != null);
 		f_directionOfTravelToPlace.put(d, l);
 	}
+	
+	private Inventory f_inventory = new Inventory();
+	
+	public Inventory getInventory() {
+		return f_inventory;
+	}
 }
