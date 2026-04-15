@@ -19,7 +19,7 @@ public class WorldTest extends TestCase {
 	}
 
 	public void testWorld() {
-		assertEquals(1, f_world.getAllPlaces().size());
+		assertEquals(1, f_world.getPlaces().size());
 		assertNotNull(f_world.getNowherePlace());
 		assertNotNull(f_world.getPlayer());
 		try {
@@ -63,12 +63,12 @@ public class WorldTest extends TestCase {
 		assertTrue(f_world.isNameUsed("HALL"));
 		assertFalse(f_world.isNameUsed("UNKNOWN"));
 
-		Set<Place> places = f_world.getAllPlaces();
+		Set<Place> places = f_world.getPlaces();
 		assertEquals(3, places.size());
 		assertTrue(places.contains(l1));
 		assertTrue(places.contains(l2));
 		places.remove(l1);
-		assertFalse(places.equals(f_world.getAllPlaces()));
+		assertFalse(places.equals(f_world.getPlaces()));
 
 		try {
 			f_world.createPlace("room", article, description);
