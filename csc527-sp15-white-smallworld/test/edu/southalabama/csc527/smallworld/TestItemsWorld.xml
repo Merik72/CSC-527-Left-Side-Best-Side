@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<smallworld version="1.2">
+	<place name="Bathroom" article="the">
+		<description>You are in the bathroom</description>
+		<travel direction="S">Bedroom</travel>
+	</place>
+	<place name="Bedroom" article="the">
+		<description>You are in the bedroom</description>
+		<travel direction="N">Bathroom</travel>
+		<travel direction="E">Living Room</travel>
+	</place>
+    <place name="Living Room" article="the">
+    	<description>You are in the Living Room</description>
+		<travel direction="W">Bedroom</travel>
+	</place>
+    <item name="Key" article="the" location="Living Room" takePoints="10" dropPoints="-10"> 
+        <place neededToEnter="Y" blockedMsg="The bedroom is locked.">Bedroom</location> 
+    </item> 
+    <item name="Chocolate Pudding" article="the" location="Bathroom" takePoints="150" dropPoints="0"> 
+        <place takePoints="-18" dropPoints="-2">Living Room</location> 
+    </item> 
+    <item name="Tshirt" article="a" location="Bedroom" takePoints="51" dropPoints="0"/> 
+	<player location="Living Room" />
+</smallworld>

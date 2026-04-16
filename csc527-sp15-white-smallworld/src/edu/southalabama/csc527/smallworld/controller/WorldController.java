@@ -248,6 +248,15 @@ public final class WorldController {
 		player.getInventory().addItem(item);
 		player.addPoints(item.getTakePoints());
 	}
+	
+	public void takeAll() {
+		Player player = f_world.getPlayer();
+		Place currentLocation = player.getLocation();
+		
+		for(Item item : currentLocation.getInventory().getItems()) {
+			take(item);
+		}
+	}
 
 	/**
 	 * Removes all items from the player's location and places them in the

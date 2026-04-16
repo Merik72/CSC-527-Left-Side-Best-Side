@@ -161,9 +161,7 @@ public final class UserCommandParser {
                 } else {
                     f_pwo.display(currentPlaceInv + "Has/have been added to your inventory.");
                 }
-                for (Item item : currentPlaceInv.getItems()) {
-                    f_wc.take(item);
-                }
+                f_wc.takeAll();
             } else {
                 String itemName = command.substring(words[0].length()).trim();
                 Item item = currentPlaceInv.getItem(itemName);
