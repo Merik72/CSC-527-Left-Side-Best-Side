@@ -1,10 +1,9 @@
 package edu.southalabama.csc527.smallworld.controller;
 
 
-import java.io.File;
-
 import edu.southalabama.csc527.smallworld.model.*;
 import edu.southalabama.csc527.smallworld.persistence.WorldPersistence;
+import java.io.File;
 
 /**
  * This class is responsible for executing a user's commands. In the
@@ -278,6 +277,15 @@ public final class WorldController {
 		} else {
 			f_world.addToMessage("You are carrying:\n" + currentInventory);
 		}
+		f_world.turnOver();
+	}
+
+	/**
+	 * Returns the player's current point total and adds to the message.
+	 */
+	public void printPoints(){
+		int currentPoints = f_world.getPlayer().getPoints();
+		f_world.addToMessage("You have " + currentPoints + " points.");
 		f_world.turnOver();
 	}
 }

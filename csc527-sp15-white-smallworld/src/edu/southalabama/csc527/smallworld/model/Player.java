@@ -119,4 +119,8 @@ public final class Player {
 	public void addPoints(int points) {
 		f_points += points;
 	}
+
+	public int getPoints(){
+		return f_points;
+	}
 }
