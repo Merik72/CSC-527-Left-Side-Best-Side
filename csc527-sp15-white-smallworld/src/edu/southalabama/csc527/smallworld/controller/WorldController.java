@@ -187,9 +187,13 @@ public final class WorldController {
 	 * the item to take.
 	 */
 	public void take(Item item) {
-		f_world.getPlayer().getLocation().getInventory().removeItem(item);
-		f_world.getPlayer().getInventory().addItem(item);
+		Player player = f_world.getPlayer();
+		Place currentLocation = player.getLocation();
+		
 		item.setLocation("Player");
+		currentLocation.getInventory().removeItem(item);
+		player.getInventory().addItem(item);
+		player.addPoints(item.getTakePoints());
 	}
 
 	/**
@@ -204,10 +208,13 @@ public final class WorldController {
 	 * the item to drop.
 	 */
 	public void drop(Item item) {
-		Place currentLocation = f_world.getPlayer().getLocation();
-		f_world.getPlayer().getInventory().removeItem(item);
-		currentLocation.getInventory().addItem(item);
+		Player player = f_world.getPlayer();
+		Place currentLocation = player.getLocation();
+
 		item.setLocation(currentLocation.getName());
+		currentLocation.getInventory().addItem(item);
+		player.getInventory().removeItem(item);
+		player.addPoints(item.getDropPoints());
 	}
 
 	/**

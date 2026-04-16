@@ -36,6 +36,11 @@ public final class Player {
 	private Inventory f_inventory;
 
 	/**
+	 * The player's point value. Is affected by which {@link Item}s are picked up and dropped.
+	 */
+	private int f_points = 0;
+
+	/**
 	 * Gets the world this exists in.
 	 * 
 	 * @return a reference to the {@link World} instance containing this.
@@ -109,5 +114,9 @@ public final class Player {
 
 	public Inventory getInventory() {
 		return f_inventory;
+	}
+
+	public void addPoints(int points) {
+		f_points += points;
 	}
 }
