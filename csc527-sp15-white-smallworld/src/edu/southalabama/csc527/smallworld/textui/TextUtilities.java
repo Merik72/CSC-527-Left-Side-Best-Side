@@ -1,5 +1,5 @@
 package edu.southalabama.csc527.smallworld.textui;
-
+import edu.southalabama.csc527.smallworld.model.Item;
 import edu.southalabama.csc527.smallworld.model.Direction;
 import edu.southalabama.csc527.smallworld.model.Place;
 
@@ -62,6 +62,22 @@ public class TextUtilities {
 		msg.append(place.getDescription());
 		msg.append(LINESEP2);
 		msg.append(TextUtilities.getDirectionsFrom(place));
+		
+
+		if (!place.getInventory().getItems().isEmpty()) {
+			msg.append(LINESEP2);
+			msg.append("You see here: ");
+			for (Item item : place.getInventory().getItems()) {
+				msg.append(item.getArticle() + " " + item.getName() + ". ");
+			}
+		}else{
+			msg.append(LINESEP2);
+			msg.append("You see nothing of interest here.");
+		}
+
 		return msg.toString();
 	}
 }
+
+
+
