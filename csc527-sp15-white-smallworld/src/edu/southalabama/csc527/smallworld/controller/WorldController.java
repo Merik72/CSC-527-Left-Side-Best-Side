@@ -177,7 +177,7 @@ public final class WorldController {
 	private String getBlockedMessage(Player player, Place destination) {
 		Inventory playerInventory = player.getInventory();
 
-		for (LocationRule rule : f_world.getLocationRules()) {
+		for (LocationRule rule : f_world.getLocationRules().getObjects()) {
 
 			if (!rule.getNeededToEnter()) continue;
 			if (!rule.getPlaceName().equalsIgnoreCase(destination.getName())) continue;

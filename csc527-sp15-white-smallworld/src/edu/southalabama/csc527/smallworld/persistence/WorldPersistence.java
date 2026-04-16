@@ -129,7 +129,7 @@ public class WorldPersistence {
 		/*
 		 * Create XML for Places
 		 */
-		for (Place l : world.getPlaces()) {
+		for (Place l : world.getPlaces().getObjects()) {
 			/*
 			 * We don't save the nowhere place to the save file. This place
 			 * always exists in every world so its inclusion in the save file
@@ -141,7 +141,7 @@ public class WorldPersistence {
 			}
 		}
 
-		for (Item i : world.getItems()) {
+		for (Item i : world.getItems().getObjects()) {
 			if (i != null)
 				worldElement.addContent(createItemXML(i));
 		}

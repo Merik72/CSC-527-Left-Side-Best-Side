@@ -77,8 +77,8 @@ public final class World {
         return f_places.getObjectByName(name);
 	}
 
-	public Set<Place> getPlaces() {
-		return f_places.getObjects();
+	public WorldObjects<Place> getPlaces() {
+		return f_places;
 	}
 	
 	public Item getItem(String name) {
@@ -86,8 +86,8 @@ public final class World {
         return f_items.getObjectByName(name);
 	}
 
-	public Set<Item> getItems() {
-		return f_items.getObjects();
+	public WorldObjects<Item> getItems() {
+		return f_items;
 	}
 
 	public LocationRule getLocationRule(String placeName) {
@@ -95,8 +95,8 @@ public final class World {
         return f_entryRestrictions.getObjectByName(placeName);
 	}
 
-	public Set<LocationRule> getLocationRules() {
-		return f_entryRestrictions.getObjects();
+	public WorldObjects<LocationRule> getLocationRules() {
+		return f_entryRestrictions;
 	}
 
 	/**
