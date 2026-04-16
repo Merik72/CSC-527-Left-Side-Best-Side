@@ -187,7 +187,8 @@ public final class WorldController {
 	 * the item to take.
 	 */
 	public void take(Item item) {
-
+		f_world.getPlayer().getLocation().getInventory().removeItem(item);
+		f_world.getPlayer().getInventory().addItem(item);
 	}
 
 	/**
@@ -201,7 +202,10 @@ public final class WorldController {
 	 * @param item
 	 * the item to drop.
 	 */
-	public void drop(Item item) {  }
+	public void drop(Item item) {
+		f_world.getPlayer().getInventory().removeItem(item);
+		f_world.getPlayer().getLocation().getInventory().addItem(item);
+	}
 
 	/**
 	 * Examines the items in the player's inventory.
@@ -212,7 +216,7 @@ public final class WorldController {
 		if (currentInventory.getItems().isEmpty()) {
 			f_world.addToMessage("You are not carrying any items.");
 		} else {
-			f_world.addToMessage("The player is holding: " + currentInventory);
+			f_world.addToMessage("You are carrying:\n" + currentInventory);
 		}
 		f_world.turnOver();
 	}
