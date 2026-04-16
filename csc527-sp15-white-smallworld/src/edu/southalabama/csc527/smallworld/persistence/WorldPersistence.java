@@ -143,7 +143,7 @@ public class WorldPersistence {
 
 		for (Item i : world.getItems().getObjects()) {
 			if (i != null)
-				worldElement.addContent(createItemXML(i));
+				worldElement.addContent(createItemXML(world, i));
 		}
 		
 		/*
@@ -171,41 +171,67 @@ public class WorldPersistence {
 
 	// Item is a stub
 	// Creates an XML tree for an Item
-	private static Element createItemXML(Item item) {
+	private static Element createItemXML(World world, Item item) {
 		Element itemElement = new Element(ITEM_TAG);
+
 		itemElement.setAttribute(NAME_TAG, item.getName());
 		itemElement.setAttribute(ARTICLE_TAG, item.getArticle());
 		itemElement.setAttribute(LOCATION_TAG, item.getLocation());
-		itemElement.setAttribute(TAKE_POINTS_TAG, String.valueOf(item.getTakePoints()));
-		itemElement.setAttribute(DROP_POINTS_TAG, String.valueOf(item.getDropPoints()));
-		
-		// All subplace tags are optional, aside from the place name
-		// un-tagged place name
-		// Needed to enter
-		// blockedMsg
-		// description
-		// /location?
-		// Take points and drop points
-		
-		for (LocationRule locationRule : item.getSubplaces()) {
-			Element subplaceElement = new Element(PLACE_TAG);
-			itemElement.addContent(subplaceElement);
-			if(locationRule.getTakePoints() != null) {
-				subplaceElement.setAttribute(TAKE_POINTS_TAG, locationRule.getTakePoints().toString());
+
+		itemElement.setAttribute(
+				TAKE_POINTS_TAG,
+				String.valueOf(item.getTakePoints())
+		);
+
+		itemElement.setAttribute(
+				DROP_POINTS_TAG,
+				String.valueOf(item.getDropPoints())
+		);
+
+		for (LocationRule rule : world.getLocationRules().getObjects()) {
+
+			// Only include rules for this item
+			if (!rule.getItemNeededName().equalsIgnoreCase(item.getName())) {
+				continue;
 			}
-			if(locationRule.getDropPoints() != null) {
-				subplaceElement.setAttribute(DROP_POINTS_TAG, locationRule.getDropPoints().toString());
+
+			Element placeElement = new Element(PLACE_TAG);
+
+			// Place name is required
+			placeElement.setText(rule.getPlaceName());
+
+			// Optional numeric attributes
+			if (rule.getTakePoints() != null) {
+				placeElement.setAttribute(
+						TAKE_POINTS_TAG,
+						rule.getTakePoints().toString()
+				);
 			}
-			if(locationRule.getNeededToEnter()) {
-				subplaceElement.setAttribute(NEEDED_TO_ENTER_TAG, "Y");
+
+			if (rule.getDropPoints() != null) {
+				placeElement.setAttribute(
+						DROP_POINTS_TAG,
+						rule.getDropPoints().toString()
+				);
 			}
-			if(locationRule.getBlockedMsg() != "") {
-				subplaceElement.setAttribute(BLOCKED_MSG_TAG, locationRule.getBlockedMsg());
+
+			// Boolean flag: presence = true, absence = false
+			if (rule.getNeededToEnter()) {
+				placeElement.setAttribute(NEEDED_TO_ENTER_TAG, "Y");
 			}
-			subplaceElement.setText(locationRule.getPlaceName());
+
+			// Optional string attribute
+			if (rule.getBlockedMsg() != null && !rule.getBlockedMsg().isEmpty()) {
+				placeElement.setAttribute(
+						BLOCKED_MSG_TAG,
+						rule.getBlockedMsg()
+				);
+			}
+
+			itemElement.addContent(placeElement);
 		}
-		
-		return itemElement;		
+
+		return itemElement;
 	}
 
 	/**
