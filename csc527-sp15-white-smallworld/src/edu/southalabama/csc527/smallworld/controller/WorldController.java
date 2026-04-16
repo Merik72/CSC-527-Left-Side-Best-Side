@@ -17,6 +17,11 @@ import edu.southalabama.csc527.smallworld.persistence.WorldPersistence;
  * @see World
  */
 public final class WorldController {
+	/**
+	 * The world associated with this controller. It must be non-null, but may
+	 * be changed via the {@link #setWorld(World)} method.
+	 */
+	private World f_world;
 
 	/**
 	 * Creates a new instance of <code>WorldController</code> for the default
@@ -123,6 +128,19 @@ public final class WorldController {
 		if (playerLocation.isTravelAllowedToward(direction)) {
 			Place newPlayerLocation = playerLocation
 					.getTravelDestinationToward(direction);
+
+			/*
+			 * Check that the player holds every item whose subplace marks the
+			 * destination as neededToEnter. If any required item is missing,
+			 * block travel and show that item's blocked message.
+			 */
+			String blockedMessage = getBlockedMessage(player, newPlayerLocation);
+			if (blockedMessage != null) {
+				f_world.addToMessage(blockedMessage);
+				f_world.turnOver();
+				return;
+			}
+
 			if (newPlayerLocation.arrivalWinsGame()) {
 				f_world.addToMessage("Game Finished!");
 				f_world.setGameOver();
@@ -143,6 +161,44 @@ public final class WorldController {
 		}
 		f_world.turnOver();
 	}
+
+	/**
+	 * Checks whether the player is carrying all items required to enter the
+	 * specified destination place.
+	 *
+	 * @param player
+	 *            the player attempting to travel.
+	 * @param destination
+	 *            the place the player wishes to enter.
+	 * @return the blocked message of the first missing required item, or
+	 *         {@code null} if the player has all required items (or none are
+	 *         required).
+	 */
+	private String getBlockedMessage(Player player, Place destination) {
+		Inventory playerInventory = player.getInventory();
+
+		for (LocationRule rule : f_world.getLocationRules()) {
+
+			if (!rule.getNeededToEnter()) continue;
+			if (!rule.getPlaceName().equalsIgnoreCase(destination.getName())) continue;
+
+			String requiredItemName = rule.getItemNeededName();
+
+			if (requiredItemName != null &&
+					playerInventory.getItem(requiredItemName) == null) {
+
+				String msg = rule.getBlockedMsg();
+
+				return (msg != null && !msg.isEmpty())
+						? msg
+						: "You need the " + requiredItemName +
+						" to enter " + destination.getName() + ".";
+			}
+		}
+
+		return null;
+	}
+
 
 	/**
 	 * @param e
@@ -174,12 +230,6 @@ public final class WorldController {
 	}
 
 	/**
-	 * The world associated with this controller. It must be non-null, but may
-	 * be changed via the {@link #setWorld(World)} method.
-	 */
-	private World f_world;
-
-	/**
 	 * Removes the specified item from the player's location and places
 	 * it in the player's inventory.
 	 *
@@ -189,7 +239,7 @@ public final class WorldController {
 	public void take(Item item) {
 		Player player = f_world.getPlayer();
 		Place currentLocation = player.getLocation();
-		
+
 		item.setLocation("Player");
 		currentLocation.getInventory().removeItem(item);
 		player.getInventory().addItem(item);

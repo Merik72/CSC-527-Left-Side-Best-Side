@@ -1,7 +1,6 @@
 package edu.southalabama.csc527.smallworld.model;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * The simulated world in which simulated players lead their short, simulated
@@ -17,13 +16,9 @@ import java.util.stream.Collectors;
  * 
  */
 public final class World {
-
-	/**
-	 * A map from an upper-case name (thus non-case sensitive) to a
-	 * corresponding {@link Place} instance. Typically the key to this map will
-	 * be <code>name.toUpperCase()</code>.
-	 */
-	private final Map<String, WorldElement> f_worldElements = new HashMap<>();
+	private final WorldObjects<Place> f_places = new WorldObjects<>();
+	private final WorldObjects<Item> f_items = new WorldObjects<>();
+	private final WorldObjects<LocationRule> f_entryRestrictions = new WorldObjects<>();
 	
 	/**
 	 * A place that always exists in every world. It represents a thing being
@@ -68,60 +63,6 @@ public final class World {
 	}
 
 	/**
-	 * Returns <code>true</code> if the specified name is used for a
-	 * {@link Place} within this world, <code>false</code> otherwise. Names
-	 * are non-case sensitive, so "NAME" is considered the same name as "nAmE".
-	 * In addition, the namespace of the world is shared across all
-	 * {@link Place} instances.
-	 * 
-	 * @param name
-	 *            the non-null non-case sensitive name to check.
-	 * @return <code>true</code> if the specified name is used for a
-	 *         {@link Place} within this world, <code>false</code> otherwise.
-	 */
-	public boolean isNameUsed(String name) {
-		assert (name != null);
-		return f_worldElements.containsKey(name.toUpperCase());
-	}
-
-	/**
-	 * Gets the appropriate {@link Place} instance with the specified name.
-	 * 
-	 * @param name
-	 *            the non-null non-case sensitive name of the desired
-	 *            {@link Place} instance.
-	 * @return the appropriate {@link Place} instance, or <code>null</code> if
-	 *         the specified name does not exist.
-	 */
-	public Place getPlaceByName(String name) {
-		assert (name != null);
-		return (Place) f_worldElements.get(name.toUpperCase());
-	}
-
-	public Item getItemByName(String name) {
-		assert (name != null);
-		return (Item) f_worldElements.get(name.toUpperCase());
-	}
-
-	/**
-	 * Returns a copy of all the Places in this world.
-	 * 
-	 * @return a copy of the set of all Places in this world.
-	 */
-	public Set<Place> getPlaces() {
-		return f_worldElements.values().stream()
-				.filter(Place.class::isInstance)
-				.map(Place.class::cast)
-				.collect(Collectors.toSet());
-	}
-	
-	public Set<Item> getItems(){
-		return f_worldElements.values().stream()
-				.filter(Item.class::isInstance)
-				.map(Item.class::cast)
-				.collect(Collectors.toSet());
-	}
-	/**
 	 * Gets the appropriate {@link Place} instance with the specified name.
 	 * 
 	 * @param name
@@ -133,23 +74,30 @@ public final class World {
 	 */
 	public Place getPlace(String name) {
 		assert (name != null);
-		Place result = getPlaceByName(name);
-		if (result instanceof Place)
-			return (Place) result;
-		else
-			return null;
+        return f_places.getObjectByName(name);
+	}
+
+	public Set<Place> getPlaces() {
+		return f_places.getObjects();
 	}
 	
-	// STUB: needs to implement a search through a hash or smth
 	public Item getItem(String name) {
 		assert (name != null);
-		Item result = getItemByName(name);
-		if (result instanceof Item)
-			return (Item) result;
-		else
-			return null;
+        return f_items.getObjectByName(name);
 	}
-		
+
+	public Set<Item> getItems() {
+		return f_items.getObjects();
+	}
+
+	public LocationRule getLocationRule(String placeName) {
+		assert (placeName != null);
+        return f_entryRestrictions.getObjectByName(placeName);
+	}
+
+	public Set<LocationRule> getLocationRules() {
+		return f_entryRestrictions.getObjects();
+	}
 
 	/**
 	 * Constructs a new place within this world.
@@ -175,7 +123,7 @@ public final class World {
 		assert (name != null);
 		assert (article != null);
 		assert (description != null);
-		if (isNameUsed(name)) {
+		if (f_places.isNameUsed(name)) {
 			throw new IllegalStateException(
 					"Construction of a new place named \""
 							+ name
@@ -185,7 +133,7 @@ public final class World {
 		if(arrivalWinsGame != null) {
 			newPlace.setArrivalWinsGame(arrivalWinsGame.equals("Y"));
 		}
-		f_worldElements.put(name.toUpperCase(), newPlace);
+		f_places.addObject(name.toUpperCase(), newPlace);
 		return newPlace;
 	}
 	/**
@@ -210,25 +158,24 @@ public final class World {
 		assert (name != null);
 		assert (article != null);
 		assert (description != null);
-		if (isNameUsed(name)) {
+		if (f_places.isNameUsed(name)) {
 			throw new IllegalStateException(
 					"Construction of a new place named \""
 							+ name
 							+ "\" failed because the specified name already exists");
 		}
 		Place newPlace = new Place(this, name, article, description);
-		f_worldElements.put(name.toUpperCase(), newPlace);
+		f_places.addObject(name.toUpperCase(), newPlace);
 		return newPlace;
 	}
 	
 	// STUB: needs fixing to add robustness and adding to dict
 	public Item createItem() {
 		Item PLACEHOLDER = new Item();
-		f_worldElements.put(PLACEHOLDER.getName(), PLACEHOLDER);
+		f_items.addObject(PLACEHOLDER.getName(), PLACEHOLDER);
 		return PLACEHOLDER;
 	}
 	
-	// UNSTUB
 	public Item createItem(String name, String article, String location, String takePoints, String dropPoints) {
 		assert (name != null);
 		assert (article!= null);
@@ -236,18 +183,51 @@ public final class World {
 		assert (takePoints != null);
 		assert (dropPoints != null);
 		// Is it okay for there to be duplicate names?
-		if (isNameUsed(name)) {
+		if (f_items.isNameUsed(name)) {
 			throw new IllegalStateException(
-					"Construction of a new place named \""
+					"Construction of a new item named \""
 							+ name
 							+ "\" failed because the specified name already exists");
 		}
 		// Does an item need a world?
 		Item newItem = new Item(name, article, location, Integer.valueOf(takePoints),Integer.valueOf(dropPoints));
-		f_worldElements.put(name.toUpperCase(), newItem);
+		f_items.addObject(name.toUpperCase(), newItem);
 		return newItem;
 	}
-	
+
+	public LocationRule createLocationRule(String placeName, String itemName, String neededToEnter, String blockedMsg, String takePoints, String dropPoints) {
+		assert (placeName != null);
+		assert (itemName != null);
+		assert (takePoints != null);
+		assert (dropPoints != null);
+		if (f_items.isNameUsed(placeName)) {
+			throw new IllegalStateException(
+					"Construction of a new entryRestriction named \""
+							+ placeName
+							+ "\" failed because the specified name already exists");
+		}
+
+		boolean neededToEnterBool = false;
+		if(neededToEnter != null) {
+			neededToEnterBool = neededToEnter.equals("Y");
+		}
+
+		LocationRule newRestriction = new LocationRule(placeName, itemName, neededToEnterBool, blockedMsg, parseInteger(takePoints), parseInteger(dropPoints));
+		f_entryRestrictions.addObject(newRestriction.getPlaceName(), newRestriction);
+		return newRestriction;
+	}
+
+	private static Integer parseInteger(String value) {
+		if (value == null || value.isEmpty()) return null;
+
+		try {
+			return Integer.valueOf(value.trim());
+		} catch (NumberFormatException e) {
+			throw new IllegalStateException("Invalid integer value: " + value);
+		}
+	}
+
+
 	/**
 	 * A non-null mutable string message.
 	 */

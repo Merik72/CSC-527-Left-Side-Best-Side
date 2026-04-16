@@ -187,22 +187,22 @@ public class WorldPersistence {
 		// /location?
 		// Take points and drop points
 		
-		for (Subplace subplace : item.getSubplaces()) {
+		for (LocationRule locationRule : item.getSubplaces()) {
 			Element subplaceElement = new Element(PLACE_TAG);
 			itemElement.addContent(subplaceElement);
-			if(subplace.getTakePoints() != null) {
-				subplaceElement.setAttribute(TAKE_POINTS_TAG, subplace.getTakePoints().toString());
+			if(locationRule.getTakePoints() != null) {
+				subplaceElement.setAttribute(TAKE_POINTS_TAG, locationRule.getTakePoints().toString());
 			}
-			if(subplace.getDropPoints() != null) {
-				subplaceElement.setAttribute(DROP_POINTS_TAG, subplace.getDropPoints().toString());
+			if(locationRule.getDropPoints() != null) {
+				subplaceElement.setAttribute(DROP_POINTS_TAG, locationRule.getDropPoints().toString());
 			}
-			if(subplace.getNeededToEnter()) {
+			if(locationRule.getNeededToEnter()) {
 				subplaceElement.setAttribute(NEEDED_TO_ENTER_TAG, "Y");
 			}
-			if(subplace.getBlockedMsg() != "") {
-				subplaceElement.setAttribute(BLOCKED_MSG_TAG, subplace.getBlockedMsg());
+			if(locationRule.getBlockedMsg() != "") {
+				subplaceElement.setAttribute(BLOCKED_MSG_TAG, locationRule.getBlockedMsg());
 			}
-			subplaceElement.setText(subplace.getName());
+			subplaceElement.setText(locationRule.getPlaceName());
 		}
 		
 		return itemElement;		
@@ -283,19 +283,22 @@ public class WorldPersistence {
 			} else {
 				world.getPlace(i.getLocation()).getInventory().addItem(world.getItem(i.getName()));
 			}
-			for(Element s : placesOfInterest) {
+			for (Element s : placesOfInterest) {
 				// Get all of these
 				String s_name = s.getText();
+				String s_item = i.getName();
 				String s_neededToEnter = s.getAttributeValue(NEEDED_TO_ENTER_TAG);
 				String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
 				String s_takePoints = s.getAttributeValue(TAKE_POINTS_TAG);
 				String s_dropPoints = s.getAttributeValue(DROP_POINTS_TAG);
 				
-				i.createSubplace(s_name, s_neededToEnter, s_blockedMsg, s_takePoints, s_dropPoints);
+				world.createLocationRule(s_name, s_item, s_neededToEnter, s_blockedMsg, s_takePoints, s_dropPoints);
 			}
 		}
 		// Done?
 	}
+
+
 	/**
 	 * Loads all places found within the root XML element into the world under
 	 * construction.
