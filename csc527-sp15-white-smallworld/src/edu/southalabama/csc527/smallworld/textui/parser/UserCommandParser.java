@@ -4,7 +4,6 @@ import edu.southalabama.csc527.smallworld.controller.WorldController;
 import edu.southalabama.csc527.smallworld.model.Direction;
 import edu.southalabama.csc527.smallworld.model.Inventory;
 import edu.southalabama.csc527.smallworld.model.Item;
-
 import static edu.southalabama.csc527.smallworld.textui.TextUtilities.*;
 
 /**
@@ -123,7 +122,6 @@ public final class UserCommandParser {
              * the Controller's World back to its observers.
              */
             f_pwo.look(f_wc.getWorld());
-            
             commandExecuted = true;
 
         } else if (words[0].equals("QUIT") || words[0].equals("EXIT")) {
@@ -149,6 +147,10 @@ public final class UserCommandParser {
 
         } else if (words[0].equals("INVENTORY") || words[0].equals("INV") || words[0].equals("I")) {
             f_wc.inventory();
+            commandExecuted = true;
+            
+        } else if (words[0].equals("POINTS")){
+            f_wc.printPoints();
             commandExecuted = true;
 
         } else if (words[0].equals("TAKE")) {
