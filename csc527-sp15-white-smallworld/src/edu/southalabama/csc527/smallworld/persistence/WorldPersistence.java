@@ -188,47 +188,48 @@ public class WorldPersistence {
 				String.valueOf(item.getDropPoints())
 		);
 
-		for (LocationRule rule : world.getLocationRules().getObjects()) {
+		for (List<LocationRule> ruleList : world.getLocationRules().getObjects()) {
+			for (LocationRule rule : ruleList) {
+				// Only include rules for this item
+				if (!rule.getItemNeededName().equalsIgnoreCase(item.getName())) {
+					continue;
+				}
 
-			// Only include rules for this item
-			if (!rule.getItemNeededName().equalsIgnoreCase(item.getName())) {
-				continue;
+				Element placeElement = new Element(PLACE_TAG);
+
+				// Place name is required
+				placeElement.setText(rule.getPlaceName());
+
+				// Optional numeric attributes
+				if (rule.getTakePoints() != null) {
+					placeElement.setAttribute(
+							TAKE_POINTS_TAG,
+							rule.getTakePoints().toString()
+					);
+				}
+
+				if (rule.getDropPoints() != null) {
+					placeElement.setAttribute(
+							DROP_POINTS_TAG,
+							rule.getDropPoints().toString()
+					);
+				}
+
+				// Boolean flag: presence = true, absence = false
+				if (rule.getNeededToEnter()) {
+					placeElement.setAttribute(NEEDED_TO_ENTER_TAG, "Y");
+				}
+
+				// Optional string attribute
+				if (rule.getBlockedMsg() != null && !rule.getBlockedMsg().isEmpty()) {
+					placeElement.setAttribute(
+							BLOCKED_MSG_TAG,
+							rule.getBlockedMsg()
+					);
+				}
+
+				itemElement.addContent(placeElement);
 			}
-
-			Element placeElement = new Element(PLACE_TAG);
-
-			// Place name is required
-			placeElement.setText(rule.getPlaceName());
-
-			// Optional numeric attributes
-			if (rule.getTakePoints() != null) {
-				placeElement.setAttribute(
-						TAKE_POINTS_TAG,
-						rule.getTakePoints().toString()
-				);
-			}
-
-			if (rule.getDropPoints() != null) {
-				placeElement.setAttribute(
-						DROP_POINTS_TAG,
-						rule.getDropPoints().toString()
-				);
-			}
-
-			// Boolean flag: presence = true, absence = false
-			if (rule.getNeededToEnter()) {
-				placeElement.setAttribute(NEEDED_TO_ENTER_TAG, "Y");
-			}
-
-			// Optional string attribute
-			if (rule.getBlockedMsg() != null && !rule.getBlockedMsg().isEmpty()) {
-				placeElement.setAttribute(
-						BLOCKED_MSG_TAG,
-						rule.getBlockedMsg()
-				);
-			}
-
-			itemElement.addContent(placeElement);
 		}
 
 		return itemElement;

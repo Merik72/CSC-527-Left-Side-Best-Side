@@ -247,6 +247,8 @@ public final class UserCommandParser {
         helpMessage.append("\"take\" picks up all the items that are in the current room");
         helpMessage.append(LINESEP2);
         helpMessage.append("\"drop <item name>\" drops the specified item from the players inventory.");
+        helpMessage.append(LINESEP2);
+        helpMessage.append("\"points\" to show the players current points.");
 
         return helpMessage.toString();
     }

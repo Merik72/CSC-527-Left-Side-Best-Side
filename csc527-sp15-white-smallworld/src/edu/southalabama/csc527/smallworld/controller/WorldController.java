@@ -4,6 +4,7 @@ package edu.southalabama.csc527.smallworld.controller;
 import edu.southalabama.csc527.smallworld.model.*;
 import edu.southalabama.csc527.smallworld.persistence.WorldPersistence;
 import java.io.File;
+import java.util.List;
 
 /**
  * This class is responsible for executing a user's commands. In the
@@ -176,26 +177,29 @@ public final class WorldController {
 	private String getBlockedMessage(Player player, Place destination) {
 		Inventory playerInventory = player.getInventory();
 
-		for (LocationRule rule : f_world.getLocationRules().getObjects()) {
+		String resultMessage = null;
 
-			if (!rule.getNeededToEnter()) continue;
-			if (!rule.getPlaceName().equalsIgnoreCase(destination.getName())) continue;
+		for (List<LocationRule> ruleList : f_world.getLocationRules().getObjects()) {
+			for (LocationRule rule : ruleList) {
+				if (!rule.getNeededToEnter()) continue;
+				if (!rule.getPlaceName().equalsIgnoreCase(destination.getName())) continue;
 
-			String requiredItemName = rule.getItemNeededName();
+				String requiredItemName = rule.getItemNeededName();
 
-			if (requiredItemName != null &&
-					playerInventory.getItem(requiredItemName) == null) {
+				if (requiredItemName != null &&
+						playerInventory.getItem(requiredItemName) == null) {
 
-				String msg = rule.getBlockedMsg();
+					String msg = rule.getBlockedMsg();
 
-				return (msg != null && !msg.isEmpty())
-						? msg
-						: "You need the " + requiredItemName +
-						" to enter " + destination.getName() + ".";
+					resultMessage = (msg != null && !msg.isEmpty())
+							? msg
+							: "You need the " + requiredItemName +
+							" to enter " + destination.getName() + ".";
+				}
 			}
 		}
 
-		return null;
+		return resultMessage;
 	}
 
 

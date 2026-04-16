@@ -40,3 +40,4 @@ bin
 **/my_**/
 
 .idea
+out/

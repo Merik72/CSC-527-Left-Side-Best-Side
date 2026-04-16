@@ -18,7 +18,7 @@ import java.util.*;
 public final class World {
 	private final WorldObjects<Place> f_places = new WorldObjects<>();
 	private final WorldObjects<Item> f_items = new WorldObjects<>();
-	private final WorldObjects<LocationRule> f_entryRestrictions = new WorldObjects<>();
+	private final WorldObjects<List<LocationRule>> f_entryRestrictions = new WorldObjects<>();
 	
 	/**
 	 * A place that always exists in every world. It represents a thing being
@@ -90,12 +90,12 @@ public final class World {
 		return f_items;
 	}
 
-	public LocationRule getLocationRule(String placeName) {
+	public List<LocationRule> getLocationRule(String placeName) {
 		assert (placeName != null);
         return f_entryRestrictions.getObjectByName(placeName);
 	}
 
-	public WorldObjects<LocationRule> getLocationRules() {
+	public WorldObjects<List<LocationRule>> getLocationRules() {
 		return f_entryRestrictions;
 	}
 
@@ -213,7 +213,14 @@ public final class World {
 		}
 
 		LocationRule newRestriction = new LocationRule(placeName, itemName, neededToEnterBool, blockedMsg, parseInteger(takePoints), parseInteger(dropPoints));
-		f_entryRestrictions.addObject(newRestriction.getPlaceName(), newRestriction);
+		if (f_entryRestrictions.isNameUsed(placeName)) {
+			f_entryRestrictions.getObjectByName(placeName).add(newRestriction);
+		} else {
+			List<LocationRule> list = new ArrayList<>();
+			list.add(newRestriction);
+			f_entryRestrictions.addObject(newRestriction.getPlaceName(), list);
+		}
+
 		return newRestriction;
 	}
 
