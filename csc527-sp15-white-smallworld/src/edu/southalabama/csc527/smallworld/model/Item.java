@@ -48,6 +48,9 @@ public class Item extends WorldElement {
 	public String getLocation() {
 		return f_location;
 	}
+	public void setLocation(String location) {
+		f_location = location;
+	}
 	
 	// I don't know where this should go, but 
 	// Because the Item makes the Subplace class

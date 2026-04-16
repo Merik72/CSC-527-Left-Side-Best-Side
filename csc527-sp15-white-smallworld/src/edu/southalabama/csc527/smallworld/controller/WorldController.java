@@ -189,6 +189,7 @@ public final class WorldController {
 	public void take(Item item) {
 		f_world.getPlayer().getLocation().getInventory().removeItem(item);
 		f_world.getPlayer().getInventory().addItem(item);
+		item.setLocation("Player");
 	}
 
 	/**
@@ -203,8 +204,10 @@ public final class WorldController {
 	 * the item to drop.
 	 */
 	public void drop(Item item) {
+		Place currentLocation = f_world.getPlayer().getLocation();
 		f_world.getPlayer().getInventory().removeItem(item);
-		f_world.getPlayer().getLocation().getInventory().addItem(item);
+		currentLocation.getInventory().addItem(item);
+		item.setLocation(currentLocation.getName());
 	}
 
 	/**
