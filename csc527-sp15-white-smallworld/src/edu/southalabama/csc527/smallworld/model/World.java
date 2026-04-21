@@ -198,8 +198,10 @@ public final class World {
 	public LocationRule createLocationRule(String placeName, String itemName, String neededToEnter, String blockedMsg, String takePoints, String dropPoints) {
 		assert (placeName != null);
 		assert (itemName != null);
-		assert (takePoints != null);
-		assert (dropPoints != null);
+		
+		// Location Rules do not need points.
+		// assert (takePoints != null);
+		// assert (dropPoints != null);
 		if (f_items.isNameUsed(placeName)) {
 			throw new IllegalStateException(
 					"Construction of a new entryRestriction named \""
