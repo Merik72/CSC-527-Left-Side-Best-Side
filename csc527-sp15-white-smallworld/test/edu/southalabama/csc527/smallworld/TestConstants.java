@@ -43,4 +43,6 @@ public final class TestConstants {
 	 * classpath.
 	 */
 	public static final String TESTFILEWITHERRORS = "/edu/southalabama/csc527/smallworld/TestWorldError.xml";
+	
+	public static final String TESTITEMSWORLD = "/edu/southalabama/csc527/smallworld/TestItemsWorld.xml";
 }
