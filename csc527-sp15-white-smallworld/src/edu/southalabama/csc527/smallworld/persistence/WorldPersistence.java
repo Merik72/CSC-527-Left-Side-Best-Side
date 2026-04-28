@@ -417,18 +417,27 @@ public class WorldPersistence {
 		}
 	}
 	
-	// Item related tags ?
+	// Item related tags
 	private static final String ITEM_TAG = "item";
 	
 	private static final String NEEDED_TO_ENTER_TAG = "neededToEnter";
+
+	private static final String BLOCKED_MSG_TAG = "blockedMsg";
 
 	private static final String TAKE_POINTS_TAG = "takePoints";
 
 	private static final String DROP_POINTS_TAG = "dropPoints";
 	
-	private static final String BLOCKED_MSG_TAG = "blockedMsg";
+	// Event related tags
+	private static final String EVENT_TAG = "event";
 	
-	// Place tags ?
+	private static final String ACTIVATION_TYPE_TAG = "activationType";
+
+	private static final String TRIGGERED_TAG = "triggered";
+	
+	private static final String CONSUME_ITEM_TAG = "consumeItem";
+
+	// Place tags
 	private static final String DESCRIPTION_TAG = "description";
 
 	private static final String DIRECTION_TAG = "direction";
@@ -436,7 +445,7 @@ public class WorldPersistence {
 	private static final String PLACE_TAG = "place";
 
 	private static final String WIN_TAG = "arrivalWinsGame";
-	
+
 	// General purpose tags ?
 	private static final String ARTICLE_TAG = "article";
 
@@ -450,9 +459,5 @@ public class WorldPersistence {
 
 	private static final String TRAVEL_TAG = "travel";
 
-	private static final String VERSION_TAG = "version";
-
-	private static final String EVENT_TAG = "event";
-	
-	
+	private static final String VERSION_TAG = "version";	
 }
