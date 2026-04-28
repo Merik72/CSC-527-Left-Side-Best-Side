@@ -50,27 +50,14 @@ public class Event {
 
     private void spawnItems(World world){
         for(Item i : f_itemsToSpawn){
-            world.createItem(
-                    i.getName(),
-                    i.getArticle(),
-                    i.getLocation(),
-                    i.getTakePoints().toString(),
-                    i.getDropPoints().toString()
-            );
+            world.createItem(i);
         }
     }
 
     private void spawnRules(World world){
         for (LocationRule r : f_rulesToSpawn){
             String neededToEnter = r.getNeededToEnter() ? "Y" : "N";
-            world.createLocationRule(
-                    r.getPlaceName(),
-                    r.getItemNeededName(),
-                    neededToEnter,
-                    r.getBlockedMsg(),
-                    r.getTakePoints().toString(),
-                    r.getDropPoints().toString()
-            );
+            world.createLocationRule(r);
         }
     }
 }

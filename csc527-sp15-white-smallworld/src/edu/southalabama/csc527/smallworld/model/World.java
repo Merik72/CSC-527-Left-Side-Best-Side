@@ -231,6 +231,19 @@ public final class World {
 
 		return newRestriction;
 	}
+	
+	public LocationRule createLocationRule(LocationRule newRestriction) {
+		String placeName = newRestriction.getPlaceName();
+		if (f_entryRestrictions.isNameUsed(placeName)) {
+			f_entryRestrictions.getObjectByName(placeName).add(newRestriction);
+		} else {
+			List<LocationRule> list = new ArrayList<>();
+			list.add(newRestriction);
+			f_entryRestrictions.addObject(newRestriction.getPlaceName(), list);
+		}
+
+		return newRestriction;
+	}
 
 	private static Integer parseInteger(String value) {
 		if (value == null || value.isEmpty()) return null;

@@ -319,7 +319,7 @@ public class WorldPersistence {
 		return i;
 	}
 	
-	private static LocationRule makeRuleFromElement(Element s, parent p) {
+	private static BlockedLocation makeRuleFromElement(Element s, Element p) {
 		// Get all of these
 		String s_name = s.getText();
 		String s_parent = p.getName();
@@ -353,8 +353,8 @@ public class WorldPersistence {
 				world.getPlace(i.getLocation()).getInventory().addItem(world.getItem(i.getName()));
 			}
 			for (Element s : placesOfInterest) {
-				makeRuleFromElement(s);
-				world.createLocationRule(s_name, s_item, s_neededToEnter, s_blockedMsg, s_takePoints, s_dropPoints);
+				LocationRule r = makeRuleFromElement(s);
+				world.createLocationRule(r);
 			}
 		}
 		// Done?
