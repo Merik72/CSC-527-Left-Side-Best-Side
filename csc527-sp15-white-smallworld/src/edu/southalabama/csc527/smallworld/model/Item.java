@@ -1,16 +1,11 @@
 package edu.southalabama.csc527.smallworld.model;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
-import java.util.HashSet;
-
 public class Item {
 	private String f_name;
 	private String f_article;
 	private String f_location;
-	private int f_takePoints;
-	private int f_dropPoints;
+	private Integer f_takePoints;
+	private Integer f_dropPoints;
 	
 	Item(){
 		f_name = "master sword";
