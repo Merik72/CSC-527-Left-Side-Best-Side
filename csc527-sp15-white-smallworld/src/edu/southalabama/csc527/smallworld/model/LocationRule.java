@@ -38,7 +38,13 @@ public class LocationRule {
 	public Integer getTakePoints() {
 		return f_takePoints;
 	}
+	public void setTakePoints(int points) {
+		f_takePoints = points;
+	}
 	public Integer getDropPoints() {
 		return f_dropPoints;
+	}
+	public void setDropPoints(int points) {
+		f_dropPoints = points;
 	}
 }

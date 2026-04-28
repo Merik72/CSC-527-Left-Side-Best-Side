@@ -64,7 +64,7 @@
     <travel direction="S">Slit in the Stream</travel>
   </place>
   <item name="Pot of Gold" article="a" location="Hall of Mists" takePoints="500" dropPoints="0" />
-  <item name="Bird" article="a" location="Bird Chamber" takePoints="50" dropPoints="0">
+  <item name="Bird" article="a" location="Player" takePoints="50" dropPoints="0">
     <place takePoints="15" dropPoints="1000">Hill</place>
   </item>
   <item name="Rusty Key" article="the" location="Building" takePoints="50" dropPoints="0">
@@ -85,6 +85,6 @@
   </item>
   <item name="Skunk Carcass" article="a" location="Canyon" takePoints="-10" dropPoints="10" />
   <item name="Gold Coin" article="a" location="Slit in the Stream" takePoints="200" dropPoints="0" />
-  <player location="Road" />
+  <player location="Hill" />
 </smallworld>
 

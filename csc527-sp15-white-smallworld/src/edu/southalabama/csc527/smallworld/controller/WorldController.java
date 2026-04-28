@@ -247,6 +247,15 @@ public final class WorldController {
 		currentLocation.getInventory().removeItem(item);
 		player.getInventory().addItem(item);
 		player.addPoints(item.getTakePoints());
+		for(var place : f_world.getLocationRules().getObjects()) {
+			for(var subplace : place) {
+				if(subplace.getPlaceName().equals(currentLocation.getName())){
+					player.addPoints(subplace.getTakePoints());
+					subplace.setTakePoints(0);
+				}
+			}
+		}
+		item.setTakePoints(0);
 	}
 	
 	public void takeAll() {
@@ -277,6 +286,15 @@ public final class WorldController {
 		currentLocation.getInventory().addItem(item);
 		player.getInventory().removeItem(item);
 		player.addPoints(item.getDropPoints());
+		for(var place : f_world.getLocationRules().getObjects()) {
+			for(var subplace : place) {
+				if(subplace.getPlaceName().equals(currentLocation.getName())){
+					player.addPoints(subplace.getDropPoints());
+					subplace.setDropPoints(0);
+				}
+			}
+		}
+		item.setDropPoints(0);		
 	}
 
 	/**

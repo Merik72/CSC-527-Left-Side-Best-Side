@@ -11,7 +11,6 @@ public class Item {
 	private String f_location;
 	private int f_takePoints;
 	private int f_dropPoints;
-	private final Map<String, LocationRule> f_keyToSubplace = new HashMap<>();
 	
 	Item(){
 		f_name = "master sword";
@@ -28,15 +27,17 @@ public class Item {
 		f_takePoints = takePoints;
 		f_dropPoints = dropPoints;
 	}
-	public LocationRule getSubplaceByName(String name) {
-		assert (name != null);
-		return f_keyToSubplace.get(name.toUpperCase());
-	}
-	public int getTakePoints() {
+	public Integer getTakePoints() {
 		return f_takePoints;
 	}
-	public int getDropPoints() {
+	public void setTakePoints(int points) {
+		f_takePoints = points;
+	}
+	public Integer getDropPoints() {
 		return f_dropPoints;
+	}
+	public void setDropPoints(int points) {
+		f_dropPoints = points;
 	}
 	public String getName() {
 		return f_name;
@@ -49,23 +50,6 @@ public class Item {
 	}
 	public void setLocation(String location) {
 		f_location = location;
-	}
-	
-	// I don't know where this should go, but 
-	// Because the Item makes the Subplace class
-	// And needs the Subplace's attributes,
-	// I'm letting Item make its Subplaces
-	public Set<LocationRule> getSubplaces() {
-		return new HashSet<LocationRule>(f_keyToSubplace.values());
-	}
-
-	public LocationRule getLocationRule(String name) {
-		assert (name != null);
-		LocationRule result = getSubplaceByName(name);
-		if (result instanceof LocationRule)
-			return (LocationRule) result;
-		else
-			return null;
 	}
 
 	@Override
