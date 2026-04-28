@@ -4,28 +4,38 @@ import java.util.List;
 
 public class Event {
     private String f_name;
-    private String f_description;
-    private String f_activationType;
     private Item f_activationItem;
+    private Place f_location;
+    private String f_activationType;
     private Boolean f_triggered;
     private Boolean f_consumeItem;
+    private String f_description;
 
     // holds items and rules in event for spawning when event triggered
-    private List<Item> f_itemsToSpawn;
-    private List<LocationRule> f_rulesToSpawn;
+    private List<Item> f_spawnableItems;
+    private List<LocationRule> f_spawnableLocationRules;
 
-    public Event(String name, String description, String activationType, Item activationItem, Boolean triggered, Boolean consumeItem, List<Item> itemsToSpawn, List<LocationRule> rulesToSpawn){
+    public Event(
+            String name,
+            Item activationItem,
+            Place location,
+            String activationType,
+            Boolean triggered,
+            Boolean consumeItem,
+            String description,
+            List<Item> spawnableItems,
+            List<LocationRule> spawnableLocationRules
+    ) {
         f_name = name;
-        f_description = description;
-        f_activationType = activationType;
         f_activationItem = activationItem;
+        f_location = location;
+        f_activationType = activationType;
         f_triggered = triggered;
         f_consumeItem = consumeItem;
-        f_itemsToSpawn = itemsToSpawn;
-        f_rulesToSpawn = rulesToSpawn;
+        f_description = description;
+        f_spawnableItems = spawnableItems;
+        f_spawnableLocationRules = spawnableLocationRules;
     }
-
-
 
     public String trigger(World world, Player player){
         if (player.getInventory().getItems().contains(f_activationItem)){
@@ -38,7 +48,7 @@ public class Event {
     }
 
     private void spawnItems(World world){
-        for(Item i : f_itemsToSpawn){
+        for(Item i : f_spawnableItems){
             world.createItem(
                     i.getName(),
                     i.getArticle(),
@@ -50,7 +60,7 @@ public class Event {
     }
 
     private void spawnRules(World world){
-        for (LocationRule r : f_rulesToSpawn){
+        for (LocationRule r : f_spawnableLocationRules){
             String neededToEnter = r.getNeededToEnter() ? "Y" : "N";
             world.createLocationRule(
                     r.getPlaceName(),

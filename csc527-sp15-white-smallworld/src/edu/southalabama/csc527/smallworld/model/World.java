@@ -230,6 +230,10 @@ public final class World {
 		}
 	}
 
+	public Event createEvent(String name, String description, String activationType, String activationItem, String triggered, String consumeItem, List<Item> itemsToSpawn, List<LocationRule> rulesToSpawn){
+
+	}
+
 
 	/**
 	 * A non-null mutable string message.
