@@ -19,6 +19,7 @@ public final class World {
 	private final WorldObjects<Place> f_places = new WorldObjects<>();
 	private final WorldObjects<Item> f_items = new WorldObjects<>();
 	private final WorldObjects<List<LocationRule>> f_entryRestrictions = new WorldObjects<>();
+	private final WorldObjects<List<Event>> f_events = new WorldObjects<>();
 	
 	/**
 	 * A place that always exists in every world. It represents a thing being
@@ -167,13 +168,6 @@ public final class World {
 		Place newPlace = new Place(this, name, article, description);
 		f_places.addObject(name.toUpperCase(), newPlace);
 		return newPlace;
-	}
-	
-	// STUB: needs fixing to add robustness and adding to dict
-	public Item createItem() {
-		Item PLACEHOLDER = new Item();
-		f_items.addObject(PLACEHOLDER.getName(), PLACEHOLDER);
-		return PLACEHOLDER;
 	}
 	
 	public Item createItem(String name, String article, String location, String takePoints, String dropPoints) {

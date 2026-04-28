@@ -9,8 +9,8 @@ public class Item {
 	private String f_name;
 	private String f_article;
 	private String f_location;
-	private int f_takePoints;
-	private int f_dropPoints;
+	private Integer f_takePoints;
+	private Integer f_dropPoints;
 	private final Map<String, LocationRule> f_keyToSubplace = new HashMap<>();
 	
 	Item(){
@@ -32,10 +32,10 @@ public class Item {
 		assert (name != null);
 		return f_keyToSubplace.get(name.toUpperCase());
 	}
-	public int getTakePoints() {
+	public Integer getTakePoints() {
 		return f_takePoints;
 	}
-	public int getDropPoints() {
+	public Integer getDropPoints() {
 		return f_dropPoints;
 	}
 	public String getName() {
