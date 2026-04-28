@@ -1,5 +1,7 @@
 package edu.southalabama.csc527.smallworld.model;
 
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 
 public class Event {
@@ -14,6 +16,7 @@ public class Event {
     // holds items and rules in event for spawning when event triggered
     private List<Item> f_spawnableItems;
     private List<LocationRule> f_spawnableLocationRules;
+    private HashMap<Place, String> f_alternatePlaceDescriptions;
 
     public Event(
             String name,
@@ -24,8 +27,9 @@ public class Event {
             Boolean consumeItem,
             String description,
             List<Item> spawnableItems,
-            List<LocationRule> spawnableLocationRules
-    ) {
+            List<LocationRule> spawnableLocationRules,
+            HashMap<Place,String> alternatePlaceDescriptions
+    ){
         f_name = name;
         f_activationItem = activationItem;
         f_location = location;
@@ -35,6 +39,7 @@ public class Event {
         f_description = description;
         f_spawnableItems = spawnableItems;
         f_spawnableLocationRules = spawnableLocationRules;
+        f_alternatePlaceDescriptions = alternatePlaceDescriptions;
     }
 
     public String trigger(World world, Player player){
@@ -42,6 +47,7 @@ public class Event {
             f_triggered = true;
             spawnItems(world);
             spawnRules(world);
+            swapPlaceDescription(world);
             return "Event " + f_name + " triggered!";
         }
         return "Event" + f_name + " failed to trigger because player did not have " + f_activationItem.getName() + " in inventory.";
@@ -70,6 +76,14 @@ public class Event {
                     r.getTakePoints().toString(),
                     r.getDropPoints().toString()
             );
+        }
+    }
+
+    private void swapPlaceDescription(World world) {
+        for (Place place : world.getPlaces().getObjects()) {
+            if (f_alternatePlaceDescriptions.containsKey(place)) {
+                place.setDescription(f_alternatePlaceDescriptions.get(place));
+            }
         }
     }
 }
