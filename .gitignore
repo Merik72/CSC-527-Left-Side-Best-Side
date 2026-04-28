@@ -38,3 +38,6 @@ bin
 
 # For individual aspects of lab assignemnts
 **/my_**/
+
+.idea
+out/

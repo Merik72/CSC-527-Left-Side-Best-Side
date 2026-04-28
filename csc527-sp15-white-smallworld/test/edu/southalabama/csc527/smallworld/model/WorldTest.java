@@ -2,10 +2,6 @@ package edu.southalabama.csc527.smallworld.model;
 
 import java.util.Set;
 
-import edu.southalabama.csc527.smallworld.model.IWorldObserver;
-import edu.southalabama.csc527.smallworld.model.Place;
-import edu.southalabama.csc527.smallworld.model.World;
-
 import junit.framework.TestCase;
 
 /**
@@ -23,7 +19,7 @@ public class WorldTest extends TestCase {
 	}
 
 	public void testWorld() {
-		assertEquals(1, f_world.getPlaces().size());
+		assertEquals(1, f_world.getPlaces().getObjects().size());
 		assertNotNull(f_world.getNowherePlace());
 		assertNotNull(f_world.getPlayer());
 		try {
@@ -32,12 +28,12 @@ public class WorldTest extends TestCase {
 		} catch (AssertionError e) {
 		}
 		try {
-			f_world.getPlaceByName(null);
+			f_world.getPlaces().getObjectByName(null);
 			fail();
 		} catch (AssertionError e) {
 		}
 		try {
-			f_world.isNameUsed(null);
+			f_world.getPlaces().isNameUsed(null);
 		} catch (AssertionError e) {
 		}
 	}
@@ -51,8 +47,8 @@ public class WorldTest extends TestCase {
 		assertEquals(f_world, l1.getWorld());
 		assertEquals(l1, f_world.getPlace("HALL"));
 		assertEquals(l1, f_world.getPlace("hAll"));
-		assertEquals(l1, f_world.getPlaceByName("hall"));
-		assertNull(f_world.getPlaceByName("exists"));
+		assertEquals(l1, f_world.getPlaces().getObjectByName("hall"));
+		assertNull(f_world.getPlaces().getObjectByName("exists"));
 
 		name = "Room";
 		article = "the";
@@ -61,13 +57,13 @@ public class WorldTest extends TestCase {
 		assertEquals(f_world, l2.getWorld());
 		assertEquals(l2, f_world.getPlace("ROOM"));
 		assertEquals(l2, f_world.getPlace("room"));
-		assertEquals(l2, f_world.getPlaceByName("room"));
+		assertEquals(l2, f_world.getPlaces().getObjectByName("room"));
 
-		assertTrue(f_world.isNameUsed("ROOM"));
-		assertTrue(f_world.isNameUsed("HALL"));
-		assertFalse(f_world.isNameUsed("UNKNOWN"));
+		assertTrue(f_world.getPlaces().isNameUsed("ROOM"));
+		assertTrue(f_world.getPlaces().isNameUsed("HALL"));
+		assertFalse(f_world.getPlaces().isNameUsed("UNKNOWN"));
 
-		Set<Place> places = f_world.getPlaces();
+		Set<Place> places = f_world.getPlaces().getObjects();
 		assertEquals(3, places.size());
 		assertTrue(places.contains(l1));
 		assertTrue(places.contains(l2));

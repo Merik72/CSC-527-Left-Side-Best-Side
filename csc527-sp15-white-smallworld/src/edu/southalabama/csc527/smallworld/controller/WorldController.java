@@ -1,10 +1,10 @@
 package edu.southalabama.csc527.smallworld.controller;
 
 
-import java.io.File;
-
 import edu.southalabama.csc527.smallworld.model.*;
 import edu.southalabama.csc527.smallworld.persistence.WorldPersistence;
+import java.io.File;
+import java.util.List;
 
 /**
  * This class is responsible for executing a user's commands. In the
@@ -17,6 +17,11 @@ import edu.southalabama.csc527.smallworld.persistence.WorldPersistence;
  * @see World
  */
 public final class WorldController {
+	/**
+	 * The world associated with this controller. It must be non-null, but may
+	 * be changed via the {@link #setWorld(World)} method.
+	 */
+	private World f_world;
 
 	/**
 	 * Creates a new instance of <code>WorldController</code> for the default
@@ -123,6 +128,19 @@ public final class WorldController {
 		if (playerLocation.isTravelAllowedToward(direction)) {
 			Place newPlayerLocation = playerLocation
 					.getTravelDestinationToward(direction);
+
+			/*
+			 * Check that the player holds every item whose subplace marks the
+			 * destination as neededToEnter. If any required item is missing,
+			 * block travel and show that item's blocked message.
+			 */
+			String blockedMessage = getBlockedMessage(player, newPlayerLocation);
+			if (blockedMessage != null) {
+				f_world.addToMessage(blockedMessage);
+				f_world.turnOver();
+				return;
+			}
+
 			if (newPlayerLocation.arrivalWinsGame()) {
 				f_world.addToMessage("Game Finished!");
 				f_world.setGameOver();
@@ -143,6 +161,47 @@ public final class WorldController {
 		}
 		f_world.turnOver();
 	}
+
+	/**
+	 * Checks whether the player is carrying all items required to enter the
+	 * specified destination place.
+	 *
+	 * @param player
+	 *            the player attempting to travel.
+	 * @param destination
+	 *            the place the player wishes to enter.
+	 * @return the blocked message of the first missing required item, or
+	 *         {@code null} if the player has all required items (or none are
+	 *         required).
+	 */
+	private String getBlockedMessage(Player player, Place destination) {
+		Inventory playerInventory = player.getInventory();
+
+		String resultMessage = null;
+
+		for (List<LocationRule> ruleList : f_world.getLocationRules().getObjects()) {
+			for (LocationRule rule : ruleList) {
+				if (!rule.getNeededToEnter()) continue;
+				if (!rule.getPlaceName().equalsIgnoreCase(destination.getName())) continue;
+
+				String requiredItemName = rule.getItemNeededName();
+
+				if (requiredItemName != null &&
+						playerInventory.getItem(requiredItemName) == null) {
+
+					String msg = rule.getBlockedMsg();
+
+					resultMessage = (msg != null && !msg.isEmpty())
+							? msg
+							: "You need the " + requiredItemName +
+							" to enter " + destination.getName() + ".";
+				}
+			}
+		}
+
+		return resultMessage;
+	}
+
 
 	/**
 	 * @param e
@@ -174,8 +233,90 @@ public final class WorldController {
 	}
 
 	/**
-	 * The world associated with this controller. It must be non-null, but may
-	 * be changed via the {@link #setWorld(World)} method.
+	 * Removes the specified item from the player's location and places
+	 * it in the player's inventory.
+	 *
+	 * @param item
+	 * the item to take.
 	 */
-	private World f_world;
+	public void take(Item item) {
+		Player player = f_world.getPlayer();
+		Place currentLocation = player.getLocation();
+
+		item.setLocation("Player");
+		currentLocation.getInventory().removeItem(item);
+		player.getInventory().addItem(item);
+		player.addPoints(item.getTakePoints());
+		for(var place : f_world.getLocationRules().getObjects()) {
+			for(var subplace : place) {
+				if(subplace.getPlaceName().equals(currentLocation.getName())){
+					player.addPoints(subplace.getTakePoints());
+					subplace.setTakePoints(0);
+				}
+			}
+		}
+		item.setTakePoints(0);
+	}
+	
+	public void takeAll() {
+		Player player = f_world.getPlayer();
+		Place currentLocation = player.getLocation();
+		
+		for(Item item : currentLocation.getInventory().getItems()) {
+			take(item);
+		}
+	}
+
+	/**
+	 * Removes all items from the player's location and places them in the
+	 * player's inventory.
+	 */
+
+	/**
+	 * Drops the specified item from the player's inventory.
+	 *
+	 * @param item
+	 * the item to drop.
+	 */
+	public void drop(Item item) {
+		Player player = f_world.getPlayer();
+		Place currentLocation = player.getLocation();
+
+		item.setLocation(currentLocation.getName());
+		currentLocation.getInventory().addItem(item);
+		player.getInventory().removeItem(item);
+		player.addPoints(item.getDropPoints());
+		for(var place : f_world.getLocationRules().getObjects()) {
+			for(var subplace : place) {
+				if(subplace.getPlaceName().equals(currentLocation.getName())){
+					player.addPoints(subplace.getDropPoints());
+					subplace.setDropPoints(0);
+				}
+			}
+		}
+		item.setDropPoints(0);		
+	}
+
+	/**
+	 * Examines the items in the player's inventory.
+	 */
+	public void inventory() {
+		Inventory currentInventory = f_world.getPlayer().getInventory();
+
+		if (currentInventory.getItems().isEmpty()) {
+			f_world.addToMessage("You are not carrying any items.");
+		} else {
+			f_world.addToMessage("You are carrying:\n" + currentInventory);
+		}
+		f_world.turnOver();
+	}
+
+	/**
+	 * Returns the player's current point total and adds to the message.
+	 */
+	public void printPoints(){
+		int currentPoints = f_world.getPlayer().getPoints();
+		f_world.addToMessage("You have " + currentPoints + " points.");
+		f_world.turnOver();
+	}
 }

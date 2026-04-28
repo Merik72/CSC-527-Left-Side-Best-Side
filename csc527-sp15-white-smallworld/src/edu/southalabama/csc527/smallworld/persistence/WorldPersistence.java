@@ -28,7 +28,7 @@ public class WorldPersistence {
 	/**
 	 * The version of the game as defined by the XML save file format.
 	 */
-	public static final String SAVEFILE_VERSION = "1.1";
+	public static final String SAVEFILE_VERSION = "1.2"; // 1.2 : The Items update :^)
 
 	/**
 	 * The full location, on the Java classpath, of the default world file.
@@ -95,6 +95,8 @@ public class WorldPersistence {
 			Element root = saveXML.getRootElement();
 
 			loadPlaceXML(root, world);
+			
+			loadItemXML(root, world);
 
 			loadPlayerXML(root, world);
 
@@ -127,7 +129,7 @@ public class WorldPersistence {
 		/*
 		 * Create XML for Places
 		 */
-		for (Place l : world.getPlaces()) {
+		for (Place l : world.getPlaces().getObjects()) {
 			/*
 			 * We don't save the nowhere place to the save file. This place
 			 * always exists in every world so its inclusion in the save file
@@ -139,6 +141,11 @@ public class WorldPersistence {
 			}
 		}
 
+		for (Item i : world.getItems().getObjects()) {
+			if (i != null)
+				worldElement.addContent(createItemXML(world, i));
+		}
+		
 		/*
 		 * Create XML for the Player
 		 */
@@ -159,6 +166,73 @@ public class WorldPersistence {
 			// something went wrong
 			throw new IllegalStateException("Unable to write world file", e);
 		}
+	}
+	
+
+	// Item is a stub
+	// Creates an XML tree for an Item
+	private static Element createItemXML(World world, Item item) {
+		Element itemElement = new Element(ITEM_TAG);
+
+		itemElement.setAttribute(NAME_TAG, item.getName());
+		itemElement.setAttribute(ARTICLE_TAG, item.getArticle());
+		itemElement.setAttribute(LOCATION_TAG, item.getLocation());
+
+		itemElement.setAttribute(
+				TAKE_POINTS_TAG,
+				String.valueOf(item.getTakePoints())
+		);
+
+		itemElement.setAttribute(
+				DROP_POINTS_TAG,
+				String.valueOf(item.getDropPoints())
+		);
+
+		for (List<LocationRule> ruleList : world.getLocationRules().getObjects()) {
+			for (LocationRule rule : ruleList) {
+				// Only include rules for this item
+				if (!rule.getItemNeededName().equalsIgnoreCase(item.getName())) {
+					continue;
+				}
+
+				Element placeElement = new Element(PLACE_TAG);
+
+				// Place name is required
+				placeElement.setText(rule.getPlaceName());
+
+				// Optional numeric attributes
+				if (rule.getTakePoints() != null) {
+					placeElement.setAttribute(
+							TAKE_POINTS_TAG,
+							rule.getTakePoints().toString()
+					);
+				}
+
+				if (rule.getDropPoints() != null) {
+					placeElement.setAttribute(
+							DROP_POINTS_TAG,
+							rule.getDropPoints().toString()
+					);
+				}
+
+				// Boolean flag: presence = true, absence = false
+				if (rule.getNeededToEnter()) {
+					placeElement.setAttribute(NEEDED_TO_ENTER_TAG, "Y");
+				}
+
+				// Optional string attribute
+				if (rule.getBlockedMsg() != null && !rule.getBlockedMsg().isEmpty()) {
+					placeElement.setAttribute(
+							BLOCKED_MSG_TAG,
+							rule.getBlockedMsg()
+					);
+				}
+
+				itemElement.addContent(placeElement);
+			}
+		}
+
+		return itemElement;
 	}
 
 	/**
@@ -206,6 +280,51 @@ public class WorldPersistence {
 				+ player.getLocation().getName());
 		return playerElement;
 	}
+	
+	@SuppressWarnings("unchecked")
+	private static void loadItemXML(Element root, World world) {
+		List<Element> itemList = root.getChildren(ITEM_TAG);
+		for (Element itemElement : itemList) {
+			String name = itemElement.getAttributeValue(NAME_TAG);
+			String article = itemElement.getAttributeValue(ARTICLE_TAG);
+			String location = itemElement.getAttributeValue(LOCATION_TAG);
+			String takePoints = itemElement.getAttributeValue(TAKE_POINTS_TAG);
+			String dropPoints = itemElement.getAttributeValue(DROP_POINTS_TAG);
+			if (name == null || article == null || takePoints == null || dropPoints == null)
+				throw new IllegalStateException();
+			world.createItem(name, article, location, takePoints, dropPoints);
+		}
+		for (Element itemElement : itemList)
+		{
+			// world.createItem();
+			List<Element> placesOfInterest = itemElement.getChildren(PLACE_TAG);
+			Item i = world.getItem(itemElement.getAttributeValue(NAME_TAG));
+			if (i == null)
+				throw new IllegalStateException(
+						"Unable to find an Item named \""
+								+ itemElement.getAttributeValue(NAME_TAG)
+								+ "\" during the second pass through the file..."
+								+ "did the file change while we were reading it?");
+			if(i.getLocation().toUpperCase().equals("PLAYER")) {
+				world.getPlayer().getInventory().addItem(world.getItem(i.getName()));
+			} else {
+				world.getPlace(i.getLocation()).getInventory().addItem(world.getItem(i.getName()));
+			}
+			for (Element s : placesOfInterest) {
+				// Get all of these
+				String s_name = s.getText();
+				String s_item = i.getName();
+				String s_neededToEnter = s.getAttributeValue(NEEDED_TO_ENTER_TAG);
+				String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
+				String s_takePoints = s.getAttributeValue(TAKE_POINTS_TAG);
+				String s_dropPoints = s.getAttributeValue(DROP_POINTS_TAG);
+				
+				world.createLocationRule(s_name, s_item, s_neededToEnter, s_blockedMsg, s_takePoints, s_dropPoints);
+			}
+		}
+		// Done?
+	}
+
 
 	/**
 	 * Loads all places found within the root XML element into the world under
@@ -295,20 +414,33 @@ public class WorldPersistence {
 			}
 		}
 	}
+	
+	// Item related tags ?
+	private static final String ITEM_TAG = "item";
+	
+	private static final String NEEDED_TO_ENTER_TAG = "neededToEnter";
 
-	private static final String ARTICLE_TAG = "article";
+	private static final String TAKE_POINTS_TAG = "takePoints";
 
+	private static final String DROP_POINTS_TAG = "dropPoints";
+	
+	private static final String BLOCKED_MSG_TAG = "blockedMsg";
+	
+	// Place tags ?
 	private static final String DESCRIPTION_TAG = "description";
 
 	private static final String DIRECTION_TAG = "direction";
 
 	private static final String PLACE_TAG = "place";
 
+	private static final String WIN_TAG = "arrivalWinsGame";
+	
+	// General purpose tags ?
+	private static final String ARTICLE_TAG = "article";
+
 	private static final String LOCATION_TAG = "location";
 
 	private static final String NAME_TAG = "name";
-
-	private static final String WIN_TAG = "arrivalWinsGame";
 
 	private static final String PLAYER_TAG = "player";
 
