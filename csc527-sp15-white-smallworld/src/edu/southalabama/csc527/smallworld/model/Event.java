@@ -13,6 +13,7 @@ public class Event {
 
     // holds items and rules in event for spawning when event triggered
     private List<Item>  f_itemsToSpawn;
+    private List<String> f_descriptionsToUpdate;
     private List<LocationRule> f_rulesToSpawn;
 
     public Event(String name, Item activationItem, String location, String activationType, Boolean triggered, Boolean consumeItem, String description){

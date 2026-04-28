@@ -22,6 +22,14 @@ public class Item {
 		f_takePoints = takePoints;
 		f_dropPoints = dropPoints;
 	}
+	
+	public Item(String name, String article, String location, String takePoints, String dropPoints){
+		f_name = name;
+		f_article = article;
+		f_location = location;
+		f_takePoints = Integer.valueOf(takePoints);
+		f_dropPoints = Integer.valueOf(dropPoints);
+	}
 	public Integer getTakePoints() {
 		return f_takePoints;
 	}

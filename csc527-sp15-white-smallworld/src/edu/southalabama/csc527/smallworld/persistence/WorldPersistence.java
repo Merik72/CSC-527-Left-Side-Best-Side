@@ -302,20 +302,39 @@ public class WorldPersistence {
 			}
 			world.createEvent(name, item, location, activationType, triggered, consumeItem, description);
 		}
+		for(Element EventElement : eventList) {
+			List<Element> descriptions
+		}
 	}
 	
+	private static Item makeItemFromElement(Element itemElement) {
+		String name = itemElement.getAttributeValue(NAME_TAG);
+		String article = itemElement.getAttributeValue(ARTICLE_TAG);
+		String location = itemElement.getAttributeValue(LOCATION_TAG);
+		String takePoints = itemElement.getAttributeValue(TAKE_POINTS_TAG);
+		String dropPoints = itemElement.getAttributeValue(DROP_POINTS_TAG);
+		if (name == null || article == null || takePoints == null || dropPoints == null)
+			throw new IllegalStateException();
+		Item i = new Item(name, article, location, takePoints, dropPoints);
+		return i;
+	}
+	
+	private static LocationRule makeRuleFromElement(Element s, parent p) {
+		// Get all of these
+		String s_name = s.getText();
+		String s_parent = p.getName();
+		String s_neededToEnter = s.getAttributeValue(NEEDED_TO_ENTER_TAG);
+		String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
+		String s_takePoints = s.getAttributeValue(TAKE_POINTS_TAG);
+		String s_dropPoints = s.getAttributeValue(DROP_POINTS_TAG);
+		
+	}
 	@SuppressWarnings("unchecked")
 	private static void loadItemXML(Element root, World world) {
 		List<Element> itemList = root.getChildren(ITEM_TAG);
 		for (Element itemElement : itemList) {
-			String name = itemElement.getAttributeValue(NAME_TAG);
-			String article = itemElement.getAttributeValue(ARTICLE_TAG);
-			String location = itemElement.getAttributeValue(LOCATION_TAG);
-			String takePoints = itemElement.getAttributeValue(TAKE_POINTS_TAG);
-			String dropPoints = itemElement.getAttributeValue(DROP_POINTS_TAG);
-			if (name == null || article == null || takePoints == null || dropPoints == null)
-				throw new IllegalStateException();
-			world.createItem(name, article, location, takePoints, dropPoints);
+			var i = makeItemFromElement(itemElement);
+			world.createItem(i);
 		}
 		for (Element itemElement : itemList)
 		{
@@ -334,14 +353,7 @@ public class WorldPersistence {
 				world.getPlace(i.getLocation()).getInventory().addItem(world.getItem(i.getName()));
 			}
 			for (Element s : placesOfInterest) {
-				// Get all of these
-				String s_name = s.getText();
-				String s_item = i.getName();
-				String s_neededToEnter = s.getAttributeValue(NEEDED_TO_ENTER_TAG);
-				String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
-				String s_takePoints = s.getAttributeValue(TAKE_POINTS_TAG);
-				String s_dropPoints = s.getAttributeValue(DROP_POINTS_TAG);
-				
+				makeRuleFromElement(s);
 				world.createLocationRule(s_name, s_item, s_neededToEnter, s_blockedMsg, s_takePoints, s_dropPoints);
 			}
 		}

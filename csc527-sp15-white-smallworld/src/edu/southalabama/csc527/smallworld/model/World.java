@@ -194,6 +194,12 @@ public final class World {
 		f_items.addObject(name.toUpperCase(), newItem);
 		return newItem;
 	}
+	
+	public Item createItem(Item item) {
+		// Does an item need a world?
+		f_items.addObject(item.getName().toUpperCase(), item);
+		return item;
+	}
 
 	public LocationRule createLocationRule(String placeName, String itemName, String neededToEnter, String blockedMsg, String takePoints, String dropPoints) {
 		assert (placeName != null);
