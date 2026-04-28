@@ -5,6 +5,7 @@ import java.util.List;
 public class Event {
     private String f_name;
     private String f_description;
+    private String f_location;
     private String f_activationType;
     private Item f_activationItem;
     private Boolean f_triggered;
@@ -14,9 +15,10 @@ public class Event {
     private List<Item>  f_itemsToSpawn;
     private List<LocationRule> f_rulesToSpawn;
 
-    public Event(String name, String description, String activationType, Item activationItem, Boolean triggered, Boolean consumeItem){
+    public Event(String name, Item activationItem, String location, String activationType, Boolean triggered, Boolean consumeItem, String description){
         f_name = name;
         f_description = description;
+        f_location = location;
         f_activationType = activationType;
         f_activationItem = activationItem;
         f_triggered = triggered;
@@ -33,7 +35,6 @@ public class Event {
         f_itemsToSpawn = itemsToSpawn;
         f_rulesToSpawn = rulesToSpawn;
     }
-
 
 
     public String trigger(World world, Player player){

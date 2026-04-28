@@ -170,8 +170,10 @@ public final class World {
 		return newPlace;
 	}
 	
-	public Event createEvent(String name, String description, String activationType, String activationItem, String triggered, String consumeItem) {
-		Event newEvent = new Event(name, description, activationType, newItem, triggered, (consumeItem.equals("Y") ? true : false));
+	public Event createEvent(String name, String activationItem, String location, String activationType, String triggered, String consumeItem, String description) {
+		Item newItem = this.getItem(activationItem);
+		Event newEvent = new Event(name, newItem, location, activationType, (triggered.equals("Y") ? true : false), (consumeItem.equals("Y") ? true : false), description);
+		return newEvent;
 	}
 	
 	public Item createItem(String name, String article, String location, String takePoints, String dropPoints) {

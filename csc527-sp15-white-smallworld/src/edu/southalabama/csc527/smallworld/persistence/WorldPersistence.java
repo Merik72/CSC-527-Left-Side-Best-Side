@@ -100,9 +100,9 @@ public class WorldPersistence {
 			
 			loadItemXML(root, world);
 
-			loadPlayerXML(root, world);
+			loadEventXML(root, world);
 			
-			LoadEventXML(root, world);
+			loadPlayerXML(root, world);
 
 		} catch (IOException e) {
 			throw new IllegalStateException(
@@ -289,17 +289,18 @@ public class WorldPersistence {
 		List<Element> eventList = root.getChildren(EVENT_TAG);
 		for (Element eventElement : eventList) {
 			String name = eventElement.getAttributeValue(NAME_TAG);
+			String description = eventElement.getText();
 			String item = eventElement.getAttributeValue(ITEM_TAG);
 			String location  = eventElement.getAttributeValue(LOCATION_TAG);
 			String activationType = eventElement.getAttributeValue(ACTIVATION_TYPE_TAG);
 			String triggered = eventElement.getAttributeValue(TRIGGERED_TAG);
 			String consumeItem = eventElement.getAttributeValue(CONSUME_ITEM_TAG);
 			
-			// Events must have name, item, location, activation, triggered, consume
-			if(name == null || item == null || location == null || activationType == null || triggered == null || consumeItem == null) {
+			// Events must have name, description, item, location, activation, triggered, consume
+			if(name == null || description == null || item == null || location == null || activationType == null || triggered == null || consumeItem == null) {
 				throw new IllegalStateException();
 			}
-			world.createEvent(name, item, location, activationType, triggered, consumeItem);
+			world.createEvent(name, item, location, activationType, triggered, consumeItem, description);
 		}
 	}
 	
