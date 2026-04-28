@@ -11,9 +11,18 @@ public class Event {
     private Boolean f_consumeItem;
 
     // holds items and rules in event for spawning when event triggered
-    private List<Item> f_itemsToSpawn;
+    private List<Item>  f_itemsToSpawn;
     private List<LocationRule> f_rulesToSpawn;
 
+    public Event(String name, String description, String activationType, Item activationItem, Boolean triggered, Boolean consumeItem){
+        f_name = name;
+        f_description = description;
+        f_activationType = activationType;
+        f_activationItem = activationItem;
+        f_triggered = triggered;
+        f_consumeItem = consumeItem;
+    }
+    
     public Event(String name, String description, String activationType, Item activationItem, Boolean triggered, Boolean consumeItem, List<Item> itemsToSpawn, List<LocationRule> rulesToSpawn){
         f_name = name;
         f_description = description;

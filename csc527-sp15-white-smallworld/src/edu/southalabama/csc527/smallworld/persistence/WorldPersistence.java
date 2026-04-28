@@ -101,6 +101,8 @@ public class WorldPersistence {
 			loadItemXML(root, world);
 
 			loadPlayerXML(root, world);
+			
+			LoadEventXML(root, world);
 
 		} catch (IOException e) {
 			throw new IllegalStateException(
@@ -170,7 +172,6 @@ public class WorldPersistence {
 		}
 	}
 	
-
 	// Item is a stub
 	// Creates an XML tree for an Item
 	private static Element createItemXML(World world, Item item) {
@@ -281,6 +282,25 @@ public class WorldPersistence {
 		playerElement.setAttribute(LOCATION_TAG, ""
 				+ player.getLocation().getName());
 		return playerElement;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static void loadEventXML(Element root, World world) {
+		List<Element> eventList = root.getChildren(EVENT_TAG);
+		for (Element eventElement : eventList) {
+			String name = eventElement.getAttributeValue(NAME_TAG);
+			String item = eventElement.getAttributeValue(ITEM_TAG);
+			String location  = eventElement.getAttributeValue(LOCATION_TAG);
+			String activationType = eventElement.getAttributeValue(ACTIVATION_TYPE_TAG);
+			String triggered = eventElement.getAttributeValue(TRIGGERED_TAG);
+			String consumeItem = eventElement.getAttributeValue(CONSUME_ITEM_TAG);
+			
+			// Events must have name, item, location, activation, triggered, consume
+			if(name == null || item == null || location == null || activationType == null || triggered == null || consumeItem == null) {
+				throw new IllegalStateException();
+			}
+			world.createEvent(name, item, location, activationType, triggered, consumeItem);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
