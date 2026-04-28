@@ -27,8 +27,10 @@ public class WorldPersistence {
 
 	/**
 	 * The version of the game as defined by the XML save file format.
+	 * 1.2 -- The items update
+	 * 1.3 -- The Events update
 	 */
-	public static final String SAVEFILE_VERSION = "1.2"; // 1.2 : The Items update :^)
+	public static final String SAVEFILE_VERSION = "1.3"; 
 
 	/**
 	 * The full location, on the Java classpath, of the default world file.
@@ -449,4 +451,8 @@ public class WorldPersistence {
 	private static final String TRAVEL_TAG = "travel";
 
 	private static final String VERSION_TAG = "version";
+
+	private static final String EVENT_TAG = "event";
+	
+	
 }
