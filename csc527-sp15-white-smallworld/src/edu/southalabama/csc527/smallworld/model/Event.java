@@ -71,6 +71,15 @@ public class Event {
     public void addRuleToUpdate(BlockedLocation add) {
     	f_rulesToUpdate.add(add);
     }
+    public List<Item> getItemsToSpawn(){
+    	return f_itemsToSpawn;
+    }
+    public HashMap<String, String> getDescriptionsToUpdate() {
+    	return f_descriptionsToUpdate;
+    }
+    public List<BlockedLocation> getRulesToUpdate() {
+    	return f_rulesToUpdate;
+    }
 
     public String trigger(World world, Player player){
         if (player.getInventory().getItems().contains(f_activationItem)){

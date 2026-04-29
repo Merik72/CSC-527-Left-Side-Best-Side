@@ -181,14 +181,14 @@ public final class World {
 	public Event createEvent(String name, String activationItem, String location, String activationType, String triggered, String consumeItem, String description) {
 		Item newItem = this.getItem(activationItem);
 		ItemAction type;
-		switch (activationType) {
-			case "take":
+		switch (activationType.toUpperCase()) {
+			case "TAKE":
 				type = ItemAction.TAKE;
 				break;
-			case "drop":
+			case "DROP":
 				type = ItemAction.DROP;
 				break;
-			case "use":
+			case "USE":
 				type = ItemAction.USE;
 				break;
 			default:
@@ -268,7 +268,7 @@ public final class World {
 	}
 
 	public static Integer parseInteger(String value) {
-		if (value == null || value.isEmpty()) return null;
+		if (value == null || value.isEmpty()) return 0;
 
 		try {
 			return Integer.valueOf(value.trim());

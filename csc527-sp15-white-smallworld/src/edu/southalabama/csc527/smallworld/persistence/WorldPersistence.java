@@ -175,12 +175,9 @@ public class WorldPersistence {
 			throw new IllegalStateException("Unable to write world file", e);
 		}
 	}
-	
-	// Item is a stub
-	// Creates an XML tree for an Item
-	private static Element createItemXML(World world, Item item) {
+	private static Element makeItemElement(Item item) {
 		Element itemElement = new Element(ITEM_TAG);
-
+		
 		itemElement.setAttribute(NAME_TAG, item.getName());
 		itemElement.setAttribute(ARTICLE_TAG, item.getArticle());
 		itemElement.setAttribute(LOCATION_TAG, item.getLocation());
@@ -194,6 +191,12 @@ public class WorldPersistence {
 				DROP_POINTS_TAG,
 				String.valueOf(item.getDropPoints())
 		);
+		return itemElement;
+	}
+	// Item is a stub
+	// Creates an XML tree for an Item
+	private static Element createItemXML(World world, Item item) {
+		Element itemElement = makeItemElement(item);
 
 		for (List<BlockedLocation> ruleList : world.getLocationRules().getObjects()) {
 			for (BlockedLocation r : ruleList) {
@@ -255,6 +258,25 @@ public class WorldPersistence {
 		eventElement.setAttribute(TRIGGERED_TAG, event.getTriggered() ? "Y" : "N");
 		eventElement.setAttribute(CONSUME_ITEM_TAG, (event.getConsumeItem()? "Y": "N"));
 		eventElement.setText(event.getDescription());
+		for (var description : event.getDescriptionsToUpdate().entrySet()) {
+			Element descriptionElement = new Element(DESCRIPTION_TAG);
+			descriptionElement.addContent(description.getValue());
+			descriptionElement.setAttribute(LOCATION_TAG, description.getKey());
+			eventElement.addContent(descriptionElement);
+		}
+		for (var block: event.getRulesToUpdate()) {
+			if(!block.getUnlockerName().equals(event.getName())) continue;
+			Element bl = new Element(PLACE_TAG);
+			bl.setAttribute(NEEDED_TO_ENTER_TAG, block.getNeededToEnter() ? "Y" : "N");
+			bl.setAttribute(BLOCKED_MSG_TAG, block.getBlockedMsg());
+			bl.setText(block.getPlaceName());
+			eventElement.addContent(bl);
+		}
+		for (var item : event.getItemsToSpawn()) {
+			Element itemElement = makeItemElement(item);
+			eventElement.addContent(itemElement);
+			
+		}
 		return eventElement;
 	}
 
