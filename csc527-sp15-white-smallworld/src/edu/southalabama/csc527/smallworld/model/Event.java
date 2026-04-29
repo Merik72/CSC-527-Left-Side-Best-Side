@@ -44,14 +44,23 @@ public class Event {
     	return f_name;
     }
 
-    public String getActivationItem() {
-    	return f_activationItem.getName();
-    }
     public String getDescription() {
     	return f_description;
     }
+    public String getLocation() {
+    	return f_location;
+    }
+    public String getActivationItem() {
+    	return f_activationItem.getName();
+    }
     public ItemAction getActivationType() {
     	return f_activationType;
+    }
+    public boolean getTriggered() {
+    	return f_triggered;
+    }
+    public boolean getConsumeItem() {
+    	return f_consumeItem;
     }
     public void addDescription(String name, String desc) {
     	f_descriptionsToUpdate.put(name, desc);
@@ -71,10 +80,6 @@ public class Event {
             return "Event " + f_name + " triggered!";
         }
         return "Event" + f_name + " failed to trigger because player did not have " + f_activationItem.getName() + " in inventory.";
-    }
-    
-    public Boolean getTriggered() {
-    	return f_triggered;
     }
 
     private void spawnItems(World world){

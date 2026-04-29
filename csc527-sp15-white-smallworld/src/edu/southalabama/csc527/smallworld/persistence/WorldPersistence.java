@@ -197,10 +197,10 @@ public class WorldPersistence {
 
 		for (List<BlockedLocation> ruleList : world.getLocationRules().getObjects()) {
 			for (BlockedLocation r : ruleList) {
-				LocationRule rule = (LocationRule)r;
-				if(!r.getClass().equals(r.getClass())) {
+				if(!r.getClass().equals(LocationRule.class)) {
 					continue;
 				}
+				LocationRule rule = (LocationRule)r;
 				// Only include rules for this item
 				if (!rule.getItemNeededName().equalsIgnoreCase(item.getName())) {
 					continue;
@@ -250,10 +250,10 @@ public class WorldPersistence {
 		Element eventElement = new Element(EVENT_TAG);
 		eventElement.setAttribute(NAME_TAG, event.getName());
 		eventElement.setAttribute(ITEM_TAG, event.getActivationItem());
-		eventElement.setAttribute(LOCATION_TAG, event.getName());
-		eventElement.setAttribute(ACTIVATION_TYPE_TAG, event.getName());
-		eventElement.setAttribute(TRIGGERED_TAG, event.getName());
-		eventElement.setAttribute(CONSUME_ITEM_TAG, event());
+		eventElement.setAttribute(LOCATION_TAG, event.getLocation());
+		eventElement.setAttribute(ACTIVATION_TYPE_TAG, event.getActivationType().toString());
+		eventElement.setAttribute(TRIGGERED_TAG, event.getTriggered() ? "Y" : "N");
+		eventElement.setAttribute(CONSUME_ITEM_TAG, (event.getConsumeItem()? "Y": "N"));
 		eventElement.setText(event.getDescription());
 		return eventElement;
 	}
