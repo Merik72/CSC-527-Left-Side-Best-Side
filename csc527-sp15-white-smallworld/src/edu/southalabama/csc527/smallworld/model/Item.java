@@ -27,8 +27,8 @@ public class Item {
 		f_name = name;
 		f_article = article;
 		f_location = location;
-		f_takePoints = Integer.valueOf(takePoints);
-		f_dropPoints = Integer.valueOf(dropPoints);
+		f_takePoints = World.parseInteger(takePoints);
+		f_dropPoints = World.parseInteger(dropPoints);
 	}
 	public Integer getTakePoints() {
 		return f_takePoints;

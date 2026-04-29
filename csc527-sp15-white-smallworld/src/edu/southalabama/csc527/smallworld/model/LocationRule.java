@@ -14,7 +14,7 @@ public class LocationRule extends BlockedLocation {
 	
 	public LocationRule(String placeName, String itemName, String neededToEnter, String blockedMsg, String takePoints, String dropPoints) {
 		super(placeName, itemName, blockedMsg);
-		f_neededToEnter = (neededToEnter!=null ? neededToEnter.equals("Y") ? true:false : false);
+		f_neededToEnter = (neededToEnter != null ? (neededToEnter.equals("Y") ? true : false) : false);
 		f_blockedMsg = blockedMsg;
 		f_takePoints = World.parseInteger(takePoints);
 		f_dropPoints = World.parseInteger(dropPoints);
@@ -26,12 +26,6 @@ public class LocationRule extends BlockedLocation {
 	}
 	public void setNeededToEnter(boolean f_neededToEnter) {
 		this.f_neededToEnter = f_neededToEnter;
-	}
-	public String getBlockedMsg() {
-		return f_blockedMsg;
-	}
-	public void setBlockedMsg(String f_blockedMsg) {
-		this.f_blockedMsg = f_blockedMsg;
 	}
 	public Integer getTakePoints() {
 		return f_takePoints;

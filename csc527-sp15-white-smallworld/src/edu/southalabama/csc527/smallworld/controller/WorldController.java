@@ -134,7 +134,7 @@ public final class WorldController {
 			 * destination as neededToEnter. If any required item is missing,
 			 * block travel and show that item's blocked message.
 			 */
-			String blockedMessage = getBlockedMessage(player, newPlayerLocation);
+			String blockedMessage = getBlockedAndBlockedMessage(player, newPlayerLocation);
 			if (blockedMessage != null) {
 				f_world.addToMessage(blockedMessage);
 				f_world.turnOver();
@@ -174,7 +174,7 @@ public final class WorldController {
 	 *         {@code null} if the player has all required items (or none are
 	 *         required).
 	 */
-	private String getBlockedMessage(Player player, Place destination) {
+	private String getBlockedAndBlockedMessage(Player player, Place destination) {
 		Inventory playerInventory = player.getInventory();
 
 		String resultMessage = null;
@@ -185,24 +185,28 @@ public final class WorldController {
 				if (!rule.getPlaceName().equalsIgnoreCase(destination.getName())) continue;
 
 				String unlockerName = rule.getUnlockerName();
-				
+				String msg;
 				// There is an unlocker, it is an item, the player doesn't have it
-				if (unlockerName!= null && f_world.getItem(unlockerName) != null && playerInventory.getItem(unlockerName) == null) {
-
-					String msg = rule.getBlockedMsg();
+				if (unlockerName != null && f_world.getItem(unlockerName) != null && playerInventory.getItem(unlockerName) == null) {
+					
+					msg = rule.getBlockedMsg();
 
 					resultMessage = (msg != null && !msg.isEmpty())
 							? msg
 							: "You need the " + unlockerName +
 							" to enter " + destination.getName() + ".";
 				}
-				Event e = f_world.getEvent(unlockerName);
-				// Unlocker is an event and the event isn't triggered
-				if(e != null && !e.getTriggered()) {
-					String msg = rule.getBlockedMsg();
-					resultMessage = (msg != null && !msg.isEmpty())
-							? msg
-							: "You need to" + unlockerName + "before you can enter" + destination.getName() + ".";
+				else {	
+					Event e = f_world.getEvent(unlockerName);
+					// Unlocker is an event and the event isn't triggered
+					if(unlockerName != null && e != null && e.getTriggered() == false) {
+						
+						msg = rule.getBlockedMsg();
+						
+						resultMessage = (msg != null && !msg.isEmpty())
+								? msg
+								: "You need to" + unlockerName + "before you can enter" + destination.getName() + ".";
+					}
 				}
 			}
 		}
@@ -256,12 +260,11 @@ public final class WorldController {
 		player.addPoints(item.getTakePoints());
 		for(var place : f_world.getLocationRules().getObjects()) {
 			for(var subplace : place) {
-				LocationRule r;
-				if(subplace.getClass().equals(currentLocation.getClass())) {
-					r = (LocationRule)subplace;
-				}else {
+				if(!subplace.getClass().equals(LocationRule.class)) {
 					continue;
 				}
+				LocationRule r;
+				r = (LocationRule)subplace;
 				if(subplace.getPlaceName().equals(currentLocation.getName())){
 					player.addPoints(r.getTakePoints());
 					r.setTakePoints(0);
@@ -301,11 +304,11 @@ public final class WorldController {
 		player.addPoints(item.getDropPoints());
 		for(var place : f_world.getLocationRules().getObjects()) {
 			for(var subplace : place) {
-				LocationRule r;
-				r = (LocationRule)subplace;
-				if(!subplace.getClass().equals(r.getClass())) {
+				if(!subplace.getClass().equals(LocationRule.class)) {
 					continue;
 				}
+				LocationRule r;
+				r = (LocationRule)subplace;
 				if(subplace.getPlaceName().equals(currentLocation.getName())){
 					player.addPoints(r.getDropPoints());
 					r.setDropPoints(0);

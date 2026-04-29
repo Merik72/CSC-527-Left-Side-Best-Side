@@ -247,7 +247,6 @@ public final class World {
 			list.add(newRestriction);
 			f_entryRestrictions.addObject(newRestriction.getPlaceName(), list);
 		}
-
 		return newRestriction;
 	}
 

@@ -345,7 +345,7 @@ public class WorldPersistence {
 	private static LocationRule makeRuleFromElement(Element s, Element p) {
 		// Get all of these
 		String s_name = s.getText();
-		String s_parent = p.getName();
+		String s_parent = p.getAttributeValue(NAME_TAG);
 		String s_neededToEnter = s.getAttributeValue(NEEDED_TO_ENTER_TAG);
 		String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
 		String s_takePoints = s.getAttributeValue(TAKE_POINTS_TAG);
@@ -356,7 +356,7 @@ public class WorldPersistence {
 	private static BlockedLocation makeBlockedLocationFromElement(Element s, Element p) {
 		// Get all of these
 		String s_name = s.getText();
-		String s_parent = p.getName();
+		String s_parent = p.getAttributeValue(NAME_TAG);
 		String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
 		BlockedLocation bl = new BlockedLocation(s_name, s_parent, s_blockedMsg);
 		return bl;
@@ -386,7 +386,7 @@ public class WorldPersistence {
 			}
 			for (Element s : placesOfInterest) {
 				LocationRule r = makeRuleFromElement(s, itemElement);
-				world.createLocationRule(r);
+				world.createLocationRule(r);		
 			}
 		}
 		// Done?

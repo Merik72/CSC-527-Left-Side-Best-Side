@@ -41,5 +41,5 @@
 		<description location="Bedroom">There's a bullet hole in your bed.</description>
 		<description location="Bathroom">The toilet bowl. Because you shot a hole in bowl.</description>
 	</event>
-	<player location="Bathroom" />
+	<player location="Living Room" />
 </smallworld>
