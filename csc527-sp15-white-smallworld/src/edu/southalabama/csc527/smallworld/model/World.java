@@ -76,6 +76,17 @@ public final class World {
 	public Event getEvent(String name) {
 		return f_events.getObjectByName(name);
 	}
+	// In a big data setting, you'd probably want to like
+	// Hook up an observer to the observe the f_Events list?
+	// Be able to sync
+	public void triggerEvent(ItemAction activationType, Item activationItem, String location) {
+		for(var event : f_events.getObjects()) {
+			if(event.getActivationItem().equals(activationItem.getName()) && activationType.equals(event.getActivationType()) && location.equals(event.getLocation())) {
+				event.trigger(this, f_player);
+				return;
+			}
+		}
+	}
 	public WorldObjects<Event> getEvents() {
 		return f_events;
 	}
