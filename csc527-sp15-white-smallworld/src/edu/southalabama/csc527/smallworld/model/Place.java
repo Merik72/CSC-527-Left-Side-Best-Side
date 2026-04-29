@@ -98,7 +98,7 @@ public class Place {
 	/**
 	 * A long description of this thing.
 	 */
-	private String f_description;
+	private final String f_description;
 
 	/**
 	 * Gets the long description of this.
@@ -107,10 +107,6 @@ public class Place {
 	 */
 	public final String getDescription() {
 		return f_description;
-	}
-
-	public void setDescription(String description){
-		f_description = description;
 	}
 	
 	/**

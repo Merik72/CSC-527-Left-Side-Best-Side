@@ -1,7 +1,5 @@
 package edu.southalabama.csc527.smallworld.model;
 
-import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,11 +10,8 @@ public class Event {
     private String f_location;
     private ItemAction f_activationType;
     private Item f_activationItem;
-    private Place f_location;
-    private String f_activationType;
     private Boolean f_triggered;
     private Boolean f_consumeItem;
-    private String f_description;
 
     // holds items and rules in event for spawning when event triggered
     private List<Item> f_itemsToSpawn = new ArrayList<Item>();
@@ -37,9 +32,9 @@ public class Event {
     
     public Event(String name, String description, ItemAction activationType, Item activationItem, Boolean triggered, Boolean consumeItem, List<Item> itemsToSpawn, List<BlockedLocation> rulesToSpawn){
         f_name = name;
-        f_activationItem = activationItem;
-        f_location = location;
+        f_description = description;
         f_activationType = activationType;
+        f_activationItem = activationItem;
         f_triggered = triggered;
         f_consumeItem = consumeItem;
         f_itemsToSpawn = itemsToSpawn;
@@ -91,8 +86,6 @@ public class Event {
             f_triggered = true;
             spawnItems(world);
             // updateRules(world); // setting self to triggered is sufficient
-            spawnRules(world);
-            swapPlaceDescription(world);
             return "Event " + f_name + " triggered!";
         }
         return "Event" + f_name + " failed to trigger because player did not have " + f_activationItem.getName() + " in inventory.";
@@ -112,17 +105,4 @@ public class Event {
         }
     }
      */
-    private void spawnRules(World world){
-        for (var r : f_spawnableLocationRules){
-            world.createLocationRule(r);
-        }
-    }
-
-    private void swapPlaceDescription(World world) {
-        for (Place place : world.getPlaces().getObjects()) {
-            if (f_alternatePlaceDescriptions.containsKey(place)) {
-                place.setDescription(f_alternatePlaceDescriptions.get(place));
-            }
-        }
-    }
 }
