@@ -16,11 +16,11 @@ public class Event {
     private Boolean f_retriggerable = false;
 
     // holds items and rules in event for spawning when event triggered
-    private List<Item> f_itemsToSpawn = new ArrayList<Item>();
-    private List<BlockedLocation> f_rulesToUpdate= new ArrayList<BlockedLocation>();
+    private List<Item> f_itemsToSpawn = new ArrayList<>();
+    private List<BlockedLocation> f_rulesToUpdate= new ArrayList<>();
     // Placename : Description to update
-    private HashMap<String, String> f_descriptionsToUpdate = new HashMap<String,String>();
-    private List<Event> f_eventsToUpdate = new ArrayList<Event>();
+    private HashMap<String, String> f_descriptionsToUpdate = new HashMap<>();
+    private List<Event> f_eventsToUpdate = new ArrayList<>();
 
     public Event(String name, Item activationItem, String location, ItemAction activationType, Boolean triggered, Boolean consumeItem, String description){
         f_name = name;
@@ -88,9 +88,8 @@ public class Event {
     	return f_eventsToUpdate;
     }
 
-    public String trigger(World world, Player player){
-        //if (player.getInventory().getItems().contains(f_activationItem)){
-    	if(!f_retriggerable) f_triggered = true;
+    public String trigger(World world){
+        if(!f_retriggerable) f_triggered = true;
     	if(f_consumeItem) {
     		world.consumeItem(f_activationItem);
         	// f_activationItem.setLocation("Nowhere");
@@ -99,20 +98,35 @@ public class Event {
     	spawnItems(world);
         updateEvents(world);
             // updateRules(world); // setting self to triggered is sufficient
-            return "Event " + f_name + " triggered!";
+        // Events must be phrased as a verb phrase conjugated in the second person perspective
+        return "You " + f_name + ".";
         //}
         //return "Event" + f_name + " failed to trigger because player did not have " + f_activationItem.getName() + " in inventory.";
+        // updateRules(world); // setting self to triggered is sufficient
+    }
+
+    public Boolean contditionsMet(ItemAction action, Item item, Place location){
+        return f_activationType.equals(action)
+                && f_activationItem.equals(item)
+                && f_location.equals(location.getName())
+                && !f_triggered;
     }
 
     private void spawnItems(World world){
-        for(Item i : new ArrayList<Item>(f_itemsToSpawn)){
+        for(Item i : new ArrayList<>(f_itemsToSpawn)){
             world.addItem(i);
         }
     }
     private void updateEvents(World world) {
-    	for(Event e : new ArrayList<Event>(f_eventsToUpdate)) {
+    	for(Event e : new ArrayList<>(f_eventsToUpdate)) {
     		world.createEvent(e);
     	}
+    }
+    private void updateDescriptions(World world){
+        for(var my_p : new HashMap<>(f_descriptionsToUpdate).entrySet()){
+            Place p = world.getPlace(my_p.getKey());
+            p.setDescription(my_p.getValue());
+        }
     }
     
     public void setRetriggerable(boolean val) {
@@ -122,12 +136,9 @@ public class Event {
     	return f_retriggerable;
     }
 
-    /*
-     * 
-    private void updateRules(World world){
+   /* private void updateRules(World world){
         for (BlockedLocation r : f_rulesToUpdate){
             world.updateBlockedLocation(r);
         }
-    }
-     */
+    }*/
 }

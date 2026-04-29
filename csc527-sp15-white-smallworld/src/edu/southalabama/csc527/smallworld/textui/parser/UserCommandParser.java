@@ -2,6 +2,7 @@ package edu.southalabama.csc527.smallworld.textui.parser;
 
 import edu.southalabama.csc527.smallworld.controller.WorldController;
 import edu.southalabama.csc527.smallworld.model.Direction;
+import edu.southalabama.csc527.smallworld.model.Event;
 import edu.southalabama.csc527.smallworld.model.Inventory;
 import edu.southalabama.csc527.smallworld.model.Item;
 import static edu.southalabama.csc527.smallworld.textui.TextUtilities.*;
@@ -153,25 +154,8 @@ public final class UserCommandParser {
             f_wc.printPoints();
             commandExecuted = true;
 
-        } else if (words[0].equals("TAKE")) {
-            Inventory currentPlaceInv = f_wc.getWorld().getPlayer().getLocation().getInventory();
-            if (words.length == 1) {
-                if (currentPlaceInv.getItems().isEmpty()) {
-                    f_pwo.display("There are no items to pick up.");
-                } else {
-                    f_pwo.display(currentPlaceInv + "Has/have been added to your inventory.");
-                }
-                f_wc.takeAll();
-            } else {
-                String itemName = command.substring(words[0].length()).trim();
-                Item item = currentPlaceInv.getItem(itemName);
-                if (item == null) {
-                    f_pwo.display("There is no item named \"" + itemName + "\" in the current room.");
-                } else {
-                    f_pwo.display("\"" + itemName + "\" has been added to your inventory.");
-                    f_wc.take(item);
-                }
-            }
+        }/* else if (words[0].equals("TAKE")) {
+
             commandExecuted = true;
 
         } else if (words[0].equals("DROP")) {
@@ -191,6 +175,52 @@ public final class UserCommandParser {
             }
             commandExecuted = true;
 
+        } else if (words[0].equals("USE")) {
+            Inventory currentPlaceInv = f_wc.getWorld().getPlayer().getInventory();
+            if (words.length ==1){
+                f_pwo.display("You must specify what item you want to use from your inventory. "
+                        + "Please type \"help\" if you need more help.");
+            }else {
+                String itemName = command.substring(words[0].length()).trim();
+                Item item = currentPlaceInv.getItem(itemName);
+                if (item == null) {
+                    f_pwo.display("There is no item named \"" + itemName + "\" in your inventory.");
+                } else {
+                    f_pwo.display("\"" + itemName + "\" has been used from your inventory.");
+                    f_wc.use(item);
+                }
+            }
+            commandExecuted = true;
+        }*/ else if (words[0].equals("TAKE") || words[0].equals("DROP") || words[0].equals("USE")) {
+            Inventory currentPlaceInv = f_wc.getWorld().getPlayer().getLocation().getInventory();
+            Inventory currentPlayerInv = f_wc.getWorld().getPlayer().getInventory();
+
+            switch (words[0]){
+                case "TAKE":
+                    if (words.length == 1) {
+                        f_wc.takeAll();
+                    } else {
+                        f_wc.takeOne(words[1]);
+                    }
+                    break;
+                case "DROP":
+                    if (words.length == 1) {
+                        f_pwo.display("You must specify what item you want to drop from your inventory.  "
+                                + "Please type \"help\" if you need more help.");
+                    } else {
+                        f_wc.drop(words[1]);
+                    }
+                    break;
+                case "USE":
+                    if (words.length == 1) {
+                        f_pwo.display("You must specify what item you want to use from your inventory.  "
+                                + "Please type \"help\" if you need more help.");
+                    } else {
+                        f_wc.use(words[1]);
+                    }
+                    break;
+            }
+            commandExecuted = true;
         }
 
         if (!commandExecuted) {

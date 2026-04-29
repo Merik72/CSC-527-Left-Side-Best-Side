@@ -247,40 +247,68 @@ public final class WorldController {
 	 * Removes the specified item from the player's location and places
 	 * it in the player's inventory.
 	 *
-	 * @param item
-	 * the item to take.
+	 * @param itemName
+	 * the item name to take.
 	 */
-	public void take(Item item) {
+	private void take(String itemName) {
 		Player player = f_world.getPlayer();
 		Place currentLocation = player.getLocation();
+		Inventory currentPlayerInv = player.getInventory();
+		Inventory currentLocationInv = currentLocation.getInventory();
+		Item item = currentLocationInv.getItem(itemName);
 
+		if (item == null) {
+			f_world.addToMessage("There is no item named \"" + itemName + "\" to pickup.");
+			return;
+		}
+
+		currentLocationInv.removeItem(item);
+
+		currentPlayerInv.addItem(item);
 		item.setLocation("Player");
-		currentLocation.getInventory().removeItem(item);
-		player.getInventory().addItem(item);
+		f_world.addToMessage("\"" + itemName + "\" has been added to your inventory.");
+
 		player.addPoints(item.getTakePoints());
-		for(var place : f_world.getLocationRules().getObjects()) {
-			for(var subplace : place) {
-				if(!subplace.getClass().equals(LocationRule.class)) {
+
+		for(var locationRules : f_world.getLocationRules().getObjects()) {
+			for(var locationRule : locationRules) {
+				if(!locationRule.getClass().equals(LocationRule.class)) {
 					continue;
 				}
 				LocationRule r;
-				r = (LocationRule)subplace;
-				if(subplace.getPlaceName().equals(currentLocation.getName())){
+				r = (LocationRule)locationRule;
+				if(locationRule.getPlaceName().equals(currentLocation.getName())){
 					player.addPoints(r.getTakePoints());
 					r.setTakePoints(0);
 				}
 			}
 		}
 		item.setTakePoints(0);
+        
+        String response = f_world.triggerEvent(ItemAction.DROP, item, currentLocation.getName());
+		if (!(response == null)){
+			f_world.addToMessage(response);
+		}
+	}
+
+	public void takeOne(String itemName) {
+		take(itemName);
+		f_world.turnOver();
 	}
 	
 	public void takeAll() {
-		Player player = f_world.getPlayer();
-		Place currentLocation = player.getLocation();
-		
-		for(Item item : currentLocation.getInventory().getItems()) {
-			take(item);
+		var currentPlaceInv = f_world.getPlayer().getLocation().getInventory();
+		var items = currentPlaceInv.getItems();
+
+		if (items.isEmpty()) {
+			f_world.addToMessage("There are no items to pick up.");
+			return;
 		}
+
+		for(Item item : items) {
+			take(item.getName());
+		}
+		f_world.turnOver();
 	}
 
 	/**
@@ -291,32 +319,69 @@ public final class WorldController {
 	/**
 	 * Drops the specified item from the player's inventory.
 	 *
-	 * @param item
-	 * the item to drop.
+	 * @param itemName
+	 * the item name to drop.
 	 */
-	public void drop(Item item) {
+	public void drop(String itemName) {
 		Player player = f_world.getPlayer();
 		Place currentLocation = player.getLocation();
-		
-		currentLocation.getInventory().addItem(item);
-		player.getInventory().removeItem(item);
+		Inventory currentPlayerInv = player.getInventory();
+		Inventory currentLocationInv = currentLocation.getInventory();
+		Item item = currentPlayerInv.getItem(itemName);
+
+		if (item == null) {
+			f_world.addToMessage("There is no item named \"" + itemName + "\" in your inventory.");
+			f_world.turnOver();
+			return;
+		}
+
 		item.setLocation(currentLocation.getName());
+		currentLocationInv.addItem(item);
+
+		currentPlayerInv.removeItem(item);
+		f_world.addToMessage("\"" + itemName + "\" has been dropped from your inventory.");
+
 		player.addPoints(item.getDropPoints());
 		for(var place : f_world.getLocationRules().getObjects()) {
-			for(var subplace : place) {
-				if(!subplace.getClass().equals(LocationRule.class)) {
+			for(var locationRule : place) {
+				if(!locationRule.getClass().equals(LocationRule.class)) {
 					continue;
 				}
 				LocationRule r;
-				r = (LocationRule)subplace;
-				if(subplace.getPlaceName().equals(currentLocation.getName())){
+				r = (LocationRule)locationRule;
+				if(locationRule.getPlaceName().equals(currentLocation.getName())){
 					player.addPoints(r.getDropPoints());
 					r.setDropPoints(0);
 				}
 			}
 		}
 		item.setDropPoints(0);
-		f_world.triggerEvent(ItemAction.DROP, item, currentLocation.getName());
+		
+		String response = f_world.triggerEvent(ItemAction.DROP, item);
+
+		if (!(response == null)){
+			f_world.addToMessage(response);
+		}
+
+		f_world.turnOver();
+	}
+
+	public void use(String itemName) {
+		Item item = f_world.getPlayer().getInventory().getItem(itemName);
+
+		if (item == null) {
+			f_world.addToMessage("You are not holding an item named \"" + itemName + "\".");
+			f_world.turnOver();
+			return;
+		}
+
+		String response = f_world.triggerEvent(ItemAction.DROP, item);
+		if (!(response == null)){
+			f_world.addToMessage(response);
+		} else {
+			f_world.addToMessage("Nothing happened...");
+		}
+		f_world.turnOver();
 	}
 
 	/**
@@ -340,5 +405,18 @@ public final class WorldController {
 		int currentPoints = f_world.getPlayer().getPoints();
 		f_world.addToMessage("You have " + currentPoints + " points.");
 		f_world.turnOver();
+	}
+
+	private String eventTriggerCheck(ItemAction action, Item item){
+		var events = f_world.getEvents().getObjects();
+
+		for (Event e : events){
+			if (e.contditionsMet(action, item, f_world.getPlayer().getLocation())){
+				e.trigger(f_world);
+				return e.getDescription();
+			}
+		}
+
+		return null;
 	}
 }
