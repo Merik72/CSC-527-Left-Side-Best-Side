@@ -11,7 +11,13 @@ public class LocationRule extends BlockedLocation {
 		f_takePoints = takePoints;
 		f_dropPoints = dropPoints;
 	}
-	
+	public LocationRule(LocationRule l) {
+		super(l.f_placeName, l.f_unlockerName, l.f_blockedMsg);
+		f_neededToEnter = l.f_neededToEnter;
+		f_blockedMsg = l.f_blockedMsg;
+		f_takePoints = l.f_takePoints;
+		f_dropPoints = l.f_dropPoints;
+	}
 	public LocationRule(String placeName, String itemName, String neededToEnter, String blockedMsg, String takePoints, String dropPoints) {
 		super(placeName, itemName, blockedMsg);
 		f_neededToEnter = (neededToEnter != null ? (neededToEnter.equals("Y") ? true : false) : false);

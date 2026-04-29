@@ -23,6 +23,14 @@ public class Item {
 		f_dropPoints = dropPoints;
 	}
 	
+	public Item(Item item) {
+		f_name = item.getName();
+		f_article = item.getArticle();
+		f_location = item.getLocation();
+		f_takePoints = item.getTakePoints();
+		f_dropPoints = item.getDropPoints();
+	}
+	
 	public Item(String name, String article, String location, String takePoints, String dropPoints){
 		f_name = name;
 		f_article = article;

@@ -298,9 +298,9 @@ public final class WorldController {
 		Player player = f_world.getPlayer();
 		Place currentLocation = player.getLocation();
 		
-		item.setLocation(currentLocation.getName());
 		currentLocation.getInventory().addItem(item);
 		player.getInventory().removeItem(item);
+		item.setLocation(currentLocation.getName());
 		player.addPoints(item.getDropPoints());
 		for(var place : f_world.getLocationRules().getObjects()) {
 			for(var subplace : place) {
@@ -315,8 +315,8 @@ public final class WorldController {
 				}
 			}
 		}
-		f_world.triggerEvent(ItemAction.DROP, item, currentLocation.getName());
 		item.setDropPoints(0);
+		f_world.triggerEvent(ItemAction.DROP, item, currentLocation.getName());
 	}
 
 	/**

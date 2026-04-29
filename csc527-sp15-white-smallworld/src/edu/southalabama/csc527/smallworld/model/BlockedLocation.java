@@ -11,6 +11,11 @@ public class BlockedLocation {
 		f_unlockerName = unlocker;
 		f_blockedMsg = blockedMsg;
 	}
+	public BlockedLocation(BlockedLocation b) {
+		f_placeName = b.f_placeName;
+		f_unlockerName = b.f_unlockerName;
+		f_blockedMsg = b.f_blockedMsg;
+	}
 	public String getPlaceName() {
 		return f_placeName;
 	}

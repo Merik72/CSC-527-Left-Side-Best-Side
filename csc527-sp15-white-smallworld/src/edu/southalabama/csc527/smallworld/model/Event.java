@@ -17,7 +17,7 @@ public class Event {
 
     // holds items and rules in event for spawning when event triggered
     private List<Item> f_itemsToSpawn = new ArrayList<Item>();
-    private List<BlockedLocation> f_rulesToUpdate= new ArrayList<BlockedLocation>();;
+    private List<BlockedLocation> f_rulesToUpdate= new ArrayList<BlockedLocation>();
     // Placename : Description to update
     private HashMap<String, String> f_descriptionsToUpdate = new HashMap<String,String>();
     private List<Event> f_eventsToUpdate = new ArrayList<Event>();
@@ -91,16 +91,13 @@ public class Event {
     public String trigger(World world, Player player){
         //if (player.getInventory().getItems().contains(f_activationItem)){
     	if(!f_retriggerable) f_triggered = true;
-        spawnItems(world);
-        if(f_consumeItem) {
-        	var inventory = player.getInventory();
-        	if(f_activationType.equals(ItemAction.DROP)) {
-        		inventory = player.getLocation().getInventory();
-        	}
-        	inventory.removeItem(f_activationItem);
-        	f_activationItem.setLocation("Nowhere");
+    	if(f_consumeItem) {
+    		world.consumeItem(f_activationItem);
+        	// f_activationItem.setLocation("Nowhere");
         }
-
+    	
+    	spawnItems(world);
+        updateEvents(world);
             // updateRules(world); // setting self to triggered is sufficient
             return "Event " + f_name + " triggered!";
         //}
@@ -108,9 +105,14 @@ public class Event {
     }
 
     private void spawnItems(World world){
-        for(Item i : f_itemsToSpawn){
-            world.createItem(i);
+        for(Item i : new ArrayList<Item>(f_itemsToSpawn)){
+            world.addItem(i);
         }
+    }
+    private void updateEvents(World world) {
+    	for(Event e : new ArrayList<Event>(f_eventsToUpdate)) {
+    		world.createEvent(e);
+    	}
     }
     
     public void setRetriggerable(boolean val) {

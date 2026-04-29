@@ -27,6 +27,8 @@ public final class World {
 	 */
 	private final Place f_nowhere = createPlace("Very Remote Place", "a",
 			"You are in a very remote place.");
+	private final Place f_anywhere = createPlace("any", "at",
+			"You are everywhere.");
 
 	/**
 	 * Gets the {@link Place} representing nowhere. This place always exists in
@@ -81,13 +83,13 @@ public final class World {
 	// Be able to sync
 	public void triggerEvent(ItemAction activationType, Item activationItem, String location) {
 		for(var event : f_events.getObjects()) {
-			if(event.getActivationItem().equals(activationItem) 
+			//if(event.getTriggered()) continue;
+			if(event.getActivationItem().getName().equals(activationItem.getName()) 
 					&& activationType.equals(event.getActivationType()) 
 					&& (location.equals(event.getLocation())
 							// This allows events to be triggered globally, using a magic word!
 							|| event.getLocation().equals("any"))) {
 				event.trigger(this, f_player);
-				return;
 			}
 		}
 	}
@@ -235,14 +237,28 @@ public final class World {
 		}
 		// Does an item need a world?
 		Item newItem = new Item(name, article, location, Integer.valueOf(takePoints),Integer.valueOf(dropPoints));
-		f_items.addObject(name.toUpperCase(), newItem);
+		addItem(newItem);
 		return newItem;
 	}
 	
-	public Item createItem(Item item) {
+	public Item addItem(Item item) {
 		// Does an item need a world?
-		f_items.addObject(item.getName().toUpperCase(), item);
-		return item;
+		Item newItem = new Item(item);
+		f_items.addObject(newItem.getName().toUpperCase(), newItem);
+		if(newItem.getLocation().equalsIgnoreCase("player")) {
+			f_player.getInventory().addItem(newItem);
+		}
+		else f_places.getObjectByName(newItem.getLocation()).getInventory().addItem(newItem);
+		return newItem;
+	}
+	public void consumeItem(Item item) {
+		var location = item.getLocation();
+		var inventory = f_player.getInventory();
+		if(!location.equalsIgnoreCase("player")) {
+			inventory = f_player.getLocation().getInventory();
+		}
+		inventory.removeItem(item);
+		f_items.removeObject(item.getName());
 	}
 
 	public BlockedLocation createLocationRule(String placeName, String itemName, String neededToEnter, String blockedMsg, String takePoints, String dropPoints) {
@@ -275,7 +291,8 @@ public final class World {
 		return newRestriction;
 	}
 	
-	public BlockedLocation createLocationRule(BlockedLocation newRestriction) {
+	public BlockedLocation createLocationRule(BlockedLocation rule) {
+		BlockedLocation newRestriction = new BlockedLocation(rule);
 		String placeName = newRestriction.getPlaceName();
 		if (f_entryRestrictions.isNameUsed(placeName)) {
 			f_entryRestrictions.getObjectByName(placeName).add(newRestriction);

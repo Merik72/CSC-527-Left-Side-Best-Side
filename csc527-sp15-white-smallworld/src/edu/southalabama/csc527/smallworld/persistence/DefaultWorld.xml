@@ -20,7 +20,7 @@
 	</place>
     <item name="Key" article="the" location="Living Room" takePoints="10" dropPoints="-10"> 
         <place neededToEnter="Y" blockedMsg="The bedroom is locked.">Bedroom</place> 
-    </item> 
+    </item>
     <item name="Chocolate Pudding" article="the" location="Bathroom" takePoints="150" dropPoints="0"> 
         <place takePoints="-18" dropPoints="-2">Living Room</place> 
     </item> 
@@ -44,6 +44,7 @@
 	<item name="Anger" article="your" location="player" takePoints="0" dropPoints="0"/>
 	<event name="Get Mad" item="Anger" location="any" activationType="drop" triggered="R" consumeItem="Y">
 		You make an angry face in the mirror. Grr!
+		<item name="Anger" article="your" location="player" takePoints="0" dropPoints="0"/>		
 	</event> 
 	<player location="Living Room" />
 </smallworld>

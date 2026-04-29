@@ -360,36 +360,45 @@ public class WorldPersistence {
 		event.setRetriggerable(retriggerable);
 		return event;
 	}
+
+	@SuppressWarnings("unchecked")
+	private static void populateEventFromElement(Element eventElement, Event e, World world) {
+		List<Element> descriptions = eventElement.getChildren(DESCRIPTION_TAG);
+		world.getEvent(e.getName());
+		for(var d : descriptions) {
+			String newDesc = d.getText();
+			String location = d.getAttributeValue(LOCATION_TAG);
+			e.addDescription(location, newDesc);
+		}
+		List<Element> items = eventElement.getChildren(ITEM_TAG);
+		for(var i : items) {
+			Item newItem = makeItemFromElement(i);
+			e.addItemToSpawn(newItem);
+		}
+		List<Element> places = eventElement.getChildren(PLACE_TAG);
+		for(var p : places) {
+			BlockedLocation bl = makeBlockedLocationFromElement(p,eventElement);
+			e.addRuleToUpdate(bl);
+			world.createLocationRule(bl);
+		}
+		List<Element> subevents = eventElement.getChildren(EVENT_TAG);
+		for(var subEventElement : subevents) {
+			Event event = makeEventFromElement(subEventElement, world);
+			e.addEventToUpdate(event);
+		}
+	}
 	
 	@SuppressWarnings("unchecked")
 	private static void loadEventXML(Element root, World world) {
 		List<Element> eventList = root.getChildren(EVENT_TAG);
 		for (Element eventElement : eventList) {
-			
 			var e = makeEventFromElement(eventElement, world);
 			world.createEvent(e);
 		}
 		
 		for(Element eventElement : eventList) {
 			Event e = world.getEvent(eventElement.getAttributeValue(NAME_TAG));
-			List<Element> descriptions = eventElement.getChildren(DESCRIPTION_TAG);
-			world.getEvent(e.getName());
-			for(var d : descriptions) {
-				String newDesc = d.getText();
-				String location = d.getAttributeValue(LOCATION_TAG);
-				e.addDescription(location, newDesc);
-			}
-			List<Element> items = eventElement.getChildren(ITEM_TAG);
-			for(var i : items) {
-				Item newItem = makeItemFromElement(i);
-				e.addItemToSpawn(newItem);
-			}
-			List<Element> places = eventElement.getChildren(PLACE_TAG);
-			for(var p : places) {
-				BlockedLocation bl = makeBlockedLocationFromElement(p,eventElement);
-				e.addRuleToUpdate(bl);
-				world.createLocationRule(bl);
-			}
+			populateEventFromElement(eventElement, e, world);
 		}
 	}
 	
@@ -429,7 +438,7 @@ public class WorldPersistence {
 		List<Element> itemList = root.getChildren(ITEM_TAG);
 		for (Element itemElement : itemList) {
 			var i = makeItemFromElement(itemElement);
-			world.createItem(i);
+			world.addItem(i);
 		}
 		for (Element itemElement : itemList)
 		{
