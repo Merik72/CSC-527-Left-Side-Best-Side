@@ -4,8 +4,9 @@ public class BlockedLocation {
 	protected String f_placeName;
 	protected String f_unlockerName;
 	protected String f_blockedMsg = "";
+	protected Boolean f_neededToEnter = true;
 	
-	BlockedLocation(String placeName, String unlocker, String blockedMsg){
+	public BlockedLocation(String placeName, String unlocker, String blockedMsg){
 		f_placeName = placeName;
 		f_unlockerName = unlocker;
 		f_blockedMsg = blockedMsg;
@@ -28,4 +29,7 @@ public class BlockedLocation {
 	public void setBlockedMsg(String blockedMsg) {
 		f_blockedMsg = blockedMsg;
 	}	
+	public boolean getNeededToEnter() {
+		return f_neededToEnter;
+	}
 }

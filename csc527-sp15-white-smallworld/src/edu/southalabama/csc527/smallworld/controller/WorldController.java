@@ -179,26 +179,33 @@ public final class WorldController {
 
 		String resultMessage = null;
 
-		for (List<LocationRule> ruleList : f_world.getLocationRules().getObjects()) {
-			for (LocationRule rule : ruleList) {
+		for (List<BlockedLocation> ruleList : f_world.getLocationRules().getObjects()) {
+			for (BlockedLocation rule : ruleList) {
 				if (!rule.getNeededToEnter()) continue;
 				if (!rule.getPlaceName().equalsIgnoreCase(destination.getName())) continue;
 
-				String requiredItemName = rule.getItemNeededName();
-
-				if (requiredItemName != null &&
-						playerInventory.getItem(requiredItemName) == null) {
+				String unlockerName = rule.getUnlockerName();
+				
+				// There is an unlocker, it is an item, the player doesn't have it
+				if (unlockerName!= null && f_world.getItem(unlockerName) != null && playerInventory.getItem(unlockerName) == null) {
 
 					String msg = rule.getBlockedMsg();
 
 					resultMessage = (msg != null && !msg.isEmpty())
 							? msg
-							: "You need the " + requiredItemName +
+							: "You need the " + unlockerName +
 							" to enter " + destination.getName() + ".";
+				}
+				Event e = f_world.getEvent(unlockerName);
+				// Unlocker is an event and the event isn't triggered
+				if(e != null && !e.getTriggered()) {
+					String msg = rule.getBlockedMsg();
+					resultMessage = (msg != null && !msg.isEmpty())
+							? msg
+							: "You need to" + unlockerName + "before you can enter" + destination.getName() + ".";
 				}
 			}
 		}
-
 		return resultMessage;
 	}
 
@@ -249,9 +256,15 @@ public final class WorldController {
 		player.addPoints(item.getTakePoints());
 		for(var place : f_world.getLocationRules().getObjects()) {
 			for(var subplace : place) {
+				LocationRule r;
+				if(subplace.getClass().equals(currentLocation.getClass())) {
+					r = (LocationRule)subplace;
+				}else {
+					continue;
+				}
 				if(subplace.getPlaceName().equals(currentLocation.getName())){
-					player.addPoints(subplace.getTakePoints());
-					subplace.setTakePoints(0);
+					player.addPoints(r.getTakePoints());
+					r.setTakePoints(0);
 				}
 			}
 		}
@@ -288,9 +301,14 @@ public final class WorldController {
 		player.addPoints(item.getDropPoints());
 		for(var place : f_world.getLocationRules().getObjects()) {
 			for(var subplace : place) {
+				LocationRule r;
+				r = (LocationRule)subplace;
+				if(!subplace.getClass().equals(r.getClass())) {
+					continue;
+				}
 				if(subplace.getPlaceName().equals(currentLocation.getName())){
-					player.addPoints(subplace.getDropPoints());
-					subplace.setDropPoints(0);
+					player.addPoints(r.getDropPoints());
+					r.setDropPoints(0);
 				}
 			}
 		}

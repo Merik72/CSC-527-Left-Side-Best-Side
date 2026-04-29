@@ -18,8 +18,8 @@ import java.util.*;
 public final class World {
 	private final WorldObjects<Place> f_places = new WorldObjects<>();
 	private final WorldObjects<Item> f_items = new WorldObjects<>();
-	private final WorldObjects<List<LocationRule>> f_entryRestrictions = new WorldObjects<>();
-	private final WorldObjects<List<Event>> f_events = new WorldObjects<>();
+	private final WorldObjects<List<BlockedLocation>> f_entryRestrictions = new WorldObjects<>();
+	private final WorldObjects<Event> f_events = new WorldObjects<>();
 	
 	/**
 	 * A place that always exists in every world. It represents a thing being
@@ -73,6 +73,10 @@ public final class World {
 	 *         the specified name does not exist or is not of the {@link Place}
 	 *         type.
 	 */
+	public Event getEvent(String name) {
+		return f_events.getObjectByName(name);
+	}
+	
 	public Place getPlace(String name) {
 		assert (name != null);
         return f_places.getObjectByName(name);
@@ -91,12 +95,12 @@ public final class World {
 		return f_items;
 	}
 
-	public List<LocationRule> getLocationRule(String placeName) {
+	public List<BlockedLocation> getLocationRule(String placeName) {
 		assert (placeName != null);
         return f_entryRestrictions.getObjectByName(placeName);
 	}
 
-	public WorldObjects<List<LocationRule>> getLocationRules() {
+	public WorldObjects<List<BlockedLocation>> getLocationRules() {
 		return f_entryRestrictions;
 	}
 
@@ -170,9 +174,12 @@ public final class World {
 		return newPlace;
 	}
 	
+	
+	
 	public Event createEvent(String name, String activationItem, String location, String activationType, String triggered, String consumeItem, String description) {
 		Item newItem = this.getItem(activationItem);
 		Event newEvent = new Event(name, newItem, location, activationType, (triggered.equals("Y") ? true : false), (consumeItem.equals("Y") ? true : false), description);
+		f_events.addObject(name.toUpperCase(), newEvent);
 		return newEvent;
 	}
 	
@@ -201,7 +208,7 @@ public final class World {
 		return item;
 	}
 
-	public LocationRule createLocationRule(String placeName, String itemName, String neededToEnter, String blockedMsg, String takePoints, String dropPoints) {
+	public BlockedLocation createLocationRule(String placeName, String itemName, String neededToEnter, String blockedMsg, String takePoints, String dropPoints) {
 		assert (placeName != null);
 		assert (itemName != null);
 		
@@ -220,24 +227,23 @@ public final class World {
 			neededToEnterBool = neededToEnter.equals("Y");
 		}
 
-		LocationRule newRestriction = new LocationRule(placeName, itemName, neededToEnterBool, blockedMsg, parseInteger(takePoints), parseInteger(dropPoints));
+		BlockedLocation newRestriction = new LocationRule(placeName, itemName, neededToEnterBool, blockedMsg, parseInteger(takePoints), parseInteger(dropPoints));
 		if (f_entryRestrictions.isNameUsed(placeName)) {
 			f_entryRestrictions.getObjectByName(placeName).add(newRestriction);
 		} else {
-			List<LocationRule> list = new ArrayList<>();
+			List<BlockedLocation> list = new ArrayList<>();
 			list.add(newRestriction);
 			f_entryRestrictions.addObject(newRestriction.getPlaceName(), list);
 		}
-
 		return newRestriction;
 	}
 	
-	public LocationRule createLocationRule(LocationRule newRestriction) {
+	public BlockedLocation createLocationRule(BlockedLocation newRestriction) {
 		String placeName = newRestriction.getPlaceName();
 		if (f_entryRestrictions.isNameUsed(placeName)) {
 			f_entryRestrictions.getObjectByName(placeName).add(newRestriction);
 		} else {
-			List<LocationRule> list = new ArrayList<>();
+			List<BlockedLocation> list = new ArrayList<>();
 			list.add(newRestriction);
 			f_entryRestrictions.addObject(newRestriction.getPlaceName(), list);
 		}
@@ -245,7 +251,7 @@ public final class World {
 		return newRestriction;
 	}
 
-	private static Integer parseInteger(String value) {
+	public static Integer parseInteger(String value) {
 		if (value == null || value.isEmpty()) return null;
 
 		try {

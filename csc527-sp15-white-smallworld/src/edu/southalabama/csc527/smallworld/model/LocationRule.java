@@ -1,7 +1,6 @@
 package edu.southalabama.csc527.smallworld.model;
 
 public class LocationRule extends BlockedLocation {
-	private boolean f_neededToEnter;
 	private Integer f_takePoints = 0;
 	private Integer f_dropPoints = 0;
 
@@ -12,13 +11,18 @@ public class LocationRule extends BlockedLocation {
 		f_takePoints = takePoints;
 		f_dropPoints = dropPoints;
 	}
+	
+	public LocationRule(String placeName, String itemName, String neededToEnter, String blockedMsg, String takePoints, String dropPoints) {
+		super(placeName, itemName, blockedMsg);
+		f_neededToEnter = (neededToEnter!=null ? neededToEnter.equals("Y") ? true:false : false);
+		f_blockedMsg = blockedMsg;
+		f_takePoints = World.parseInteger(takePoints);
+		f_dropPoints = World.parseInteger(dropPoints);
+	}
 
 	
 	public String getItemNeededName() {
 		return f_unlockerName;
-	}
-	public boolean getNeededToEnter() {
-		return f_neededToEnter;
 	}
 	public void setNeededToEnter(boolean f_neededToEnter) {
 		this.f_neededToEnter = f_neededToEnter;
