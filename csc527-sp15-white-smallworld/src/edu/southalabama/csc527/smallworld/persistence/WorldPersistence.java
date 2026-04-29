@@ -255,7 +255,7 @@ public class WorldPersistence {
 		eventElement.setAttribute(ITEM_TAG, event.getActivationItem());
 		eventElement.setAttribute(LOCATION_TAG, event.getLocation());
 		eventElement.setAttribute(ACTIVATION_TYPE_TAG, event.getActivationType().toString());
-		eventElement.setAttribute(TRIGGERED_TAG, event.getTriggered() ? "Y" : "N");
+		eventElement.setAttribute(TRIGGERED_TAG, event.getRetriggerable() ? "R" : (event.getTriggered() ? "Y" : "N"));
 		eventElement.setAttribute(CONSUME_ITEM_TAG, (event.getConsumeItem()? "Y": "N"));
 		eventElement.setText(event.getDescription());
 		for (var description : event.getDescriptionsToUpdate().entrySet()) {
@@ -342,7 +342,9 @@ public class WorldPersistence {
 			if(name == null || description == null || item == null || location == null || activationType == null || triggered == null || consumeItem == null) {
 				throw new IllegalStateException();
 			}
-			world.createEvent(name, item, location, activationType, triggered, consumeItem, description);
+			boolean retriggerable = triggered.equals("R");
+			var e = world.createEvent(name, item, location, activationType, triggered, consumeItem, description);
+			e.setRetriggerable(retriggerable);
 		}
 		
 		for(Element eventElement : eventList) {

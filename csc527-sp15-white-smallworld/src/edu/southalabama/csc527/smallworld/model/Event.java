@@ -12,6 +12,8 @@ public class Event {
     private Item f_activationItem;
     private Boolean f_triggered;
     private Boolean f_consumeItem;
+    
+    private Boolean f_retriggerable = false;
 
     // holds items and rules in event for spawning when event triggered
     private List<Item> f_itemsToSpawn = new ArrayList<Item>();
@@ -43,7 +45,6 @@ public class Event {
     public String getName() {
     	return f_name;
     }
-
     public String getDescription() {
     	return f_description;
     }
@@ -83,8 +84,9 @@ public class Event {
 
     public String trigger(World world, Player player){
         if (player.getInventory().getItems().contains(f_activationItem)){
-            f_triggered = true;
+        	if(!f_retriggerable) f_triggered = true;
             spawnItems(world);
+            
             // updateRules(world); // setting self to triggered is sufficient
             return "Event " + f_name + " triggered!";
         }
@@ -95,6 +97,13 @@ public class Event {
         for(Item i : f_itemsToSpawn){
             world.createItem(i);
         }
+    }
+    
+    public void setRetriggerable(boolean val) {
+    	f_retriggerable = val;
+    }
+    public boolean getRetriggerable() {
+    	return f_retriggerable;
     }
 
     /*

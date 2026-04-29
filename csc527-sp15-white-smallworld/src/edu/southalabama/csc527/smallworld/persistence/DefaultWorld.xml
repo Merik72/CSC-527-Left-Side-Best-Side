@@ -36,7 +36,7 @@
 		Shirt goes over your head, then head goes through the shirt. Now you're finally presentable for the day.
 		<place neededToEnter="Y" blockedMsg="You need to get dressed first!">Living Room</place>
 	</event>
-	<event name="Shoot gun" item="Gun" location="Basement" activationType="use" triggered="N" consumeItem="N">
+	<event name="Shoot gun" item="Gun" location="Basement" activationType="use" triggered="R" consumeItem="N">
 		You go wacko crazy and shoot everywhere.
 		<description location="Bedroom">There's a bullet hole in your bed.</description>
 		<description location="Bathroom">The toilet bowl. Because you shot a hole in bowl.</description>
