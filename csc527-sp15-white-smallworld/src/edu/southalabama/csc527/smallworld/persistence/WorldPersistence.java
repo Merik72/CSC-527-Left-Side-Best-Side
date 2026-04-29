@@ -252,7 +252,7 @@ public class WorldPersistence {
 	private static Element createEventXML(World world, Event event) {
 		Element eventElement = new Element(EVENT_TAG);
 		eventElement.setAttribute(NAME_TAG, event.getName());
-		eventElement.setAttribute(ITEM_TAG, event.getActivationItem());
+		eventElement.setAttribute(ITEM_TAG, event.getActivationItem().getName());
 		eventElement.setAttribute(LOCATION_TAG, event.getLocation());
 		eventElement.setAttribute(ACTIVATION_TYPE_TAG, event.getActivationType().toString());
 		eventElement.setAttribute(TRIGGERED_TAG, event.getRetriggerable() ? "R" : (event.getTriggered() ? "Y" : "N"));
@@ -325,26 +325,49 @@ public class WorldPersistence {
 				+ player.getLocation().getName());
 		return playerElement;
 	}
-
+	
+	private static Event makeEventFromElement(Element eventElement, World world) {
+		String name = eventElement.getAttributeValue(NAME_TAG);
+		String description = eventElement.getText();
+		String item = eventElement.getAttributeValue(ITEM_TAG);
+		String location  = eventElement.getAttributeValue(LOCATION_TAG);
+		String activationType = eventElement.getAttributeValue(ACTIVATION_TYPE_TAG);
+		String triggered = eventElement.getAttributeValue(TRIGGERED_TAG);
+		String consumeItem = eventElement.getAttributeValue(CONSUME_ITEM_TAG);
+		
+		// Events must have name, description, item, location, activation, triggered, consume
+		if(name == null || description == null || item == null || location == null || activationType == null || triggered == null || consumeItem == null) {
+			throw new IllegalStateException();
+		}
+		boolean retriggerable = triggered.equals("R");
+		Item newItem = world.getItem(item);
+		ItemAction type;
+		switch (activationType.toUpperCase()) {
+			case "TAKE":
+				type = ItemAction.TAKE;
+				break;
+			case "DROP":
+				type = ItemAction.DROP;
+				break;
+			case "USE":
+				type = ItemAction.USE;
+				break;
+			default:
+				throw new IllegalStateException("Invalid activation type: " + activationType);
+		}
+				
+		Event event = new Event(name, newItem, location, type, (triggered.equals("Y") ? true : false), (consumeItem.equals("Y") ? true : false), description);
+		event.setRetriggerable(retriggerable);
+		return event;
+	}
+	
 	@SuppressWarnings("unchecked")
 	private static void loadEventXML(Element root, World world) {
 		List<Element> eventList = root.getChildren(EVENT_TAG);
 		for (Element eventElement : eventList) {
-			String name = eventElement.getAttributeValue(NAME_TAG);
-			String description = eventElement.getText();
-			String item = eventElement.getAttributeValue(ITEM_TAG);
-			String location  = eventElement.getAttributeValue(LOCATION_TAG);
-			String activationType = eventElement.getAttributeValue(ACTIVATION_TYPE_TAG);
-			String triggered = eventElement.getAttributeValue(TRIGGERED_TAG);
-			String consumeItem = eventElement.getAttributeValue(CONSUME_ITEM_TAG);
 			
-			// Events must have name, description, item, location, activation, triggered, consume
-			if(name == null || description == null || item == null || location == null || activationType == null || triggered == null || consumeItem == null) {
-				throw new IllegalStateException();
-			}
-			boolean retriggerable = triggered.equals("R");
-			var e = world.createEvent(name, item, location, activationType, triggered, consumeItem, description);
-			e.setRetriggerable(retriggerable);
+			var e = makeEventFromElement(eventElement, world);
+			world.createEvent(e);
 		}
 		
 		for(Element eventElement : eventList) {

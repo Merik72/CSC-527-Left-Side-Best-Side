@@ -41,5 +41,9 @@
 		<description location="Bedroom">There's a bullet hole in your bed.</description>
 		<description location="Bathroom">The toilet bowl. Because you shot a hole in bowl.</description>
 	</event>
+	<item name="Anger" article="your" location="player" takePoints="0" dropPoints="0"/>
+	<event name="Get Mad" item="Anger" location="any" activationType="drop" triggered="R" consumeItem="Y">
+		You make an angry face in the mirror. Grr!
+	</event> 
 	<player location="Living Room" />
 </smallworld>

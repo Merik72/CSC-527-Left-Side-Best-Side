@@ -18,9 +18,9 @@ public class Event {
     // holds items and rules in event for spawning when event triggered
     private List<Item> f_itemsToSpawn = new ArrayList<Item>();
     private List<BlockedLocation> f_rulesToUpdate= new ArrayList<BlockedLocation>();;
-    
     // Placename : Description to update
     private HashMap<String, String> f_descriptionsToUpdate = new HashMap<String,String>();
+    private List<Event> f_eventsToUpdate = new ArrayList<Event>();
 
     public Event(String name, Item activationItem, String location, ItemAction activationType, Boolean triggered, Boolean consumeItem, String description){
         f_name = name;
@@ -51,8 +51,8 @@ public class Event {
     public String getLocation() {
     	return f_location;
     }
-    public String getActivationItem() {
-    	return f_activationItem.getName();
+    public Item getActivationItem() {
+    	return f_activationItem;
     }
     public ItemAction getActivationType() {
     	return f_activationType;
@@ -72,6 +72,9 @@ public class Event {
     public void addRuleToUpdate(BlockedLocation add) {
     	f_rulesToUpdate.add(add);
     }
+    public void addEventToUpdate(Event event) {
+    	f_eventsToUpdate.add(event);
+    }
     public List<Item> getItemsToSpawn(){
     	return f_itemsToSpawn;
     }
@@ -81,16 +84,27 @@ public class Event {
     public List<BlockedLocation> getRulesToUpdate() {
     	return f_rulesToUpdate;
     }
+    public List<Event> getEventsToUpdate() {
+    	return f_eventsToUpdate;
+    }
 
     public String trigger(World world, Player player){
-        if (player.getInventory().getItems().contains(f_activationItem)){
-        	if(!f_retriggerable) f_triggered = true;
-            spawnItems(world);
-            
+        //if (player.getInventory().getItems().contains(f_activationItem)){
+    	if(!f_retriggerable) f_triggered = true;
+        spawnItems(world);
+        if(f_consumeItem) {
+        	var inventory = player.getInventory();
+        	if(f_activationType.equals(ItemAction.DROP)) {
+        		inventory = player.getLocation().getInventory();
+        	}
+        	inventory.removeItem(f_activationItem);
+        	f_activationItem.setLocation("Nowhere");
+        }
+
             // updateRules(world); // setting self to triggered is sufficient
             return "Event " + f_name + " triggered!";
-        }
-        return "Event" + f_name + " failed to trigger because player did not have " + f_activationItem.getName() + " in inventory.";
+        //}
+        //return "Event" + f_name + " failed to trigger because player did not have " + f_activationItem.getName() + " in inventory.";
     }
 
     private void spawnItems(World world){

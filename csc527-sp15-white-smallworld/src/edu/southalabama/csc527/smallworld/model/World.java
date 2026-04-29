@@ -81,11 +81,11 @@ public final class World {
 	// Be able to sync
 	public void triggerEvent(ItemAction activationType, Item activationItem, String location) {
 		for(var event : f_events.getObjects()) {
-			if(event.getActivationItem().equals(activationItem.getName()) 
+			if(event.getActivationItem().equals(activationItem) 
 					&& activationType.equals(event.getActivationType()) 
 					&& (location.equals(event.getLocation())
 							// This allows events to be triggered globally, using a magic word!
-							|| location.equals("any"))) {
+							|| event.getLocation().equals("any"))) {
 				event.trigger(this, f_player);
 				return;
 			}
@@ -192,7 +192,7 @@ public final class World {
 	}
 	
 	
-	
+
 	public Event createEvent(String name, String activationItem, String location, String activationType, String triggered, String consumeItem, String description) {
 		Item newItem = this.getItem(activationItem);
 		ItemAction type;
@@ -213,6 +213,11 @@ public final class World {
 		Event newEvent = new Event(name, newItem, location, type, (triggered.equals("Y") ? true : false), (consumeItem.equals("Y") ? true : false), description);
 		f_events.addObject(name.toUpperCase(), newEvent);
 		return newEvent;
+	}
+	
+	public Event createEvent(Event event) {		
+		f_events.addObject(event.getName().toUpperCase(), event);
+		return event;
 	}
 	
 	public Item createItem(String name, String article, String location, String takePoints, String dropPoints) {

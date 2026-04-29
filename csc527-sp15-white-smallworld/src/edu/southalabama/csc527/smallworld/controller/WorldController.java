@@ -297,7 +297,7 @@ public final class WorldController {
 	public void drop(Item item) {
 		Player player = f_world.getPlayer();
 		Place currentLocation = player.getLocation();
-
+		
 		item.setLocation(currentLocation.getName());
 		currentLocation.getInventory().addItem(item);
 		player.getInventory().removeItem(item);
@@ -315,7 +315,8 @@ public final class WorldController {
 				}
 			}
 		}
-		item.setDropPoints(0);		
+		f_world.triggerEvent(ItemAction.DROP, item, currentLocation.getName());
+		item.setDropPoints(0);
 	}
 
 	/**
