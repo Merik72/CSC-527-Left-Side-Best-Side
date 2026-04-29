@@ -81,7 +81,11 @@ public final class World {
 	// Be able to sync
 	public void triggerEvent(ItemAction activationType, Item activationItem, String location) {
 		for(var event : f_events.getObjects()) {
-			if(event.getActivationItem().equals(activationItem.getName()) && activationType.equals(event.getActivationType()) && (location.equals(event.getLocation())||location.equals("any"))) {
+			if(event.getActivationItem().equals(activationItem.getName()) 
+					&& activationType.equals(event.getActivationType()) 
+					&& (location.equals(event.getLocation())
+							// This allows events to be triggered globally, using a magic word!
+							|| location.equals("any"))) {
 				event.trigger(this, f_player);
 				return;
 			}
