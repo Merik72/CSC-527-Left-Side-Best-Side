@@ -27,8 +27,10 @@ public class WorldPersistence {
 
 	/**
 	 * The version of the game as defined by the XML save file format.
+	 * 1.2 -- The items update
+	 * 1.3 -- The Events update
 	 */
-	public static final String SAVEFILE_VERSION = "1.2"; // 1.2 : The Items update :^)
+	public static final String SAVEFILE_VERSION = "1.3"; 
 
 	/**
 	 * The full location, on the Java classpath, of the default world file.
@@ -98,6 +100,8 @@ public class WorldPersistence {
 			
 			loadItemXML(root, world);
 
+			loadEventXML(root, world);
+			
 			loadPlayerXML(root, world);
 
 		} catch (IOException e) {
@@ -145,6 +149,10 @@ public class WorldPersistence {
 			if (i != null)
 				worldElement.addContent(createItemXML(world, i));
 		}
+		for (Event e : world.getEvents().getObjects()) {
+			if (e != null)
+				worldElement.addContent(createEventXML(world, e));
+		}
 		
 		/*
 		 * Create XML for the Player
@@ -167,13 +175,9 @@ public class WorldPersistence {
 			throw new IllegalStateException("Unable to write world file", e);
 		}
 	}
-	
-
-	// Item is a stub
-	// Creates an XML tree for an Item
-	private static Element createItemXML(World world, Item item) {
+	private static Element makeItemElement(Item item) {
 		Element itemElement = new Element(ITEM_TAG);
-
+		
 		itemElement.setAttribute(NAME_TAG, item.getName());
 		itemElement.setAttribute(ARTICLE_TAG, item.getArticle());
 		itemElement.setAttribute(LOCATION_TAG, item.getLocation());
@@ -187,9 +191,19 @@ public class WorldPersistence {
 				DROP_POINTS_TAG,
 				String.valueOf(item.getDropPoints())
 		);
+		return itemElement;
+	}
+	// Item is a stub
+	// Creates an XML tree for an Item
+	private static Element createItemXML(World world, Item item) {
+		Element itemElement = makeItemElement(item);
 
-		for (List<LocationRule> ruleList : world.getLocationRules().getObjects()) {
-			for (LocationRule rule : ruleList) {
+		for (List<BlockedLocation> ruleList : world.getLocationRules().getObjects()) {
+			for (BlockedLocation r : ruleList) {
+				if(!r.getClass().equals(LocationRule.class)) {
+					continue;
+				}
+				LocationRule rule = (LocationRule)r;
 				// Only include rules for this item
 				if (!rule.getItemNeededName().equalsIgnoreCase(item.getName())) {
 					continue;
@@ -233,6 +247,37 @@ public class WorldPersistence {
 		}
 
 		return itemElement;
+	}
+	
+	private static Element createEventXML(World world, Event event) {
+		Element eventElement = new Element(EVENT_TAG);
+		eventElement.setAttribute(NAME_TAG, event.getName());
+		eventElement.setAttribute(ITEM_TAG, event.getActivationItem());
+		eventElement.setAttribute(LOCATION_TAG, event.getLocation());
+		eventElement.setAttribute(ACTIVATION_TYPE_TAG, event.getActivationType().toString());
+		eventElement.setAttribute(TRIGGERED_TAG, event.getTriggered() ? "Y" : "N");
+		eventElement.setAttribute(CONSUME_ITEM_TAG, (event.getConsumeItem()? "Y": "N"));
+		eventElement.setText(event.getDescription());
+		for (var description : event.getDescriptionsToUpdate().entrySet()) {
+			Element descriptionElement = new Element(DESCRIPTION_TAG);
+			descriptionElement.addContent(description.getValue());
+			descriptionElement.setAttribute(LOCATION_TAG, description.getKey());
+			eventElement.addContent(descriptionElement);
+		}
+		for (var block: event.getRulesToUpdate()) {
+			if(!block.getUnlockerName().equals(event.getName())) continue;
+			Element bl = new Element(PLACE_TAG);
+			bl.setAttribute(NEEDED_TO_ENTER_TAG, block.getNeededToEnter() ? "Y" : "N");
+			bl.setAttribute(BLOCKED_MSG_TAG, block.getBlockedMsg());
+			bl.setText(block.getPlaceName());
+			eventElement.addContent(bl);
+		}
+		for (var item : event.getItemsToSpawn()) {
+			Element itemElement = makeItemElement(item);
+			eventElement.addContent(itemElement);
+			
+		}
+		return eventElement;
 	}
 
 	/**
@@ -280,19 +325,86 @@ public class WorldPersistence {
 				+ player.getLocation().getName());
 		return playerElement;
 	}
+
+	@SuppressWarnings("unchecked")
+	private static void loadEventXML(Element root, World world) {
+		List<Element> eventList = root.getChildren(EVENT_TAG);
+		for (Element eventElement : eventList) {
+			String name = eventElement.getAttributeValue(NAME_TAG);
+			String description = eventElement.getText();
+			String item = eventElement.getAttributeValue(ITEM_TAG);
+			String location  = eventElement.getAttributeValue(LOCATION_TAG);
+			String activationType = eventElement.getAttributeValue(ACTIVATION_TYPE_TAG);
+			String triggered = eventElement.getAttributeValue(TRIGGERED_TAG);
+			String consumeItem = eventElement.getAttributeValue(CONSUME_ITEM_TAG);
+			
+			// Events must have name, description, item, location, activation, triggered, consume
+			if(name == null || description == null || item == null || location == null || activationType == null || triggered == null || consumeItem == null) {
+				throw new IllegalStateException();
+			}
+			world.createEvent(name, item, location, activationType, triggered, consumeItem, description);
+		}
+		
+		for(Element eventElement : eventList) {
+			Event e = world.getEvent(eventElement.getAttributeValue(NAME_TAG));
+			List<Element> descriptions = eventElement.getChildren(DESCRIPTION_TAG);
+			world.getEvent(e.getName());
+			for(var d : descriptions) {
+				String newDesc = d.getText();
+				String location = d.getAttributeValue(LOCATION_TAG);
+				e.addDescription(location, newDesc);
+			}
+			List<Element> items = eventElement.getChildren(ITEM_TAG);
+			for(var i : items) {
+				Item newItem = makeItemFromElement(i);
+				e.addItemToSpawn(newItem);
+			}
+			List<Element> places = eventElement.getChildren(PLACE_TAG);
+			for(var p : places) {
+				BlockedLocation bl = makeBlockedLocationFromElement(p,eventElement);
+				e.addRuleToUpdate(bl);
+				world.createLocationRule(bl);
+			}
+		}
+	}
 	
+	private static Item makeItemFromElement(Element itemElement) {
+		String name = itemElement.getAttributeValue(NAME_TAG);
+		String article = itemElement.getAttributeValue(ARTICLE_TAG);
+		String location = itemElement.getAttributeValue(LOCATION_TAG);
+		String takePoints = itemElement.getAttributeValue(TAKE_POINTS_TAG);
+		String dropPoints = itemElement.getAttributeValue(DROP_POINTS_TAG);
+		if (name == null || article == null || takePoints == null || dropPoints == null)
+			throw new IllegalStateException();
+		Item i = new Item(name, article, location, takePoints, dropPoints);
+		return i;
+	}
+	
+	private static LocationRule makeRuleFromElement(Element s, Element p) {
+		// Get all of these
+		String s_name = s.getText();
+		String s_parent = p.getAttributeValue(NAME_TAG);
+		String s_neededToEnter = s.getAttributeValue(NEEDED_TO_ENTER_TAG);
+		String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
+		String s_takePoints = s.getAttributeValue(TAKE_POINTS_TAG);
+		String s_dropPoints = s.getAttributeValue(DROP_POINTS_TAG);
+		LocationRule bl = new LocationRule(s_name, s_parent, s_neededToEnter, s_blockedMsg, s_takePoints, s_dropPoints);
+		return bl;
+	}
+	private static BlockedLocation makeBlockedLocationFromElement(Element s, Element p) {
+		// Get all of these
+		String s_name = s.getText();
+		String s_parent = p.getAttributeValue(NAME_TAG);
+		String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
+		BlockedLocation bl = new BlockedLocation(s_name, s_parent, s_blockedMsg);
+		return bl;
+	}
 	@SuppressWarnings("unchecked")
 	private static void loadItemXML(Element root, World world) {
 		List<Element> itemList = root.getChildren(ITEM_TAG);
 		for (Element itemElement : itemList) {
-			String name = itemElement.getAttributeValue(NAME_TAG);
-			String article = itemElement.getAttributeValue(ARTICLE_TAG);
-			String location = itemElement.getAttributeValue(LOCATION_TAG);
-			String takePoints = itemElement.getAttributeValue(TAKE_POINTS_TAG);
-			String dropPoints = itemElement.getAttributeValue(DROP_POINTS_TAG);
-			if (name == null || article == null || takePoints == null || dropPoints == null)
-				throw new IllegalStateException();
-			world.createItem(name, article, location, takePoints, dropPoints);
+			var i = makeItemFromElement(itemElement);
+			world.createItem(i);
 		}
 		for (Element itemElement : itemList)
 		{
@@ -311,15 +423,8 @@ public class WorldPersistence {
 				world.getPlace(i.getLocation()).getInventory().addItem(world.getItem(i.getName()));
 			}
 			for (Element s : placesOfInterest) {
-				// Get all of these
-				String s_name = s.getText();
-				String s_item = i.getName();
-				String s_neededToEnter = s.getAttributeValue(NEEDED_TO_ENTER_TAG);
-				String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
-				String s_takePoints = s.getAttributeValue(TAKE_POINTS_TAG);
-				String s_dropPoints = s.getAttributeValue(DROP_POINTS_TAG);
-				
-				world.createLocationRule(s_name, s_item, s_neededToEnter, s_blockedMsg, s_takePoints, s_dropPoints);
+				LocationRule r = makeRuleFromElement(s, itemElement);
+				world.createLocationRule(r);		
 			}
 		}
 		// Done?
@@ -415,18 +520,27 @@ public class WorldPersistence {
 		}
 	}
 	
-	// Item related tags ?
+	// Item related tags
 	private static final String ITEM_TAG = "item";
 	
 	private static final String NEEDED_TO_ENTER_TAG = "neededToEnter";
+
+	private static final String BLOCKED_MSG_TAG = "blockedMsg";
 
 	private static final String TAKE_POINTS_TAG = "takePoints";
 
 	private static final String DROP_POINTS_TAG = "dropPoints";
 	
-	private static final String BLOCKED_MSG_TAG = "blockedMsg";
+	// Event related tags
+	private static final String EVENT_TAG = "event";
 	
-	// Place tags ?
+	private static final String ACTIVATION_TYPE_TAG = "activationType";
+
+	private static final String TRIGGERED_TAG = "triggered";
+	
+	private static final String CONSUME_ITEM_TAG = "consumeItem";
+
+	// Place tags
 	private static final String DESCRIPTION_TAG = "description";
 
 	private static final String DIRECTION_TAG = "direction";
@@ -434,7 +548,7 @@ public class WorldPersistence {
 	private static final String PLACE_TAG = "place";
 
 	private static final String WIN_TAG = "arrivalWinsGame";
-	
+
 	// General purpose tags ?
 	private static final String ARTICLE_TAG = "article";
 
@@ -448,5 +562,5 @@ public class WorldPersistence {
 
 	private static final String TRAVEL_TAG = "travel";
 
-	private static final String VERSION_TAG = "version";
+	private static final String VERSION_TAG = "version";	
 }
