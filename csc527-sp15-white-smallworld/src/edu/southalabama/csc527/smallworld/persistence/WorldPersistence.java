@@ -149,6 +149,10 @@ public class WorldPersistence {
 			if (i != null)
 				worldElement.addContent(createItemXML(world, i));
 		}
+		for (Event e : world.getEvents().getObjects()) {
+			if (e != null)
+				worldElement.addContent(createEventXML(world, e));
+		}
 		
 		/*
 		 * Create XML for the Player
@@ -240,6 +244,18 @@ public class WorldPersistence {
 		}
 
 		return itemElement;
+	}
+	
+	private static Element createEventXML(World world, Event event) {
+		Element eventElement = new Element(EVENT_TAG);
+		eventElement.setAttribute(NAME_TAG, event.getName());
+		eventElement.setAttribute(ITEM_TAG, event.getActivationItem());
+		eventElement.setAttribute(LOCATION_TAG, event.getName());
+		eventElement.setAttribute(ACTIVATION_TYPE_TAG, event.getName());
+		eventElement.setAttribute(TRIGGERED_TAG, event.getName());
+		eventElement.setAttribute(CONSUME_ITEM_TAG, event());
+		eventElement.setText(event.getDescription());
+		return eventElement;
 	}
 
 	/**

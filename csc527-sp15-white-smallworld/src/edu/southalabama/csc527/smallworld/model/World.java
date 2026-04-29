@@ -76,7 +76,9 @@ public final class World {
 	public Event getEvent(String name) {
 		return f_events.getObjectByName(name);
 	}
-	
+	public WorldObjects<Event> getEvents() {
+		return f_events;
+	}
 	public Place getPlace(String name) {
 		assert (name != null);
         return f_places.getObjectByName(name);
@@ -178,7 +180,22 @@ public final class World {
 	
 	public Event createEvent(String name, String activationItem, String location, String activationType, String triggered, String consumeItem, String description) {
 		Item newItem = this.getItem(activationItem);
-		Event newEvent = new Event(name, newItem, location, activationType, (triggered.equals("Y") ? true : false), (consumeItem.equals("Y") ? true : false), description);
+		ItemAction type;
+		switch (activationType) {
+			case "take":
+				type = ItemAction.TAKE;
+				break;
+			case "drop":
+				type = ItemAction.DROP;
+				break;
+			case "use":
+				type = ItemAction.USE;
+				break;
+			default:
+				throw new IllegalStateException("Invalid activation type: " + activationType);
+		}
+				
+		Event newEvent = new Event(name, newItem, location, type, (triggered.equals("Y") ? true : false), (consumeItem.equals("Y") ? true : false), description);
 		f_events.addObject(name.toUpperCase(), newEvent);
 		return newEvent;
 	}

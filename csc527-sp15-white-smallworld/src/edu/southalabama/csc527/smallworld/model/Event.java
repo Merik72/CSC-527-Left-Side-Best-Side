@@ -8,7 +8,7 @@ public class Event {
     private String f_name;
     private String f_description;
     private String f_location;
-    private String f_activationType;
+    private ItemAction f_activationType;
     private Item f_activationItem;
     private Boolean f_triggered;
     private Boolean f_consumeItem;
@@ -20,7 +20,7 @@ public class Event {
     // Placename : Description to update
     private HashMap<String, String> f_descriptionsToUpdate = new HashMap<String,String>();
 
-    public Event(String name, Item activationItem, String location, String activationType, Boolean triggered, Boolean consumeItem, String description){
+    public Event(String name, Item activationItem, String location, ItemAction activationType, Boolean triggered, Boolean consumeItem, String description){
         f_name = name;
         f_description = description;
         f_location = location;
@@ -30,7 +30,7 @@ public class Event {
         f_consumeItem = consumeItem;
     }
     
-    public Event(String name, String description, String activationType, Item activationItem, Boolean triggered, Boolean consumeItem, List<Item> itemsToSpawn, List<BlockedLocation> rulesToSpawn){
+    public Event(String name, String description, ItemAction activationType, Item activationItem, Boolean triggered, Boolean consumeItem, List<Item> itemsToSpawn, List<BlockedLocation> rulesToSpawn){
         f_name = name;
         f_description = description;
         f_activationType = activationType;
@@ -42,6 +42,16 @@ public class Event {
     }
     public String getName() {
     	return f_name;
+    }
+
+    public String getActivationItem() {
+    	return f_activationItem.getName();
+    }
+    public String getDescription() {
+    	return f_description;
+    }
+    public ItemAction getActivationType() {
+    	return f_activationType;
     }
     public void addDescription(String name, String desc) {
     	f_descriptionsToUpdate.put(name, desc);
