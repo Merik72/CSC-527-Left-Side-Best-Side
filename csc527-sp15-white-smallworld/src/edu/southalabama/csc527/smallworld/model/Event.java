@@ -81,8 +81,8 @@ public class Event {
     	return f_rulesToUpdate;
     }
 
-    public String trigger(World world, Player player, ItemAction activationType){
-        if (player.getInventory().getItems().contains(f_activationItem) && activationType == f_activationType){
+    public String trigger(World world, Player player){
+        if (player.getInventory().getItems().contains(f_activationItem)){
             f_triggered = true;
             spawnItems(world);
             // updateRules(world); // setting self to triggered is sufficient
