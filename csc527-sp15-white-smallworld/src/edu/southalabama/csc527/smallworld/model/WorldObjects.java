@@ -50,4 +50,8 @@ public class WorldObjects<T> {
     public void addObject(String name, T object) {
         f_keyToValue.put(name.toUpperCase(), object);
     }
+
+    public void removeObject(String name) {
+        f_keyToValue.remove(name);
+    }
 }

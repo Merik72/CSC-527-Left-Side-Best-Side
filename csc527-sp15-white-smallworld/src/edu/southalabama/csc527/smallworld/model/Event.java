@@ -14,11 +14,11 @@ public class Event {
     private Boolean f_consumeItem;
 
     // holds items and rules in event for spawning when event triggered
-    private List<Item> f_itemsToSpawn = new ArrayList<Item>();
-    private List<BlockedLocation> f_rulesToUpdate= new ArrayList<BlockedLocation>();;
+    private List<Item> f_itemsToSpawn = new ArrayList<>();
+    private List<BlockedLocation> f_rulesToUpdate= new ArrayList<>();
     
     // Placename : Description to update
-    private HashMap<String, String> f_descriptionsToUpdate = new HashMap<String,String>();
+    private HashMap<String, String> f_descriptionsToUpdate = new HashMap<>();
 
     public Event(String name, Item activationItem, String location, ItemAction activationType, Boolean triggered, Boolean consumeItem, String description){
         f_name = name;
@@ -81,14 +81,20 @@ public class Event {
     	return f_rulesToUpdate;
     }
 
-    public String trigger(World world, Player player){
-        if (player.getInventory().getItems().contains(f_activationItem)){
-            f_triggered = true;
-            spawnItems(world);
-            // updateRules(world); // setting self to triggered is sufficient
-            return "Event " + f_name + " triggered!";
+    public void trigger(World world){
+        f_triggered = true;
+        spawnItems(world);
+        if (f_consumeItem) {
+            world.getItems().removeObject(f_activationItem.getName());
         }
-        return "Event" + f_name + " failed to trigger because player did not have " + f_activationItem.getName() + " in inventory.";
+        // updateRules(world); // setting self to triggered is sufficient
+    }
+
+    public Boolean contditionsMet(ItemAction action, Item item, Place location){
+        return f_activationType.equals(action)
+                && f_activationItem.equals(item)
+                && f_location.equals(location.getName())
+                && !f_triggered;
     }
 
     private void spawnItems(World world){
@@ -97,12 +103,9 @@ public class Event {
         }
     }
 
-    /*
-     * 
-    private void updateRules(World world){
+   /* private void updateRules(World world){
         for (BlockedLocation r : f_rulesToUpdate){
             world.updateBlockedLocation(r);
         }
-    }
-     */
+    }*/
 }

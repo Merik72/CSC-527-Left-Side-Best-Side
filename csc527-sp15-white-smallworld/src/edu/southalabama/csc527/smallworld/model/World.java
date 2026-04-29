@@ -79,14 +79,14 @@ public final class World {
 	// In a big data setting, you'd probably want to like
 	// Hook up an observer to the observe the f_Events list?
 	// Be able to sync
-	public void triggerEvent(ItemAction activationType, Item activationItem, String location) {
+	/*public void triggerEvent(ItemAction activationType, Item activationItem, String location) {
 		for(var event : f_events.getObjects()) {
 			if(event.getActivationItem().equals(activationItem.getName()) && activationType.equals(event.getActivationType()) && location.equals(event.getLocation())) {
 				event.trigger(this, f_player);
 				return;
 			}
 		}
-	}
+	}*/
 	public WorldObjects<Event> getEvents() {
 		return f_events;
 	}
@@ -205,7 +205,7 @@ public final class World {
 			default:
 				throw new IllegalStateException("Invalid activation type: " + activationType);
 		}
-				
+
 		Event newEvent = new Event(name, newItem, location, type, (triggered.equals("Y") ? true : false), (consumeItem.equals("Y") ? true : false), description);
 		f_events.addObject(name.toUpperCase(), newEvent);
 		return newEvent;
