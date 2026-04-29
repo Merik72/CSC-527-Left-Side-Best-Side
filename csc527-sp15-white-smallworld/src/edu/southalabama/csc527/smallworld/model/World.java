@@ -277,7 +277,6 @@ public final class World {
 		}
 	}
 
-
 	/**
 	 * A non-null mutable string message.
 	 */
