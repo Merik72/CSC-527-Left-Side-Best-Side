@@ -55,7 +55,10 @@ public final class UserCommandParser {
      * @param command the users's command to the game.
      */
     public void parse(String command) {
-        String[] words = command.trim().toUpperCase().split("\\s+");
+        String[] words = command.trim().toUpperCase().split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+        for (int i = 0; i < words.length; i++) {
+            words[i] = words[i].replaceAll("^\"|\"$", "");
+        }
 
         /*
          * The below flag is used to indicate if we were able to understand the
