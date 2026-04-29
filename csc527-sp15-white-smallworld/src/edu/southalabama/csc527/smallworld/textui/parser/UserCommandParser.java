@@ -237,6 +237,11 @@ public final class UserCommandParser {
         helpMessage.append(LINESEP2);
         helpMessage.append("\"save <filename>\" saves the current game state "
                 + "to the specified filename. Example \"save C:\\save1.xml\"");
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
         helpMessage.append(LINESEP2);
         helpMessage.append("\"inventory\" or \"inv\" or \"i\" to show the players current inventory.");
         helpMessage.append(LINESEP2);
@@ -244,10 +249,20 @@ public final class UserCommandParser {
         helpMessage.append(LINESEP2);
         helpMessage.append("\"take\" picks up all the items that are in the current room");
         helpMessage.append(LINESEP2);
+<<<<<<< Updated upstream
         helpMessage.append("\"drop <item name>\" drops the specified item from the players inventory.");
         helpMessage.append(LINESEP2);
         helpMessage.append("\"points\" to show the players current points.");
 
+=======
+        helpMessage.append("\"use <item name>\" to use the specified item in the players inventory.");
+        helpMessage.append(LINESEP2);
+        helpMessage.append("\"drop <item name>\" drops the specified item from the players inventory.");
+        helpMessage.append(LINESEP2);
+        helpMessage.append("\"points\" to show the players current points.");
+        
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         return helpMessage.toString();
     }
 }
