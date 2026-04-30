@@ -267,21 +267,22 @@ public final class WorldController {
 		currentPlayerInv.addItem(item);
 		item.setLocation("Player");
 		f_world.addToMessage("\"" + itemName + "\" has been added to your inventory.");
+		if(item.getTakePoints()!= null) {
+			player.addPoints(item.getTakePoints());
 
-		player.addPoints(item.getTakePoints());
-
-		for(var locationRules : f_world.getLocationRules().getObjects()) {
-			for(var r : locationRules) {
-				if(f_world.getItem(r.getUnlockerName())==null) {
-					continue;
-				}
-				if(r.getPlaceName().equals(currentLocation.getName())){
-					player.addPoints(r.getTakePoints());
-					r.setTakePoints(0);
+			for(var locationRules : f_world.getLocationRules().getObjects()) {
+				for(var r : locationRules) {
+					if(f_world.getItem(r.getUnlockerName())==null) {
+						continue;
+					}
+					if(r.getTakePoints()!= null && r.getPlaceName().equals(currentLocation.getName())){
+						player.addPoints(r.getTakePoints());
+						r.setTakePoints(0);
+					}
 				}
 			}
+			item.setTakePoints(0);
 		}
-		item.setTakePoints(0);
         
         String response = triggerEvent(ItemAction.TAKE, item);
 		if (!(response.equals(""))){
@@ -405,7 +406,7 @@ public final class WorldController {
 		f_world.turnOver();
 	}
 
-	private String eventTriggerCheck(ItemAction action, Item item){
+	/*private String eventTriggerCheck(ItemAction action, Item item){
 		var events = f_world.getEvents().getObjects();
 
 		for (Event e : events){
@@ -416,7 +417,7 @@ public final class WorldController {
 		}
 
 		return null;
-	}
+	}*/
 	
 	// In a big data setting, you'd probably want to like
 		// Hook up an observer to the observe the f_Events list?
@@ -431,8 +432,8 @@ public final class WorldController {
 					&& (location.equals(event.getLocation())
 							// This allows events to be triggered globally, using a magic word!
 							|| event.getLocation().equals("any"))) {
+				output.concat(event.getDescription());
 				event.trigger(f_world);
-				output.concat(output + "\n");
 			}
 		}
 		return output;

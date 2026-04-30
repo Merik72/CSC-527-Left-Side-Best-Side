@@ -199,12 +199,8 @@ public class WorldPersistence {
 		Element itemElement = makeItemElement(item);
 
 		for (var ruleList : world.getLocationRules().getObjects()) {
-			for (var r : ruleList) {
-				if(!r.getClass().equals(LocationRule.class)) {
-					continue;
-				}
-				LocationRule rule;
-				rule = (LocationRule)r;
+			for (var rule : ruleList) {
+				if(!rule.getItemNeededName().equals(item.getName())) continue;
 				// Only include rules for this item
 
 				Element placeElement = new Element(PLACE_TAG);

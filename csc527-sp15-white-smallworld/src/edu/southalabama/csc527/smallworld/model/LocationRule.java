@@ -1,8 +1,8 @@
 package edu.southalabama.csc527.smallworld.model;
 
 public class LocationRule{
-	private Integer f_takePoints = 0;
-	private Integer f_dropPoints = 0;
+	private Integer f_takePoints;
+	private Integer f_dropPoints;
 	protected String f_placeName;
 	protected String f_unlockerName;
 	protected String f_blockedMsg = "";
@@ -12,6 +12,8 @@ public class LocationRule{
 		f_placeName = placeName;
 		f_unlockerName = unlocker;
 		f_blockedMsg = blockedMsg;
+		f_takePoints = null;
+		f_dropPoints = null;
 	}
 	LocationRule(String placeName, String unlocker, boolean neededToEnter, String blockedMsg, Integer takePoints, Integer dropPoints){
 		f_placeName = placeName;

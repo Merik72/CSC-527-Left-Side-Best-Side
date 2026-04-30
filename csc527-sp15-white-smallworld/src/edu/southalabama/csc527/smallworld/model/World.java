@@ -244,10 +244,10 @@ public final class World {
 		var location = item.getLocation();
 		var inventory = f_player.getInventory();
 		if(!location.equalsIgnoreCase("player")) {
-			inventory = f_player.getLocation().getInventory();
+			inventory = getPlace(location).getInventory();
 		}
 		inventory.removeItem(item);
-		f_items.removeObject(item.getName());
+		f_items.removeObject(item.getName().toUpperCase());
 	}
 
 	public LocationRule createLocationRule(String placeName, String itemName, String neededToEnter, String blockedMsg, String takePoints, String dropPoints) {
@@ -294,7 +294,7 @@ public final class World {
 	}
 
 	public static Integer parseInteger(String value) {
-		if (value == null || value.isEmpty()) return 0;
+		if (value == null || value.isEmpty()) return null;
 
 		try {
 			return Integer.valueOf(value.trim());
