@@ -122,6 +122,7 @@
     <travel direction="E">Break Room</travel>
     <travel direction="N">Hallway</travel>
     <travel direction="S">Waiting Room</travel>
+    <travel direction="W">Road</travel>
   </place>
 
   
@@ -134,6 +135,7 @@
     <place neededToEnter="Y" blockedMsg="The receptionist nurse calls out to you, ''I don't believe anyone called you for an appointment.''">Hallway</place>
     <description location="Break Room">She sleeps peacefully knowing you're not committing medical malpractice.</description>
     <description location="Hospital">"mmm. 2 patients. North Hallway." -- Ceecee</description>
+    <event name="take key from ceecee" item="anger" location="Break Room" activationType="USE" triggered="Y" consumeItem="N"/>
  	<item name="ID badge" article="Ceedee's" location="player" takePoints="0" dropPoints="-20"/> 
   </event>
     <event name="take key from ceecee" item="anger" location="Break Room" activationType="USE" triggered="N" consumeItem="N">"IT'S ALIVE!!!" you scream at the top of your lungs, blasting a Frankenstien movie on your screen, and flipping the lightswitch on and off a few times. She screams awake, falling out of her chair. When she looks at you, she calms down. "Iris, man, what's your damage?" The drowsiness hits her again soon after, as she says "mmm. 2 patients. North Hallway." She hands you a card and falls asleep on the floor.
@@ -203,6 +205,7 @@
     <description>The room is dimly lit. You see nothing but a curtain, which you presume covers the patient.</description>
     <travel direction="S">Hallway</travel>
   </place>
+
   	<item name="curtain" article="the" location="Room 102" takePoints="0" dropPoints="0"/>
   <event name="take curtain" item="curtain" location="Room 102" activationType="TAKE" triggered="N" consumeItem="Y">You take down the curtain. The patient is a young child hooked up to life support of some kind. The patient's curved monitor head shows no backlight, though they seem to be breathing. A clipboard left near the patient says they have motherboard damage.
     <description location="Room 102">The patient is a young child hooked up to life support of some kind. The patient's curved monitor head shows no backlight, though they seem to be breathing. A clipboard left near the patient says they have motherboard damage.</description>
@@ -210,28 +213,33 @@
  	<item name="mother" article="a" location="Waiting Room" takePoints="0" dropPoints="0"/> 
  	<item name="motherboard" article="a" location="Room 102" takePoints="0" dropPoints="0"/> 
   </event>
-    <event name="use motherboard" item="motherboard" location="Room 102" activationType="USE" triggered="N" consumeItem="Y">You do your best to fix this child. Carefully peeling back organic and mechanical layers, you find the damaged motherboard. You pull it gently and it comes out, soaked. Pushing in the new motherboard with a squelch, the child starts screaming. They leap out of bed and start breakdancing on the floor. It's probably time to go back to Ceecee. This has all been too much.
-    <description location="Room 102">The kid is still breakdancing. I guess it's good to be alive.</description>
-    <description location="Waiting Room">Ceecee stretchs and yawns. "I've had a quite nice nap thanks to you. Here, take this and get something nice for yourself." She offers you a chip which can inject code. Ceecee is the pinnacle of ethics.</description>
-    <description location="Vape Store">The cashier is absorbed in his vandalizing the shop wall with a knife. Maybe you can [use] that thing on him.</description>
- 	<item name="injection attack" article="an" location="Waiting Room" takePoints="199" dropPoints="-10"/> 
-    <event name="drop mother" item="mother" location="Room 102" activationType="DROP" triggered="Y" consumeItem="Y"/>
-    <event name="take mother" item="mother" location="Waiting Room" activationType="TAKE" triggered="N" consumeItem="Y">You approach the woman. "Miss, I believe I am your child's nurse. I'm not sure how much time they have left, so I want to give you a chance to... be with them now."
-The woman stands up. "Excuse me, ma'am? I'm just here to drive my friend home while she's zooted." That friend stumbles in. She continues, "I'm no one's mom". Steadying her friend, they walk out together. 
-Bya thread, you keep yourself from crashing out from awkwardness.
-    </event>
+	<event name="use motherboard" item="motherboard" location="Room 102" activationType="USE" triggered="N" consumeItem="Y">You do your best to fix this child. Carefully peeling back organic and mechanical layers, you find the damaged motherboard. You pull it gently and it comes out, soaked. Pushing in the new motherboard with a squelch, the child starts screaming. They leap out of bed and start breakdancing on the floor. It's probably time to go back to Ceecee. This has all been too much.
+	    <description location="Hospital">You've done your time. Time to go.</description>
+	    <description location="Waiting Room">Bunch of sick people with money to treat themselves. You're filled with envy, but not money, so you can't complain.</description>
+	    <description location="Room 102">The kid is still breakdancing. I guess it's good to be alive.</description>
+	    <description location="Break Room">Ceecee stretchs and yawns. "I've had a quite nice nap thanks to you. Here, take this and get something nice for yourself." She offers you a chip which can inject code. Ceecee is the pinnacle of ethics.</description>
+	    <item name="injection attack" article="an" location="Break Room" takePoints="199" dropPoints="-10"/> 
+	    <event name="drop mother" item="mother" location="Room 102" activationType="DROP" triggered="Y" consumeItem="Y"/>
+	    <event name="take mother" item="mother" location="Waiting Room" activationType="TAKE" triggered="N" consumeItem="Y">You approach the woman. "Miss, I believe I am your child's nurse. I'm not sure how much time they have left, so I want to give you a chance to... be with them now."
+	The woman stands up. "Excuse me, ma'am? I'm just here to drive my friend home while she's zooted." That friend stumbles in. She continues, "I'm no one's mom". Steadying her friend, they walk out together. 
+	Bya thread, you keep yourself from crashing out from awkwardness.
+	    </event>
+      
   </event>
     <event name="take mother" item="mother" location="Waiting Room" activationType="TAKE" triggered="N" consumeItem="N">You approach the woman. "Miss, I believe I am your child's nurse. I'm not sure how much time they have left, so I want to give you a chance to... be with them now."
     The woman stands up. "Then what are you waiting for? [Take] me to my child immediately, and [drop] me off when we get there."
   </event>
     <event name="drop mother" item="mother" location="Room 102" activationType="DROP" triggered="N" consumeItem="Y">You take the mother to the patient's room, and she sits quietly at a chair by their bedside. She sheds a single tear and holds her child's hand. A spark catches from the static shock of their contact, and the bed starts to burn. In fact the whole room is catching. It burns and burns until nothing is left but the mother and child. They're holding each other... laughing? The kid made a full recovery I guess. They're dancing it up. It's probably time to go back to Ceecee. This has all been too much.
+    <description location="Hosspital">You've done your time. Time to go.</description>
+    <description location="Waiting Room">Bunch of sick people with money to treat themselves. You're filled with envy, but not money, so you can't complain.</description>
     <description location="Room 102">The mother and her kid are still dancing quietly. I guess it's good to be alive.</description>
-    <description location="Waiting Room">Ceecee stretchs and yawns. "I've had a quite nice nap thanks to you. Here, take this and get something nice for yourself." She offers you a chip which can inject code. Ceecee is the pinnacle of ethics.</description>
-    <description location="Vape Store">The cashier is absorbed in his vandalizing the shop wall with a knife. Maybe you can [use] that thing on him.</description>
- 	<item name="injection attack" article="an" location="Waiting Room" takePoints="199" dropPoints="-10"/> 
-    <event name="use motherboard" item="motherboard" location="Room 102" activationType="USE" triggered="Y" consumeItem="Y"/>
+    <description location="Break Room">Ceecee stretchs and yawns. "I've had a quite nice nap thanks to you. Here, take this and get something nice for yourself." She offers you a chip which can inject code. Ceecee is the pinnacle of ethics.</description>
+    <event name="use motherboard" item="motherboard" location="Room 102" activationType="USE" triggered="Y" consumeItem="Y"/>You take the device.
+      
   </event>
-  
+  <event name="take injection attack" item="injection attack" location="Break Room" activationType="TAKE" triggered="N" consumeItem="N">
+    	<description location="Vape Store">The cashier is absorbed in his vandalizing the shop wall with a knife. Maybe you can [use] that thing on him.</description>  
+    </event>
   <place name="Waiting Room" article="the">
     <description>Bunch of sick people with money to treat themselves. You're filled with envy, but not money, so you can't complain.</description>
     <travel direction="N">Hospital</travel>

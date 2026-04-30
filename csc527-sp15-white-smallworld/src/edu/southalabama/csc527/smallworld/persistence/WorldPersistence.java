@@ -141,7 +141,7 @@ public class WorldPersistence {
 			 * XML will cause an attempt on loading a save file into a model to
 			 * try and create it again (resulting in an exception).
 			 */
-			if (l != world.getNowherePlace() || l != world.getAnywherePlace()) {
+			if (l != world.getNowherePlace() || !l.getName().equalsIgnoreCase("any")) {
 				worldElement.addContent(createPlaceXML(l));
 			}
 		}
@@ -342,6 +342,7 @@ public class WorldPersistence {
 		if(newItem==null) {
 			newItem = new Item();
 			newItem.setName(item);
+			newItem.setLocation(location);
 		}
 		ItemAction type;
 		switch (activationType.toUpperCase()) {

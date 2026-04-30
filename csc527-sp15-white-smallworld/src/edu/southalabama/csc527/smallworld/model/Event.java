@@ -141,7 +141,7 @@ public class Event {
     	String message = "";
         for(var my_p : new HashMap<>(f_descriptionsToUpdate).entrySet()){
             Place p = world.getPlace(my_p.getKey());
-            p.setDescription(my_p.getValue());
+            if(p != null) p.setDescription(my_p.getValue());
             if(!world.getPlayer().getLocation().getName().equals(p.getName()))
             	message = message.concat("\n" + p.getArticle() + " " + p.getName());
         }

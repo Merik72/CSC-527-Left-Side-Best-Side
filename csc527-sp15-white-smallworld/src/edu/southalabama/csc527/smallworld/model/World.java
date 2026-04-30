@@ -240,10 +240,11 @@ public final class World {
 		return newItem;
 	}
 	public void consumeItem(Item item) {
+		if(item == null) return;
 		var location = item.getLocation();
 		var inventory = f_player.getInventory();
 		if(!location.equalsIgnoreCase("player")) {
-			inventory = getPlace(location).getInventory();
+			inventory = getPlace(location.toUpperCase()).getInventory();
 		}
 		inventory.removeItem(item);
 		f_items.removeObject(item.getName().toUpperCase());
