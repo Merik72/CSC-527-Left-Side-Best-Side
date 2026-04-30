@@ -432,7 +432,7 @@ public final class WorldController {
 					&& (location.equals(event.getLocation())
 							// This allows events to be triggered globally, using a magic word!
 							|| event.getLocation().equals("any"))) {
-				output.concat(event.getDescription());
+				output = output.concat(event.getDescription() + "\n");
 				event.trigger(f_world);
 			}
 		}
