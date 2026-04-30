@@ -284,7 +284,7 @@ public final class WorldController {
 			item.setTakePoints(0);
 		}
         
-        String response = triggerEvent(ItemAction.TAKE, item);
+        String response = triggerEvent(ItemAction.TAKE, itemName);
 		if (!(response.equals(""))){
 			f_world.addToMessage(response);
 		}
@@ -301,6 +301,7 @@ public final class WorldController {
 
 		if (items.isEmpty()) {
 			f_world.addToMessage("There are no items to pick up.");
+			f_world.turnOver();
 			return;
 		}
 
@@ -340,24 +341,25 @@ public final class WorldController {
 
 		currentPlayerInv.removeItem(item);
 		f_world.addToMessage("\"" + itemText + "\" has been dropped from your inventory.");
-
-		player.addPoints(item.getDropPoints());
-		for(var place : f_world.getLocationRules().getObjects()) {
-			for(var locationRule : place) {
-				if(f_world.getItem(locationRule.getUnlockerName())==null) {
-					continue;
-				}
-				LocationRule r;
-				r = (LocationRule)locationRule;
-				if(locationRule.getPlaceName().equals(currentLocation.getName())){
-					player.addPoints(r.getDropPoints());
-					r.setDropPoints(0);
+		if(item.getTakePoints()!= null) {
+			player.addPoints(item.getDropPoints());
+			for(var place : f_world.getLocationRules().getObjects()) {
+				for(var locationRule : place) {
+					if(f_world.getItem(locationRule.getUnlockerName())==null) {
+						continue;
+					}
+					LocationRule r;
+					r = (LocationRule)locationRule;
+					if(locationRule.getPlaceName().equals(currentLocation.getName())){
+						player.addPoints(r.getDropPoints());
+						r.setDropPoints(0);
+					}
 				}
 			}
 		}
 		item.setDropPoints(0);
 		
-		String response = triggerEvent(ItemAction.DROP, item);
+		String response = triggerEvent(ItemAction.DROP, itemName);
 
 		if (!(response.equals(""))){
 			f_world.addToMessage(response);
@@ -375,7 +377,7 @@ public final class WorldController {
 			return;
 		}
 
-		String response = triggerEvent(ItemAction.USE, item);
+		String response = triggerEvent(ItemAction.USE, itemName);
 		if (!(response.equals(""))){
 			f_world.addToMessage(response);
 		} else {
@@ -423,12 +425,13 @@ public final class WorldController {
 	// In a big data setting, you'd probably want to like
 		// Hook up an observer to the observe the f_Events list?
 		// Be able to sync
-	public String triggerEvent(ItemAction activationType, Item activationItem) {
+	public String triggerEvent(ItemAction activationType, String activationItem) {
 		String location = f_world.getPlayer().getLocation().getName();
 		String output = "";
-		for(var event : f_world.getEvents().getObjects()) {
-			//if(event.getTriggered()) continue;
-			if(event.getActivationItem().getName().equals(activationItem.getName()) 
+		for(Event event : f_world.getEvents().getObjects()) {
+			if(event.getActivationItem() == null) break;
+			if(event.getTriggered()) continue;
+			if(event.getActivationItem().getName().equalsIgnoreCase(activationItem) 
 					&& activationType.equals(event.getActivationType()) 
 					&& (location.equals(event.getLocation())
 							// This allows events to be triggered globally, using a magic word!
@@ -436,7 +439,7 @@ public final class WorldController {
 				output = output.concat(event.getDescription());
 				Item eventItem = event.getActivationItem();
 				if(event.getConsumeItem() && !event.getRetriggerable()) {
-					output = output.concat("\n You're not holding " + eventItem.getArticle() + " " + eventItem.getName() + " anymore.");
+					output = output.concat("There goes " + eventItem.getArticle() + " " + eventItem.getName() + ".");
 				}
 				event.trigger(f_world);
 			}

@@ -29,7 +29,6 @@ public final class World {
 			"You are in a very remote place.");
 	private final Place f_anywhere = createPlace("any", "at",
 			"You are everywhere.");
-
 	/**
 	 * Gets the {@link Place} representing nowhere. This place always exists in
 	 * every world.

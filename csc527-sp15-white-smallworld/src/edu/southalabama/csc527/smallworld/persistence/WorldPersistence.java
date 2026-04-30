@@ -29,6 +29,7 @@ public class WorldPersistence {
 	 * The version of the game as defined by the XML save file format.
 	 * 1.2 -- The items update
 	 * 1.3 -- The Events update
+	 * 1.3.1 -- Events +++
 	 */
 	public static final String SAVEFILE_VERSION = "1.3"; 
 
@@ -140,7 +141,7 @@ public class WorldPersistence {
 			 * XML will cause an attempt on loading a save file into a model to
 			 * try and create it again (resulting in an exception).
 			 */
-			if (l != world.getNowherePlace() && l != world.getAnywherePlace()) {
+			if (l != world.getNowherePlace() || l != world.getAnywherePlace()) {
 				worldElement.addContent(createPlaceXML(l));
 			}
 		}
@@ -381,8 +382,8 @@ public class WorldPersistence {
 		List<Element> subevents = eventElement.getChildren(EVENT_TAG);
 		for(var subEventElement : subevents) {
 			Event event = makeEventFromElement(subEventElement, world);
-			e.addEventToUpdate(event);
 			populateEventFromElement(subEventElement, event, world);
+			e.addEventToUpdate(event);
 		}
 	}
 	
@@ -435,7 +436,7 @@ public class WorldPersistence {
 	private static void loadItemXML(Element root, World world) {
 		List<Element> itemList = root.getChildren(ITEM_TAG);
 		for (Element itemElement : itemList) {
-			var i = makeItemFromElement(itemElement);
+			var i = new Item(makeItemFromElement(itemElement));
 			world.addItem(i);
 		}
 		for (Element itemElement : itemList)

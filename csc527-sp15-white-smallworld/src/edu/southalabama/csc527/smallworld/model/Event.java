@@ -30,6 +30,7 @@ public class Event {
         f_activationItem = activationItem;
         f_triggered = triggered;
         f_consumeItem = consumeItem;
+        f_retriggerable = false;
     }
     
     public Event(String name, String description, ItemAction activationType, Item activationItem, Boolean triggered, Boolean consumeItem, List<Item> itemsToSpawn, List<LocationRule> rulesToSpawn){
@@ -41,6 +42,7 @@ public class Event {
         f_consumeItem = consumeItem;
         f_itemsToSpawn = itemsToSpawn;
         f_rulesToUpdate = rulesToSpawn;
+        f_retriggerable = false;
     }
     public String getName() {
     	return f_name;
