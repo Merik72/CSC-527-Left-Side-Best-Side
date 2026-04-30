@@ -39,6 +39,9 @@ public final class World {
 	public Place getNowherePlace() {
 		return f_nowhere;
 	}
+	public Place getAnywherePlace() {
+		return f_anywhere;
+	}
 
 	/**
 	 * A {@link Player} that is controlled by, and represents, the user of the
@@ -78,21 +81,7 @@ public final class World {
 	public Event getEvent(String name) {
 		return f_events.getObjectByName(name);
 	}
-	// In a big data setting, you'd probably want to like
-	// Hook up an observer to the observe the f_Events list?
-	// Be able to sync
-	/*public void triggerEvent(ItemAction activationType, Item activationItem, String location) {
-		for(var event : f_events.getObjects()) {
-			//if(event.getTriggered()) continue;
-			if(event.getActivationItem().getName().equals(activationItem.getName()) 
-					&& activationType.equals(event.getActivationType()) 
-					&& (location.equals(event.getLocation())
-							// This allows events to be triggered globally, using a magic word!
-							|| event.getLocation().equals("any"))) {
-				event.trigger(this, f_player);
-			}
-		}
-	}*/
+	
 	public WorldObjects<Event> getEvents() {
 		return f_events;
 	}

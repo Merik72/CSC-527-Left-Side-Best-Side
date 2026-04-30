@@ -97,6 +97,7 @@ public class Event {
     	
     	spawnItems(world);
         updateEvents(world);
+        updateDescriptions(world);
             // updateRules(world); // setting self to triggered is sufficient
         // Events must be phrased as a verb phrase conjugated in the second person perspective
         return "You " + f_name + ".";

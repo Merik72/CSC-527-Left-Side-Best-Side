@@ -140,7 +140,7 @@ public class WorldPersistence {
 			 * XML will cause an attempt on loading a save file into a model to
 			 * try and create it again (resulting in an exception).
 			 */
-			if (l != world.getNowherePlace()) {
+			if (l != world.getNowherePlace() && l != world.getAnywherePlace()) {
 				worldElement.addContent(createPlaceXML(l));
 			}
 		}
@@ -198,16 +198,14 @@ public class WorldPersistence {
 	private static Element createItemXML(World world, Item item) {
 		Element itemElement = makeItemElement(item);
 
-		for (List<BlockedLocation> ruleList : world.getLocationRules().getObjects()) {
-			for (BlockedLocation r : ruleList) {
+		for (var ruleList : world.getLocationRules().getObjects()) {
+			for (var r : ruleList) {
 				if(!r.getClass().equals(LocationRule.class)) {
 					continue;
 				}
-				LocationRule rule = (LocationRule)r;
+				LocationRule rule;
+				rule = (LocationRule)r;
 				// Only include rules for this item
-				if (!rule.getItemNeededName().equalsIgnoreCase(item.getName())) {
-					continue;
-				}
 
 				Element placeElement = new Element(PLACE_TAG);
 
@@ -457,7 +455,7 @@ public class WorldPersistence {
 				world.getPlace(i.getLocation()).getInventory().addItem(world.getItem(i.getName()));
 			}
 			for (Element s : placesOfInterest) {
-				LocationRule r = makeRuleFromElement(s, itemElement);
+				LocationRule r = new LocationRule(makeRuleFromElement(s, itemElement));
 				world.createLocationRule(r);		
 			}
 		}

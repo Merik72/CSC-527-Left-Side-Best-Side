@@ -20,6 +20,7 @@
 	</place>
     <item name="Key" article="the" location="Living Room" takePoints="10" dropPoints="-10"> 
         <place neededToEnter="Y" blockedMsg="The bedroom is locked.">Bedroom</place> 
+        <place takePoints="10000000" dropPoints ="0">Living Room</place>
     </item>
     <item name="Chocolate Pudding" article="the" location="Bathroom" takePoints="150" dropPoints="0"> 
         <place takePoints="-18" dropPoints="-2">Living Room</place> 

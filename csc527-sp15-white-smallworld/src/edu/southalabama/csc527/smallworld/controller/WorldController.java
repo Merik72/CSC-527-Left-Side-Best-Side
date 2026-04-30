@@ -272,7 +272,7 @@ public final class WorldController {
 
 		for(var locationRules : f_world.getLocationRules().getObjects()) {
 			for(var locationRule : locationRules) {
-				if(!locationRule.getClass().equals(LocationRule.class)) {
+				if(f_world.getItem(locationRule.getUnlockerName())==null) {
 					continue;
 				}
 				LocationRule r;
@@ -285,8 +285,8 @@ public final class WorldController {
 		}
 		item.setTakePoints(0);
         
-        String response = f_world.triggerEvent(ItemAction.DROP, item, currentLocation.getName());
-		if (!(response == null)){
+        String response = triggerEvent(ItemAction.TAKE, item);
+		if (!(response.equals(""))){
 			f_world.addToMessage(response);
 		}
 	}
@@ -344,7 +344,7 @@ public final class WorldController {
 		player.addPoints(item.getDropPoints());
 		for(var place : f_world.getLocationRules().getObjects()) {
 			for(var locationRule : place) {
-				if(!locationRule.getClass().equals(LocationRule.class)) {
+				if(f_world.getItem(locationRule.getUnlockerName())==null) {
 					continue;
 				}
 				LocationRule r;
@@ -357,9 +357,9 @@ public final class WorldController {
 		}
 		item.setDropPoints(0);
 		
-		String response = f_world.triggerEvent(ItemAction.DROP, item);
+		String response = triggerEvent(ItemAction.DROP, item);
 
-		if (!(response == null)){
+		if (!(response.equals(""))){
 			f_world.addToMessage(response);
 		}
 
@@ -375,8 +375,8 @@ public final class WorldController {
 			return;
 		}
 
-		String response = f_world.triggerEvent(ItemAction.DROP, item);
-		if (!(response == null)){
+		String response = triggerEvent(ItemAction.USE, item);
+		if (!(response.equals(""))){
 			f_world.addToMessage(response);
 		} else {
 			f_world.addToMessage("Nothing happened...");
@@ -418,5 +418,25 @@ public final class WorldController {
 		}
 
 		return null;
+	}
+	
+	// In a big data setting, you'd probably want to like
+		// Hook up an observer to the observe the f_Events list?
+		// Be able to sync
+	public String triggerEvent(ItemAction activationType, Item activationItem) {
+		String location = f_world.getPlayer().getLocation().getName();
+		String output = "";
+		for(var event : f_world.getEvents().getObjects()) {
+			//if(event.getTriggered()) continue;
+			if(event.getActivationItem().getName().equals(activationItem.getName()) 
+					&& activationType.equals(event.getActivationType()) 
+					&& (location.equals(event.getLocation())
+							// This allows events to be triggered globally, using a magic word!
+							|| event.getLocation().equals("any"))) {
+				event.trigger(f_world);
+				output.concat(output + "\n");
+			}
+		}
+		return output;
 	}
 }
