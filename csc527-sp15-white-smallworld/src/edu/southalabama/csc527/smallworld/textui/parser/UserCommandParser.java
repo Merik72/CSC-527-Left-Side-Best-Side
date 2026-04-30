@@ -55,7 +55,7 @@ public final class UserCommandParser {
      * @param command the users's command to the game.
      */
     public void parse(String command) {
-        String[] words = command.trim().toUpperCase().split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+        String[] words = command.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
         for (int i = 0; i < words.length; i++) {
             words[i] = words[i].replaceAll("^\"|\"$", "");
         }
@@ -77,7 +77,7 @@ public final class UserCommandParser {
                 f_wc.travel(direction);
             }
             commandExecuted = true;
-        } else if (words[0].equals("GO") || words[0].equals("MOVE")) {
+        } else if (words[0].equalsIgnoreCase("GO") || words[0].equalsIgnoreCase("MOVE")) {
             /*
              * "GO <direction>" command
              */
@@ -98,14 +98,14 @@ public final class UserCommandParser {
             }
             commandExecuted = true;
 
-        } else if (words[0].equals("HELP")) {
+        } else if (words[0].equalsIgnoreCase("HELP")) {
             /*
              * "HELP" command
              */
             f_pwo.display(getHelpMessage());
             commandExecuted = true;
 
-        } else if (words[0].equals("LOAD")) {
+        } else if (words[0].equalsIgnoreCase("LOAD")) {
             /*
              * "LOAD <file>" command
              */
@@ -119,7 +119,7 @@ public final class UserCommandParser {
             }
             commandExecuted = true;
 
-        } else if (words[0].equals("LOOK")) {
+        } else if (words[0].equalsIgnoreCase("LOOK")) {
             /*
              * "LOOK" command
              * This is executed locally and the result sent through
@@ -128,14 +128,14 @@ public final class UserCommandParser {
             f_pwo.look(f_wc.getWorld());
             commandExecuted = true;
 
-        } else if (words[0].equals("QUIT") || words[0].equals("EXIT")) {
+        } else if (words[0].equalsIgnoreCase("QUIT") || words[0].equalsIgnoreCase("EXIT")) {
             /*
              * "QUIT" or "EXIT" command
              */
             f_wc.quit();
             commandExecuted = true;
 
-        } else if (words[0].equals("SAVE")) {
+        } else if (words[0].equalsIgnoreCase("SAVE")) {
             /*
              * "SAVE <file>" command
              */
@@ -149,11 +149,11 @@ public final class UserCommandParser {
             }
             commandExecuted = true;
 
-        } else if (words[0].equals("INVENTORY") || words[0].equals("INV") || words[0].equals("I")) {
+        } else if (words[0].equalsIgnoreCase("INVENTORY") || words[0].equalsIgnoreCase("INV") || words[0].equalsIgnoreCase("I")) {
             f_wc.inventory();
             commandExecuted = true;
             
-        } else if (words[0].equals("POINTS")){
+        } else if (words[0].equalsIgnoreCase("POINTS")){
             f_wc.printPoints();
             commandExecuted = true;
 
@@ -194,11 +194,8 @@ public final class UserCommandParser {
                 }
             }
             commandExecuted = true;
-        }*/ else if (words[0].equals("TAKE") || words[0].equals("DROP") || words[0].equals("USE")) {
-            Inventory currentPlaceInv = f_wc.getWorld().getPlayer().getLocation().getInventory();
-            Inventory currentPlayerInv = f_wc.getWorld().getPlayer().getInventory();
-
-            switch (words[0]){
+        }*/ else if (words[0].equalsIgnoreCase("TAKE") || words[0].equalsIgnoreCase("DROP") || words[0].equalsIgnoreCase("USE")) {
+            switch (words[0].toUpperCase()){
                 case "TAKE":
                     if (words.length == 1) {
                         f_wc.takeAll();

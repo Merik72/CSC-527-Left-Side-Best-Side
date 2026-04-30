@@ -322,6 +322,7 @@ public final class WorldController {
 	 * the item name to drop.
 	 */
 	public void drop(String itemName) {
+		String itemText = itemName.toLowerCase();
 		Player player = f_world.getPlayer();
 		Place currentLocation = player.getLocation();
 		Inventory currentPlayerInv = player.getInventory();
@@ -329,7 +330,7 @@ public final class WorldController {
 		Item item = currentPlayerInv.getItem(itemName);
 
 		if (item == null) {
-			f_world.addToMessage("There is no item named \"" + itemName + "\" in your inventory.");
+			f_world.addToMessage("There is no item named \"" + itemText  + "\" in your inventory.");
 			f_world.turnOver();
 			return;
 		}
@@ -338,7 +339,7 @@ public final class WorldController {
 		currentLocationInv.addItem(item);
 
 		currentPlayerInv.removeItem(item);
-		f_world.addToMessage("\"" + itemName + "\" has been dropped from your inventory.");
+		f_world.addToMessage("\"" + itemText + "\" has been dropped from your inventory.");
 
 		player.addPoints(item.getDropPoints());
 		for(var place : f_world.getLocationRules().getObjects()) {
@@ -432,7 +433,11 @@ public final class WorldController {
 					&& (location.equals(event.getLocation())
 							// This allows events to be triggered globally, using a magic word!
 							|| event.getLocation().equals("any"))) {
-				output = output.concat(event.getDescription() + "\n");
+				output = output.concat(event.getDescription());
+				Item eventItem = event.getActivationItem();
+				if(event.getConsumeItem() && !event.getRetriggerable()) {
+					output = output.concat("\n You can't use " + eventItem.getArticle() + " " + eventItem.getName() + " anymore.");
+				}
 				event.trigger(f_world);
 			}
 		}
