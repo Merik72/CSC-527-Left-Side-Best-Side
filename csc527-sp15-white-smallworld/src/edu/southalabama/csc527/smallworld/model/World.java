@@ -18,7 +18,7 @@ import java.util.*;
 public final class World {
 	private final WorldObjects<Place> f_places = new WorldObjects<>();
 	private final WorldObjects<Item> f_items = new WorldObjects<>();
-	private final WorldObjects<List<BlockedLocation>> f_entryRestrictions = new WorldObjects<>();
+	private final WorldObjects<List<LocationRule>> f_entryRestrictions = new WorldObjects<>();
 	private final WorldObjects<Event> f_events = new WorldObjects<>();
 	
 	/**
@@ -103,12 +103,12 @@ public final class World {
 		return f_items;
 	}
 
-	public List<BlockedLocation> getLocationRule(String placeName) {
+	public List<LocationRule> getLocationRule(String placeName) {
 		assert (placeName != null);
         return f_entryRestrictions.getObjectByName(placeName);
 	}
 
-	public WorldObjects<List<BlockedLocation>> getLocationRules() {
+	public WorldObjects<List<LocationRule>> getLocationRules() {
 		return f_entryRestrictions;
 	}
 
@@ -250,7 +250,7 @@ public final class World {
 		f_items.removeObject(item.getName());
 	}
 
-	public BlockedLocation createLocationRule(String placeName, String itemName, String neededToEnter, String blockedMsg, String takePoints, String dropPoints) {
+	public LocationRule createLocationRule(String placeName, String itemName, String neededToEnter, String blockedMsg, String takePoints, String dropPoints) {
 		assert (placeName != null);
 		assert (itemName != null);
 		
@@ -269,24 +269,24 @@ public final class World {
 			neededToEnterBool = neededToEnter.equals("Y");
 		}
 
-		BlockedLocation newRestriction = new LocationRule(placeName, itemName, neededToEnterBool, blockedMsg, parseInteger(takePoints), parseInteger(dropPoints));
+		LocationRule newRestriction = new LocationRule(placeName, itemName, neededToEnterBool, blockedMsg, parseInteger(takePoints), parseInteger(dropPoints));
 		if (f_entryRestrictions.isNameUsed(placeName)) {
 			f_entryRestrictions.getObjectByName(placeName).add(newRestriction);
 		} else {
-			List<BlockedLocation> list = new ArrayList<>();
+			List<LocationRule> list = new ArrayList<>();
 			list.add(newRestriction);
 			f_entryRestrictions.addObject(newRestriction.getPlaceName(), list);
 		}
 		return newRestriction;
 	}
 	
-	public BlockedLocation createLocationRule(BlockedLocation rule) {
-		BlockedLocation newRestriction = new BlockedLocation(rule);
+	public LocationRule createLocationRule(LocationRule rule) {
+		LocationRule newRestriction = new LocationRule(rule);
 		String placeName = newRestriction.getPlaceName();
 		if (f_entryRestrictions.isNameUsed(placeName)) {
 			f_entryRestrictions.getObjectByName(placeName).add(newRestriction);
 		} else {
-			List<BlockedLocation> list = new ArrayList<>();
+			List<LocationRule> list = new ArrayList<>();
 			list.add(newRestriction);
 			f_entryRestrictions.addObject(newRestriction.getPlaceName(), list);
 		}

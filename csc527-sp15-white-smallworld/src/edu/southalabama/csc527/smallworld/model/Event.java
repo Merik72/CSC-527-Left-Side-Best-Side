@@ -17,7 +17,7 @@ public class Event {
 
     // holds items and rules in event for spawning when event triggered
     private List<Item> f_itemsToSpawn = new ArrayList<>();
-    private List<BlockedLocation> f_rulesToUpdate= new ArrayList<>();
+    private List<LocationRule> f_rulesToUpdate= new ArrayList<>();
     // Placename : Description to update
     private HashMap<String, String> f_descriptionsToUpdate = new HashMap<>();
     private List<Event> f_eventsToUpdate = new ArrayList<>();
@@ -32,7 +32,7 @@ public class Event {
         f_consumeItem = consumeItem;
     }
     
-    public Event(String name, String description, ItemAction activationType, Item activationItem, Boolean triggered, Boolean consumeItem, List<Item> itemsToSpawn, List<BlockedLocation> rulesToSpawn){
+    public Event(String name, String description, ItemAction activationType, Item activationItem, Boolean triggered, Boolean consumeItem, List<Item> itemsToSpawn, List<LocationRule> rulesToSpawn){
         f_name = name;
         f_description = description;
         f_activationType = activationType;
@@ -69,7 +69,7 @@ public class Event {
     public void addItemToSpawn(Item item) {
     	f_itemsToSpawn.add(item);
     }
-    public void addRuleToUpdate(BlockedLocation add) {
+    public void addRuleToUpdate(LocationRule add) {
     	f_rulesToUpdate.add(add);
     }
     public void addEventToUpdate(Event event) {
@@ -81,7 +81,7 @@ public class Event {
     public HashMap<String, String> getDescriptionsToUpdate() {
     	return f_descriptionsToUpdate;
     }
-    public List<BlockedLocation> getRulesToUpdate() {
+    public List<LocationRule> getRulesToUpdate() {
     	return f_rulesToUpdate;
     }
     public List<Event> getEventsToUpdate() {
@@ -138,8 +138,8 @@ public class Event {
     }
 
    /* private void updateRules(World world){
-        for (BlockedLocation r : f_rulesToUpdate){
-            world.updateBlockedLocation(r);
+        for (LocationRule r : f_rulesToUpdate){
+            world.updateLocationRule(r);
         }
     }*/
 }

@@ -375,7 +375,7 @@ public class WorldPersistence {
 		}
 		List<Element> places = eventElement.getChildren(PLACE_TAG);
 		for(var p : places) {
-			BlockedLocation bl = makeBlockedLocationFromElement(p,eventElement);
+			LocationRule bl = makeLocationRuleFromElement(p,eventElement);
 			e.addRuleToUpdate(bl);
 			world.createLocationRule(bl);
 		}
@@ -423,12 +423,12 @@ public class WorldPersistence {
 		LocationRule bl = new LocationRule(s_name, s_parent, s_neededToEnter, s_blockedMsg, s_takePoints, s_dropPoints);
 		return bl;
 	}
-	private static BlockedLocation makeBlockedLocationFromElement(Element s, Element p) {
+	private static LocationRule makeLocationRuleFromElement(Element s, Element p) {
 		// Get all of these
 		String s_name = s.getText();
 		String s_parent = p.getAttributeValue(NAME_TAG);
 		String s_blockedMsg = s.getAttributeValue(BLOCKED_MSG_TAG);
-		BlockedLocation bl = new BlockedLocation(s_name, s_parent, s_blockedMsg);
+		LocationRule bl = new LocationRule(s_name, s_parent, s_blockedMsg);
 		return bl;
 	}
 	@SuppressWarnings("unchecked")

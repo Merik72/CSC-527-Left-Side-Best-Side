@@ -179,8 +179,8 @@ public final class WorldController {
 
 		String resultMessage = null;
 
-		for (List<BlockedLocation> ruleList : f_world.getLocationRules().getObjects()) {
-			for (BlockedLocation rule : ruleList) {
+		for (List<LocationRule> ruleList : f_world.getLocationRules().getObjects()) {
+			for (LocationRule rule : ruleList) {
 				if (!rule.getNeededToEnter()) continue;
 				if (!rule.getPlaceName().equalsIgnoreCase(destination.getName())) continue;
 
@@ -271,13 +271,11 @@ public final class WorldController {
 		player.addPoints(item.getTakePoints());
 
 		for(var locationRules : f_world.getLocationRules().getObjects()) {
-			for(var locationRule : locationRules) {
-				if(f_world.getItem(locationRule.getUnlockerName())==null) {
+			for(var r : locationRules) {
+				if(f_world.getItem(r.getUnlockerName())==null) {
 					continue;
 				}
-				LocationRule r;
-				r = (LocationRule)locationRule;
-				if(locationRule.getPlaceName().equals(currentLocation.getName())){
+				if(r.getPlaceName().equals(currentLocation.getName())){
 					player.addPoints(r.getTakePoints());
 					r.setTakePoints(0);
 				}

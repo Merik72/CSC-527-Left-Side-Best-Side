@@ -33,7 +33,7 @@
 		<item name="Mess" article="a" location="Living Room" takePoints="-5" dropPoints="10"/>
 		<item name="Cleaning Products" article="various" location="Bathroom" takePoints="100" dropPoints="0"/>
 	</event>
-	<event name="Get Dressed" item="Tshirt" location="Bedroom" activationType="use" triggered="N" consumeItem="Y">
+	<event name="Get Dressed" item="Tshirt" location="Bedroom" activationType="take" triggered="N" consumeItem="Y">
 		Shirt goes over your head, then head goes through the shirt. Now you're finally presentable for the day.
 		<place neededToEnter="Y" blockedMsg="You need to get dressed first!">Living Room</place>
 	</event>
