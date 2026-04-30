@@ -339,6 +339,10 @@ public class WorldPersistence {
 		}
 		boolean retriggerable = triggered.equals("R");
 		Item newItem = world.getItem(item);
+		if(newItem==null) {
+			newItem = new Item();
+			newItem.setName(item);
+		}
 		ItemAction type;
 		switch (activationType.toUpperCase()) {
 			case "TAKE":
@@ -370,12 +374,12 @@ public class WorldPersistence {
 		}
 		List<Element> items = eventElement.getChildren(ITEM_TAG);
 		for(var i : items) {
-			Item newItem = makeItemFromElement(i);
+			Item newItem = new Item(makeItemFromElement(i));
 			e.addItemToSpawn(newItem);
 		}
 		List<Element> places = eventElement.getChildren(PLACE_TAG);
 		for(var p : places) {
-			LocationRule bl = makeLocationRuleFromElement(p,eventElement);
+			LocationRule bl = new LocationRule(makeLocationRuleFromElement(p,eventElement));
 			e.addRuleToUpdate(bl);
 			world.createLocationRule(bl);
 		}
@@ -384,6 +388,14 @@ public class WorldPersistence {
 			Event event = makeEventFromElement(subEventElement, world);
 			populateEventFromElement(subEventElement, event, world);
 			e.addEventToUpdate(event);
+		}
+		for(var event : world.getEvents().getObjects()) {
+			if(world.getItem(event.getActivationItem().getName()) == null);
+			for(var item : event.getItemsToSpawn()) {
+				if(item.getName().equals(event.getActivationItem().getName())) {
+					event.setActivationItem(new Item(item));
+				}
+			}
 		}
 	}
 	

@@ -1,45 +1,290 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <smallworld version="1.3">
-  
-	<item name="" article="" location="" takePoints="" dropPoints=""> 
-	    <place neededToEnter="Y" blockedMsg=""></place>
-	</item>
-  <item name="Key" article="the" location="Living Room" takePoints="10" dropPoints="-10">
-    <place neededToEnter="Y" blockedMsg="The bedroom is locked.">Bedroom</place>
-    <place takePoints="10000000" dropPoints="0">Living Room</place>
+  <place name="Bathroom" article="the">
+    <description>You stare at yourself in the mirror. You're a pretty slim built guy, not so different from the pre-war humaniods aside from your head being a blocky CRT TV instead of a meat head. Got your cute, pink, oversized yarn sweater, a starched up miniskirt, and most importantly you didn't forget your programming socks. Your outfit is only slightly less cute when it's covered streaks of... the stuff you woke up in. You think about practicing [use]ing some expressions in the mirror.</description>
+    <travel direction="W">Everything Room</travel>
+  </place>
+  <place name="Hallway" article="the">
+    <description>The patients are down this hallway.</description>
+    <travel direction="N">Room 101</travel>
+    <travel direction="E">Room 102</travel>
+  </place>
+  <place name="Safe Room" article="the">
+    <description>He walks you back to a room in the back and cracks open a safe. "dont be shy" he gestures towards the door</description>
+    <travel direction="S">Taco Joint</travel>
+  </place>
+  <place name="Room 101" article="Patient">
+    <description>The patient is sprawled out on a table, chest gaping open, wires exposed. Their computer monitor face is blue-screened. 
+    On the table nearby seems to be some surgery tools. You're not qualified for this, but Ceecee's counting on you, so do your best. find the right one to [use].</description>
+    <travel direction="S">Hallway</travel>
+  </place>
+  <place name="Bedroom" article="Boombert's">
+    <description>He has the only real bedroom in the house. He lines his walls with guitars, basses, and records. Where does he get his money? You don't know; you've never seen the man work a day in his life. As long as he's splitting rent, you're not gonna ask.</description>
+    <travel direction="N">Everything Room</travel>
+    <travel direction="E">Closet</travel>
+  </place>
+  <place name="Room 102" article="Patient">
+    <description>The room is dimly lit. You see nothing but a curtain, which you presume covers the patient.</description>
+    <travel direction="S">Hallway</travel>
+  </place>
+  <place name="any" article="at">
+    <description>You are everywhere.</description>
+  </place>
+  <place name="Vape Store" article="the">
+    <description>The vape store is just one room. It's grody all over. If you didn't know better, you'd think this was a public restroom. The cashier is currently vandalizing the wall with a knife. His head has neon lights. When he turns to look at you, you realize his very head is a vape pen vending machine. The sort of thing that's in a place fancy enough not to just sell hard drugs, but not civilized enough to not... sell vapes from a vending machine.
+    "Hey, Iris! sick party last night, dude," He says to you. "I know you don't have any money after that total ragerrrrrr, but here's the deal. You get me your hot roommate's number, and I'll spot you this time. Poison for poison, my man."
+    You didn't invite him to your house. It's gross even talking to this guy. But, you gotta get some vape for Boombert.</description>
+    <travel direction="S">Strip Mall</travel>
+  </place>
+  <place name="Everything Room" article="the">
+    <description>Boombert is still cleaning, but he notices you. 
+        "Need a reminder? Ceecee's tired at work and could use your help. 
+         
+        Now that I'm thinking about it, all my spare vape juice is spent, and the air fryer is busted. I need you to grab me a reup, and gather 4 elemental stones and bring them back so I can fix it. There should be one in my room to get you started."
+        There goes your Sunday. You'll need to find your keys to run all these errands.</description>
+    <travel direction="N">Parking Lot</travel>
+    <travel direction="S">Bedroom</travel>
+  </place>
+  <place name="Parking Lot" article="the">
+    <description>The middle of fall. It would be a beautiful day if you could see anything but parking lot, further than the horizon. Trees do exist, just not here, really. Not a lot.</description>
+    <travel direction="N">Road</travel>
+    <travel direction="S">Everything Room</travel>
+    <travel direction="E">Car</travel>
+  </place>
+  <place name="Waiting Room" article="the">
+    <description>Bunch of sick people with money to treat themselves. You're filled with envy, but not money, so you can't complain.</description>
+    <travel direction="N">Hospital</travel>
+  </place>
+  <place name="Strip Mall" article="the">
+    <description>There are like a million of these. You look as hard as you can, but you don't see any malls looking for a good time. Just a parking lot full of small, individual stores.</description>
+    <travel direction="N">Taco Joint</travel>
+    <travel direction="W">Vape Store</travel>
+  </place>
+  <place name="Closet" article="Ceecee's">
+    <description>If rent was reasonable, this would just be a closet. However, you all worked together to convert the thing into a luxury drawer to sleep in, like, Harry Potter would be jealous. The futon sits on top of a chest of drawers where she keeps everything life in, and an outlet is just above that. Ceecee's left her macbook air open on her pillow, serving as both a computing device and space heater.</description>
+    <travel direction="W">Bedroom</travel>
+  </place>
+  <place name="Hospital" article="the">
+    <description>You feel like this place is out of your tax bracket. When you're sick, you slam back a cold one and call it good. You're not sure why Ceecee needs to split rent with 3 people. Don't nurses make bank? They probably make more than you do in retail. She's probably in the break room.</description>
+    <travel direction="N">Hallway</travel>
+    <travel direction="S">Waiting Room</travel>
+    <travel direction="E">Break Room</travel>
+  </place>
+  <place name="Very Remote Place" article="a">
+    <description>You are in a very remote place.</description>
+  </place>
+  <place name="Road Home" article="the">
+    <description>It's been a long day of errands, maybe it's time to go home again.</description>
+    <travel direction="N">Road</travel>
+    <travel direction="S">Home again</travel>
+  </place>
+  <place name="Road" article="The">
+    <description>Vroom vroomin in your mum's car. The only way you've managed to force yourself to focus while driving is by blasting the Hard Rock / Metal radio station while blasting dubstep on your phone. It leaves you only one hand for driving, and you'll never hear anyone honking you, but if you think about it this is really the safest option for you and them. Ceecee works at the hospital, and everything else in the world is probably at a strip mall.</description>
+    <travel direction="N">Strip Mall</travel>
+    <travel direction="S">Road Home</travel>
+    <travel direction="E">Hospital</travel>
+  </place>
+  <place name="Home again" article="Finally," arrivalWinsGame="Y">
+    <description />
+    <travel direction="N">Road Home</travel>
+  </place>
+  <place name="Break Room" article="the">
+    <description>It's not that different from the break room at your job. Snacks, a microwave, and a fridge. The exact amount of space necessary for it to not feel comfortable, so you remember to get back out there, tiger. Ceecee is collapsed on the table with a cup of yogurt in her hand. She's a tall and slim lady with a walkman for a head. Her sense of style is usually next level, but for now she's in scrubs. Maybe you should wake her [use]ing a pleasant emotion.</description>
+    <travel direction="W">Hospital</travel>
+  </place>
+  <place name="Taco Joint" article="the">
+    <description>The local taco place. Perfectly acceptable food. In fact, you'd be doing Boombert a favor by getting him food that's, like, pre-cooked. Who wakes up and wants to cook? He'll be totally overjoyed. The cashier doesn't notice you walking in. He's one of those smartphone heads, and his face is scrolling Xiaohongshu. Slow day. Maybe you can [use] a bit of emotion to get his attention?</description>
+    <travel direction="N">Safe Room</travel>
+  </place>
+  <place name="happened last night?" article="What">
+    <description>Your entire body is sore. Your joints creak, your vision is blurry, and the entire world reeks. Sitting up, you take in your surroundings. Beer cans and spent vape cartriges fill the bathtub up to your chest. Crap, weren't you wearing your favorite sweater, too? Someone will have to wash this, and it is not going to be you. Well, time to get up I guess.</description>
+    <travel direction="N">Bathroom</travel>
+  </place>
+  <place name="Car" article="Your">
+    <description>Ah, the ol' deathtrap. You don't know how old this thing is. It doesn't have many features, but you built in some anti-crash capabilities: countless mostly empty styrofoam takeout boxes are here to cushion impacts in all directions.</description>
+    <travel direction="N">Road</travel>
+    <travel direction="W">Parking Lot</travel>
+  </place>
+  <item name="pleading" article="your" location="player" takePoints="0" dropPoints="0" />
+  <item name="happiness" article="your" location="player" takePoints="0" dropPoints="0" />
+  <item name="Queen of Hearts" article="the" location="Room 101" takePoints="0" dropPoints="0" />
+  <item name="goods" article="the" location="Safe Room" takePoints="1000" dropPoints="0" />
+  <item name="Artifical Heart" article="an" location="Room 101" takePoints="0" dropPoints="0" />
+  <item name="curtain" article="the" location="Room 102" takePoints="0" dropPoints="0" />
+  <item name="Metal Element Crystal" article="the" location="Player" takePoints="0" dropPoints="0" />
+  <item name="American Idiot CD" article="an" location="Room 101" takePoints="0" dropPoints="0" />
+  <item name="car keys" article="your" location="Player" takePoints="0" dropPoints="-1">
+    <place neededToEnter="Y" blockedMsg="No way, nuh-uh, not walking. I don't have a week to finish these errands.">Road</place>
+    <place neededToEnter="Y" blockedMsg="You try to get in your car, but... dangit, where did you leave your fricken keys?">Car</place>
   </item>
-  <item name="Gun" article="a" location="Player" takePoints="0" dropPoints="1" />
-  <item name="Chocolate Pudding" article="the" location="Bathroom" takePoints="150" dropPoints="0">
-    <place takePoints="-18" dropPoints="-2">Living Room</place>
-  </item>
-  <item name="Tshirt" article="a" location="Bedroom" takePoints="51" dropPoints="0" />
-  <item name="Anger" article="your" location="player" takePoints="0" dropPoints="0" />
-  <event name="" item="" location="" activationType="" triggered="" consumeItem="">
-    
-    <place neededToEnter="Y" blockedMsg=""></place>
-    <description location=""></description>
- 	<item name="" article="" location="" takePoints="" dropPoints=""/> 
+  <item name="anger" article="your" location="player" takePoints="0" dropPoints="0" />
+  <event name="use Artifical Heart" item="Artifical Heart" location="Room 101" activationType="USE" triggered="N" consumeItem="Y">
+    Carefully, you place the mass of organic and inorganic material into the patient's chest. It begins pulsing and undulating. Wires and veins jut out from the thing, embedding themselves into the patient. It yanks the patient's chest shut, and they start breathing shallowly. You stand in stunned silence until hearing the sound of a printer. There doesn't seem to be a printer in this room, so you look around confused until a paper falls from the ceiling.
+    <description location="Room 101">The patient is breathing shallowly but steadily.</description>
+    <item name="Record of Surgery" article="a" location="Room 101" takePoints="0" dropPoints="0" />
+    <event name="take Record of Surgery" item="Record of Surgery" location="Room 101" activationType="TAKE" triggered="N" consumeItem="N">
+      "Patient was a weak match for artificial heart. After sufficient time given to weaken the rejection symptoms, the heart was administered. Patient is stable but must be monitored."
+      <place neededToEnter="Y" blockedMsg="When you swipe Ceedee's ID to open the door, a display on the door flashes: Patient 101 is in need of immediate treatment">Room 102</place>
+    </event>
+    <event name="use American Idiot CD" item="American Idiot CD" location="Room 101" activationType="USE" triggered="Y" consumeItem="N">It's too late for this procedure, now.</event>
+    <event name="use Queen of Hearts" item="Queen of Hearts" location="Room 101" activationType="USE" triggered="Y" consumeItem="N">It's too late for this procedure, now.</event>
   </event>
-  <event name="Shoot gun" item="Gun" location="Basement" activationType="USE" triggered="R" consumeItem="N">
-    You go wacko crazy and shoot everywhere.
-    <description location="Bathroom">The toilet bowl. Because you shot a hole in bowl.</description>
-    <description location="Bedroom">There's a bullet hole in your bed.</description>
+  <event name="take mother" item="mother" location="Waiting Room" activationType="TAKE" triggered="N" consumeItem="N">You approach the woman. "Miss, I believe I am your child's nurse. I'm not sure how much time they have left, so I want to give you a chance to... be with them now."
+    The woman stands up. "Then what are you waiting for? [Take] me to my child immediately, and [drop] me off when we get there."</event>
+  <event name="take CD" item="American Idiot CD" location="Room 101" activationType="TAKE" triggered="R" consumeItem="N">You pick up the thin box, unsure of what it is. It seems super vintage, probably pre-war. The thin box features a drawing of a heart with a grenade, so maybe this is a dangerous item?</event>
+  <event name="get key from ceecee" item="happiness" location="Break Room" activationType="USE" triggered="N" consumeItem="N">
+    "Hey doc, how's it goin?" You ask, tapping her shoulder. She jolts awake and looks behdind her. Finding you, she calms down. "Hey... 26 straight hours..." she manages to say. She slumps back down onto the table, handing you a card. "Take here. mmm. 2 patients. North Hallway."
+    <description location="Break Room">She sleeps peacefully knowing you're not committing medical malpractice.</description>
+    <description location="Hospital">"mmm. 2 patients. North Hallway." -- Ceecee</description>
+    <place neededToEnter="Y" blockedMsg="The receptionist nurse calls out to you, ''I don't believe anyone called you for an appointment.''">Hallway</place>
+    <item name="ID badge" article="Ceedee's" location="player" takePoints="0" dropPoints="-20" />
   </event>
-  <event name="Spilled Pudding" item="Chocolate Pudding" location="Living Room" activationType="DROP" triggered="N" consumeItem="Y">
-    Your fingers slip, and the Chocolate Pudding tumbles out of your hands, and the contents are suddenly freeflowing.
-    <description location="Living Room">Chocolate pudding is all over the Living Room carpet.</description>
-    <item name="Mess" article="a" location="Living Room" takePoints="-5" dropPoints="10" />
-   	<item name="Cleaning Products" article="various" location="Bathroom" takePoints="100" dropPoints="0">
-		<place neededToEnter="Y" blockedMsg="You'll need to clean that place up.">Basement</place>
-   	</item>
+  <event name="use Queen of Hearts" item="Queen of Hearts" location="Room 101" activationType="USE" triggered="N" consumeItem="Y">
+    You pick up the playing card up off the desk and examine it carefully. There's nothing special about it. It's clearly just a normal, glossy playing card depicting the Queen of Hearts. Despite that, you put it in the patient's chest. You watch the card as it slowly sponges up blood and oil.
+        After an agonizing minute of silence. A piece of paper slides in from the side of the patient's screen.
+    <description location="Room 101">They're dead. You killed someone because you thought a playing card could do open heart surgery.</description>
+    <item name="Record of Surgery" article="a" location="Room 101" takePoints="0" dropPoints="0" />
+    <event name="take Record of Surgery" item="Record of Surgery" location="Room 101" activationType="TAKE" triggered="N" consumeItem="N">
+      "The Queen of Hearts did her best. Patient did not survive the operation."
+      <place neededToEnter="Y" blockedMsg="When you swipe Ceedee's ID to open the door, a display on the door flashes: Patient 101 is in need of immediate treatment">Room 102</place>
+    </event>
+    <event name="use American Idiot CD" item="American Idiot CD" location="Room 101" activationType="USE" triggered="Y" consumeItem="N">It's too late for this procedure, now.</event>
+    <event name="use Artifical Heart" item="Artifical Heart" location="Room 101" activationType="USE" triggered="Y" consumeItem="N">It's too late for this procedure, now.</event>
   </event>
-  <event name="Get Mad" item="Anger" location="any" activationType="USE" triggered="R" consumeItem="N">
-    You make an angry face in the mirror. Grr!
-    <event name="Get Mad" item="Anger" location="any" activationType="USE" triggered="R" consumeItem="N">
-      You make an even angrier face in the mirror! GRAHH!!!
-      <event name="Get Mad" item="Anger" location="any" activationType="USE" triggered="R" consumeItem="N">You get so mad you might die!!!!</event>
+  <event name="practice pleading" item="pleading" location="Bathroom" activationType="USE" triggered="R" consumeItem="N">You try your best to look pathetic and needy. AI-generated crying puppies in a cardboard box in the rain play on your screen. Yeah, you've still got it.</event>
+  <event name="give him the beer" item="cheap beer" location="Everything Room" activationType="DROP" triggered="Y" consumeItem="Y" />
+  <event name="take Artifical Heart" item="Artifical Heart" location="Room 101" activationType="TAKE" triggered="R" consumeItem="N">A blob of pipes and wires you can only assume is the heart that is supposed to go in... there.</event>
+  <event name="take key from ceecee" item="anger" location="Break Room" activationType="USE" triggered="N" consumeItem="N">
+    "IT'S ALIVE!!!" you scream at the top of your lungs, blasting a Frankenstien movie on your screen, and flipping the lightswitch on and off a few times. She screams awake, falling out of her chair. When she looks at you, she calms down. "Iris, man, what's your damage?" The drowsiness hits her again soon after, as she says "mmm. 2 patients. North Hallway." She hands you a card and falls asleep on the floor.
+    <description location="Break Room">She sleeps peacefully knowing you're not committing medical malpractice.</description>
+    <description location="Hospital">"mmm. 2 patients. North Hallway." -- Ceecee</description>
+    <place neededToEnter="Y" blockedMsg="The receptionist nurse calls out to you, ''I don't believe anyone called you for an appointment.''">Hallway</place>
+    <item name="ID badge" article="Ceedee's" location="player" takePoints="0" dropPoints="-20" />
+    <event name="get key from ceecee" item="happiness" location="Break Room" activationType="USE" triggered="Y" consumeItem="N" />
+  </event>
+  <event name="taking the goods" item="goods" location="Safe Room" activationType="TAKE" triggered="N" consumeItem="Y">
+    You reach in and find four elemental crystals. Water, Fire, Earth, and Air. You look at him, confused.
+"i told you i got that good good"
+You did need this anyway, so what's the harm? You pocket the crystals.
+    <description location="Safe Room">The empty safe room where you got the elemental crystals, successfully completing 1 of 4 missions from Boombert.</description>
+    <place neededToEnter="Y" blockedMsg="When you open the door, Boombert stops you. ''Hey big guy, looks like you forgot those crystals!''">Home again</place>
+    <item name="Four Elemental Crystals" article="the" location="player" takePoints="0" dropPoints="-10" />
+  </event>
+  <event name="cant drop anger" item="anger" location="any" activationType="DROP" triggered="R" consumeItem="Y">
+    You can't drop that.
+    <item name="anger" article="your" location="Player" takePoints="0" dropPoints="0" />
+  </event>
+  <event name="use motherboard" item="motherboard" location="Room 102" activationType="USE" triggered="N" consumeItem="Y">
+    You do your best to fix this child. Carefully peeling back organic and mechanical layers, you find the damaged motherboard. You pull it gently and it comes out, soaked. Pushing in the new motherboard with a squelch, the child starts screaming. They leap out of bed and start breakdancing on the floor. It's probably time to go back to Ceecee. This has all been too much.
+    <description location="Waiting Room">Ceecee stretchs and yawns. "I've had a quite nice nap thanks to you. Here, take this and get something nice for yourself." She offers you a chip which can inject code. Ceecee is the pinnacle of ethics.</description>
+    <description location="Room 102">The kid is still breakdancing. I guess it's good to be alive.</description>
+    <description location="Vape Store">The cashier is absorbed in his vandalizing the shop wall with a knife. Maybe you can [use] that thing on him.</description>
+    <item name="injection attack" article="an" location="Waiting Room" takePoints="199" dropPoints="-10" />
+    <event name="drop mother" item="mother" location="Room 102" activationType="DROP" triggered="Y" consumeItem="Y" />
+    <event name="take mother" item="mother" location="Waiting Room" activationType="TAKE" triggered="N" consumeItem="Y">You approach the woman. "Miss, I believe I am your child's nurse. I'm not sure how much time they have left, so I want to give you a chance to... be with them now."
+The woman stands up. "Excuse me, ma'am? I'm just here to drive my friend home while she's zooted." That friend stumbles in. She continues, "I'm no one's mom". Steadying her friend, they walk out together. 
+Bya thread, you keep yourself from crashing out from awkwardness.</event>
+  </event>
+  <event name="drop mother" item="mother" location="Room 102" activationType="DROP" triggered="N" consumeItem="Y">
+    You take the mother to the patient's room, and she sits quietly at a chair by their bedside. She sheds a single tear and holds her child's hand. A spark catches from the static shock of their contact, and the bed starts to burn. In fact the whole room is catching. It burns and burns until nothing is left but the mother and child. They're holding each other... laughing? The kid made a full recovery I guess. They're dancing it up. It's probably time to go back to Ceecee. This has all been too much.
+    <description location="Waiting Room">Ceecee stretchs and yawns. "I've had a quite nice nap thanks to you. Here, take this and get something nice for yourself." She offers you a chip which can inject code. Ceecee is the pinnacle of ethics.</description>
+    <description location="Room 102">The mother and her kid are still dancing quietly. I guess it's good to be alive.</description>
+    <description location="Vape Store">The cashier is absorbed in his vandalizing the shop wall with a knife. Maybe you can [use] that thing on him.</description>
+    <item name="injection attack" article="an" location="Waiting Room" takePoints="199" dropPoints="-10" />
+    <event name="use motherboard" item="motherboard" location="Room 102" activationType="USE" triggered="Y" consumeItem="Y" />
+  </event>
+  <event name="drink that beer" item="cheap beer" location="Everything Room" activationType="USE" triggered="Y" consumeItem="Y">
+    You lock eyes with him as you start chugging the beer. You didn't want to do this, but he brought it on himself, really. You were going to put it in the fridge for later, but, he just had to be all uptight about it. He sighs deeply. It feels like you won. 
+        "Okay, big guy, how's about you help yourself by helping me? We're all a big family, and that means sometimes you gotta do things for family that you would rather not do."
+        "I'm not your family, and you're not my dad." 
+        He stops cleaning and looks in your direction. You check behind yourself. Nobody's there.
+        He continues. "Ceecee texted. She's tired at work and could use your help. Now that I'm thinking about it, I don't know how it happened Last Night at Your Party, but all my spare vape juice is spent, and the air fryer is busted. I need you to grab me a reup, then gather 4 elemental stones and bring them back so I can fix it. There should be one in my room."
+        "Ok, Needy, anything else you need?" 
+        "No, but I'll text you if anything comes up."
+        There goes your Sunday. You'll need to find your keys to run all these stupid fetch quests.
+    <description location="Everything Room">Boombert is still cleaning, but he notices you. 
+        "Need a reminder? Ceecee's tired at work and could use your help. 
+         
+        Now that I'm thinking about it, all my spare vape juice is spent, and the air fryer is busted. I need you to grab me a reup, and gather 4 elemental stones and bring them back so I can fix it. There should be one in my room to get you started."
+        There goes your Sunday. You'll need to find your keys to run all these errands.</description>
+    <event name="give him the beer" item="cheap beer" location="Everything Room" activationType="DROP" triggered="Y" consumeItem="Y" />
+  </event>
+  <event name="take that beer" item="cheap beer" location="Bathroom" activationType="TAKE" triggered="Y" consumeItem="N">
+    Ok, ready to go.
+    <description location="Bathroom">You stare at yourself in the mirror. You're a pretty slim built guy, not so different from the pre-war humaniods aside from your head being a blocky CRT TV instead of a meat head. Got your cute, pink, oversized yarn sweater, a starched up miniskirt, and most importantly you didn't forget your programming socks. Your outfit is only slightly less cute when it's covered streaks of... the stuff you woke up in. You think about practicing [use]ing some expressions in the mirror.</description>
+    <place neededToEnter="Y" blockedMsg="You can't let that beer just sit there, unchaperoned!">Everything Room</place>
+  </event>
+  <event name="cant drop happiness" item="happiness" location="any" activationType="DROP" triggered="R" consumeItem="Y">
+    You can't drop that.
+    <item name="happiness" article="your" location="Player" takePoints="0" dropPoints="0" />
+  </event>
+  <event name="cant drop pleading" item="pleading" location="any" activationType="DROP" triggered="R" consumeItem="Y">
+    You can't drop that.
+    <item name="pleading" article="your" location="Player" takePoints="0" dropPoints="0" />
+  </event>
+  <event name="practice happy" item="happiness" location="Bathroom" activationType="USE" triggered="R" consumeItem="N">
+    You try your best to lie to yourself. Blooming flowers, fireworks, and a birthday party play on your screen. That took a lot out of you.
+    <event name="practice happy" item="happiness" location="Bathroom" activationType="USE" triggered="R" consumeItem="N">
+      You practice more happy. You've got laughing babies into a sunrise on your screen. You're running dry.
+      <event name="practice happy" item="happiness" location="Bathroom" activationType="USE" triggered="R" consumeItem="N">You concentrate so hard you almost shit yourself. No matter what, all the screen has is your 8-bit eyes staring back. You're squeezed totally dry.</event>
     </event>
   </event>
-  <player location="Living Room" />
+  <event name="take curtain" item="curtain" location="Room 102" activationType="TAKE" triggered="N" consumeItem="Y">
+    You take down the curtain. The patient is a young child hooked up to life support of some kind. The patient's curved monitor head shows no backlight, though they seem to be breathing. A clipboard left near the patient says they have motherboard damage.
+    <description location="Waiting Room">You notice an older woman with a curved monitor. Is this the mother you've been looking for? If she is, then you should [take] her to her child. It's not fair that she can't be with them, especially if they're in life-threatening condition.</description>
+    <description location="Room 102">The patient is a young child hooked up to life support of some kind. The patient's curved monitor head shows no backlight, though they seem to be breathing. A clipboard left near the patient says they have motherboard damage.</description>
+    <item name="mother" article="a" location="Waiting Room" takePoints="0" dropPoints="0" />
+    <item name="motherboard" article="a" location="Room 102" takePoints="0" dropPoints="0" />
+  </event>
+  <event name="use American Idiot CD" item="American Idiot CD" location="Room 101" activationType="USE" triggered="N" consumeItem="Y">
+    You open the box and toss in the CD. It finds a slot somewhere in the patient's chest, and it slowly sinks in, blook and oil squelching out. The patient's face goes from a bluescreen to a loading wheel. Pop punk music with a whiny singer starts playing from the patient's speakers. A fate worse than death. A sheet of paper rises out of the patient's chest cavity and falls onto the floor.
+    <description location="Room 101">Pop punk music fills the room, playing from the patient's speakers.</description>
+    <item name="Record of Surgery" article="a" location="Room 101" takePoints="0" dropPoints="0" />
+    <event name="take Record of Surgery" item="Record of Surgery" location="Room 101" activationType="TAKE" triggered="N" consumeItem="N">
+      "Patient was administered the seventh studio album by Green Day. Patient did not survive the operation."
+      <place neededToEnter="Y" blockedMsg="When you swipe Ceedee's ID to open the door, a display on the door flashes: Patient 101 is in need of immediate treatment">Room 102</place>
+    </event>
+    <event name="use Artifical Heart" item="Artifical Heart" location="Room 101" activationType="USE" triggered="Y" consumeItem="N">It's too late for this procedure, now.</event>
+    <event name="use Queen of Hearts" item="Queen of Hearts" location="Room 101" activationType="USE" triggered="Y" consumeItem="N">It's too late for this procedure, now.</event>
+  </event>
+  <event name="scream at cashier" item="anger" location="Taco Joint" activationType="USE" triggered="N" consumeItem="N">
+    Your screen emits the pure rage of sitting at a red light that lasts too long when nobody's at the intersection. You stomp up to the counter, grab his head with your hands, and slam your screen into his as hard as you can. His screen flickers for a bit then he stands up straight.
+"hello valued customer. welcome to mcdonalds. whatre you having"
+"Excuse me young man? I was having a great day until you ruined it with your sour, sour attitude! I think I deserve something free just for dealing with you!"
+He processes. His screen freezes, and he closes Xiaohongshu. "uhh we have free water cups?"
+"NO! Food!"
+... Maybe it will take more emotions to crack him.
+    <description location="Taco Joint">"hello valued customer. welcome to mcdonalds. whatre you having" ... Maybe it will take more emotions to crack him.</description>
+    <event name="plead to cashier" item="pleading" location="Taco Joint" activationType="USE" triggered="N" consumeItem="N">
+      "Please please please can I have just the littlest bit of anything freeee? I'd even eat scraps. I'd do anything," you plead, screen turning to kittens staring into the camera while in tiny glass jars lost out at sea.
+He seems relieved that you stopped screaming. "i cant get you anything for free from the menu, but i uhh can get you some good off-menu stuff. ive been really hurting for an elemental crystal. if you trade me one i def can get you smth"
+      <description location="Taco Joint">The cashier looks up at you. "i cant get you anything for free from the menu, but i uhh can get you some good off-menu stuff. ive been really hurting for an elemental crystal. if you trade me one i def can get you smth"</description>
+      <event name="give metal crystal" item="Metal Element Crystal" location="Taco Joint" activationType="DROP" triggered="N" consumeItem="Y">
+        He smirks. "you wont regret it. head on back. you'll like what you see."
+        <description location="Taco Joint">The cashier nods at you, looking over his shoulder.</description>
+        <place neededToEnter="Y" blockedMsg="It might be a bit rude to climb over the counter and out the back door.">Safe Room</place>
+      </event>
+    </event>
+  </event>
+  <event name="practice anger" item="anger" location="Bathroom" activationType="USE" triggered="R" consumeItem="N">You dig deep and find your anger. Volcanos, explosions, and silver rank League of Legends gameplay play on your screen. This is easy for you.</event>
+  <event name="use" item="injection attack" location="Vape Store" activationType="USE" triggered="N" consumeItem="Y">
+    His neon lights shine through every color on every spectrum, and the vape ad on the front of his head is replaced with a command line. The screen is filled with one word.
+    dispense();
+    dispense();
+    dispense();
+    dispense();
+    dispense();
+    dispense();
+    dispense();
+    dispense();
+    dispense();
+    dispense();
+    dispense();
+    Vapes fly out of him as he passes out on the floor.
+    <place neededToEnter="Y" blockedMsg="''Big guy,'' Boombert says from the doorway, ''don't forget a man's vapes.''.">Home Again</place>
+    <item name="pile of vapes" article="a" location="Vape Store" takePoints="10000" dropPoints="-1" />
+  </event>
+  <event name="take Card" item="Queen of Hearts" location="Room 101" activationType="TAKE" triggered="R" consumeItem="N">This is a playing card. There's no way that this is the right one.</event>
+  <player location="Taco Joint" />
 </smallworld>
 

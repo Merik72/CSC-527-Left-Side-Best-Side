@@ -56,6 +56,9 @@ public class Event {
     public Item getActivationItem() {
     	return f_activationItem;
     }
+    public void setActivationItem(Item item) {
+    	f_activationItem = item;
+    }
     public ItemAction getActivationType() {
     	return f_activationType;
     }
@@ -116,13 +119,14 @@ public class Event {
     }
 
     private void spawnItems(World world){
-    	String message = "You feel like something appeared in ";
+    	String message = "";
         for(Item i : new ArrayList<>(f_itemsToSpawn)){
             world.addItem(i);
-            message = message.concat("\n" + world.getPlace(i.getLocation()).getArticle() + " " + i.getLocation());
+            if(!(i.getLocation().equalsIgnoreCase("player") || world.getPlayer().getLocation().getName().equals(i.getLocation())))
+            		message = message.concat(world.getPlace(i.getLocation()).getArticle() + " " + i.getLocation());
         }
-        if(!(f_retriggerable || (f_itemsToSpawn.isEmpty()))) {
-        	world.addToMessage(message);
+        if(!(message.equals("") || f_retriggerable || (f_itemsToSpawn.isEmpty()))) {
+        	world.addToMessage("You feel like something appeared in "+message);
         }
     }
     private void updateEvents(World world) {
@@ -131,14 +135,15 @@ public class Event {
     	}
     }
     private void updateDescriptions(World world){
-    	String message = "You feel like something changed in ";
+    	String message = "";
         for(var my_p : new HashMap<>(f_descriptionsToUpdate).entrySet()){
             Place p = world.getPlace(my_p.getKey());
             p.setDescription(my_p.getValue());
-            message = message.concat("\n" + p.getArticle() + " " + p.getName());
+            if(!world.getPlayer().getLocation().getName().equals(p.getName()))
+            	message = message.concat("\n" + p.getArticle() + " " + p.getName());
         }
-	    if(!(f_retriggerable || (f_descriptionsToUpdate.size() == 0))) {
-        	world.addToMessage(message);
+	    if(!(message.equals("") || f_retriggerable || (f_descriptionsToUpdate.size() == 0))) {
+        	world.addToMessage("You feel like something changed in " + message);
 	    }
     }
     

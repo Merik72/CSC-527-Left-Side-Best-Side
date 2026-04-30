@@ -198,6 +198,11 @@ public final class WorldController {
 				}
 				else {	
 					Event e = f_world.getEvent(unlockerName);
+					if(e == null) {
+						for(var evvent : f_world.getEvents().getObjects()){
+							e = findUnlocker(destination.getName(), evvent.getEventsToUpdate());
+						}
+					}
 					// Unlocker is an event and the event isn't triggered
 					if(unlockerName != null && e != null && e.getTriggered() == false) {
 						
@@ -211,6 +216,22 @@ public final class WorldController {
 			}
 		}
 		return resultMessage;
+	}
+	private Event findUnlocker(String unlockerName, List<Event> events) {
+		if(events.size()==0) {
+			for(var event : events) {
+				for( var rule : event.getRulesToUpdate()) {
+					if(rule.getPlaceName().equals(unlockerName)) {
+						return event;
+					}
+					else {
+						return findUnlocker(unlockerName, event.getEventsToUpdate());
+					}
+				}
+			}
+		}
+		return null;
+		
 	}
 
 
@@ -285,9 +306,6 @@ public final class WorldController {
 		}
         
         String response = triggerEvent(ItemAction.TAKE, itemName);
-		if (!(response.equals(""))){
-			f_world.addToMessage(response);
-		}
 	}
 
 	public void takeOne(String itemName) {
@@ -361,9 +379,6 @@ public final class WorldController {
 		
 		String response = triggerEvent(ItemAction.DROP, itemName);
 
-		if (!(response.equals(""))){
-			f_world.addToMessage(response);
-		}
 
 		f_world.turnOver();
 	}
@@ -378,11 +393,9 @@ public final class WorldController {
 		}
 
 		String response = triggerEvent(ItemAction.USE, itemName);
-		if (!(response.equals(""))){
-			f_world.addToMessage(response);
-		} else {
+		/*if ((response.equals(""))){
 			f_world.addToMessage("Nothing happened...");
-		}
+		}*/
 		f_world.turnOver();
 	}
 
@@ -429,14 +442,14 @@ public final class WorldController {
 		String location = f_world.getPlayer().getLocation().getName();
 		String output = "";
 		for(Event event : f_world.getEvents().getObjects()) {
-			if(event.getActivationItem() == null) break;
+			if(event.getActivationItem() == null) continue;
 			if(event.getTriggered()) continue;
 			if(event.getActivationItem().getName().equalsIgnoreCase(activationItem) 
 					&& activationType.equals(event.getActivationType()) 
 					&& (location.equals(event.getLocation())
 							// This allows events to be triggered globally, using a magic word!
 							|| event.getLocation().equals("any"))) {
-				output = output.concat(event.getDescription());
+				f_world.addToMessage((event.getDescription()));
 				Item eventItem = event.getActivationItem();
 				if(event.getConsumeItem() && !event.getRetriggerable()) {
 					output = output.concat("There goes " + eventItem.getArticle() + " " + eventItem.getName() + ".");

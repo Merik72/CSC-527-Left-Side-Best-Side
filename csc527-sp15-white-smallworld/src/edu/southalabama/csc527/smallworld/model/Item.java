@@ -7,7 +7,7 @@ public class Item {
 	private Integer f_takePoints;
 	private Integer f_dropPoints;
 	
-	Item(){
+	public Item(){
 		f_name = "master sword";
 		f_article = "THE";
 		f_location = "Sacred Grove";
@@ -52,6 +52,9 @@ public class Item {
 	}
 	public String getName() {
 		return f_name;
+	}
+	public void setName(String str) {
+		f_name = str;
 	}
 	public String getArticle() {
 		return f_article;
