@@ -436,7 +436,7 @@ public final class WorldController {
 				output = output.concat(event.getDescription());
 				Item eventItem = event.getActivationItem();
 				if(event.getConsumeItem() && !event.getRetriggerable()) {
-					output = output.concat("\n You can't use " + eventItem.getArticle() + " " + eventItem.getName() + " anymore.");
+					output = output.concat("\n You're not holding " + eventItem.getArticle() + " " + eventItem.getName() + " anymore.");
 				}
 				event.trigger(f_world);
 			}

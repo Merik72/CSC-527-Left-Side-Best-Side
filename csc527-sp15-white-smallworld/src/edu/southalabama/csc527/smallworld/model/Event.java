@@ -114,8 +114,13 @@ public class Event {
     }
 
     private void spawnItems(World world){
+    	String message = "You feel like something appeared in ";
         for(Item i : new ArrayList<>(f_itemsToSpawn)){
             world.addItem(i);
+            message = message.concat("\n" + world.getPlace(i.getLocation()).getArticle() + " " + i.getLocation());
+        }
+        if(!(f_retriggerable || (f_itemsToSpawn.isEmpty()))) {
+        	world.addToMessage(message);
         }
     }
     private void updateEvents(World world) {
@@ -124,10 +129,15 @@ public class Event {
     	}
     }
     private void updateDescriptions(World world){
+    	String message = "You feel like something changed in ";
         for(var my_p : new HashMap<>(f_descriptionsToUpdate).entrySet()){
             Place p = world.getPlace(my_p.getKey());
             p.setDescription(my_p.getValue());
+            message = message.concat("\n" + p.getArticle() + " " + p.getName());
         }
+	    if(!(f_retriggerable || (f_descriptionsToUpdate.size() == 0))) {
+        	world.addToMessage(message);
+	    }
     }
     
     public void setRetriggerable(boolean val) {
