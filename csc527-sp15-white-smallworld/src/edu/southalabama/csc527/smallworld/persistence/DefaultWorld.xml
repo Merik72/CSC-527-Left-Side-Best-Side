@@ -8,7 +8,7 @@
   
   <place name="Bathroom" article="the">
     <description>
-    Metal debris clatters loudly as you get up from the tub and stand in the middle of the room. You stare at yourself in the mirror. You're a pretty slim built guy, not so different from the pre-war humaniods aside from your head being a blocky CRT TV instead of a meat head. That's normal for you. You're normal. Unrelated, you think about practicing [use]ing some expressions in the mirror, or checking your mental [i]nventory of emotions to see which you can still do. 
+    Metal debris clatters loudly as you get up from the tub and stand in the middle of the room. You stare at yourself in the mirror. You're a pretty slim built guy, not so different from the pre-war humaniods -- aside from your head being a blocky CRT TV instead of a meat head. That's normal now. You're normal. Unrelated, you think about practicing [use]ing some expressions in the mirror, or checking your mental [i]nventory of expressions to see which you can still do. 
     Your head aches. There's a full can of beer on the sink. You should probably [take] it out, so your roommates don't throw it away.
     </description>
     <travel direction="W">Everything Room</travel>
@@ -126,7 +126,7 @@
 
   
   <place name="Break Room" article="the">
-    <description>It's not that different from the break room at your job. Snacks, a microwave, and a fridge. The exact amount of space necessary for it to not feel comfortable, so you remember to get back out there, tiger. Ceecee is collapsed on the table with a cup of yogurt in her hand. She's a tall and slim lady with a walkman for a head. Her sense of style is usually next level, but for now she's in scrubs. Maybe you should wake her [use]ing a pleasant emotion.</description>
+    <description>It's not that different from the break room at your job. Snacks, a microwave, and a fridge. The exact amount of space necessary for it to not feel comfortable, so you remember to get back out there, tiger. Ceecee is collapsed on the table with a cup of yogurt in her hand. She's a tall and slim lady with a walkman for a head. Her sense of style is usually next level, but for now she's in scrubs. Maybe you should wake her [use]ing a pleasant expression.</description>
     <travel direction="W">Hospital</travel>
   </place>
 
@@ -269,7 +269,7 @@ Bya thread, you keep yourself from crashing out from awkwardness.
   </event>
   
   <place name="Taco Joint" article="the">
-    <description>The local taco place. Perfectly acceptable food. In fact, you'd be doing Boombert a favor by getting him food that's, like, pre-cooked. Who wakes up and wants to cook? He'll be totally overjoyed. The cashier doesn't notice you walking in. He's one of those smartphone heads, and his face is scrolling Xiaohongshu. Slow day. Maybe you can [use] a bit of emotion to get his attention?</description>
+    <description>The local taco place. Perfectly acceptable food. In fact, you'd be doing Boombert a favor by getting him food that's, like, pre-cooked. Who wakes up and wants to cook? He'll be totally overjoyed. The cashier doesn't notice you walking in. He's one of those smartphone heads, and his face is scrolling Xiaohongshu. Slow day. Maybe you can [use] a certain expression to get his attention?</description>
     <travel direction="N">Safe Room</travel>
     <travel direction="S">Strip Mall</travel>
   </place>
@@ -279,11 +279,11 @@ Bya thread, you keep yourself from crashing out from awkwardness.
 "Excuse me young man? I was having a great day until you ruined it with your sour, sour attitude! I think I deserve something free just for dealing with you!"
 He processes. His screen freezes, and he closes Xiaohongshu. "uhh we have free water cups?"
 "NO! Food!"
-... Maybe it will take more emotions to crack him.
-    <description location="Taco Joint">"hello valued customer. welcome to mcdonalds. whatre you having" ... Maybe it will take more emotions to crack him.</description>
+You're making progress, but it will take more expression to crack him.
+    <description location="Taco Joint">"hello valued customer. welcome to mcdonalds. whatre you having" You made progress, but it will take more expression to crack him.</description>
     <event name="plead to cashier" item="pleading" location="Taco Joint" activationType="USE" triggered="N" consumeItem="N">
 "Please please please can I have just the littlest bit of anything freeee? I'd even eat scraps. I'd do anything," you plead, screen turning to kittens staring into the camera while in tiny glass jars lost out at sea.
-He seems relieved that you stopped screaming. "i cant get you anything for free from the menu, but i uhh can get you some good off-menu stuff. ive been really hurting for an elemental crystal. if you trade me one i def can get you smth"
+He seems relieved that you stopped screaming. "i cant get you anything for free from the menu, but i uhh can get you some good off-menu stuff. ive been really hurting for an elemental crystal. if you [drop] me one i def can get you smth"
         <description location="Taco Joint">The cashier looks up at you. "i cant get you anything for free from the menu, but i uhh can get you some good off-menu stuff. ive been really hurting for an elemental crystal. if you trade me one i def can get you smth"</description>
     </event>
   </event>
@@ -310,16 +310,15 @@ You did need this anyway, so what's the harm? You pocket the crystals.
  	<item name="Four Elemental Crystals" article="the" location="player" takePoints="0" dropPoints="-10"/> 
   </event>
 
-
-
   <place name="Road Home" article="the">
     <description>It's been a long day of errands, maybe it's time to go home again.</description>
     <travel direction="S">Home again</travel>
     <travel direction="N">Road</travel>
   </place>
 
-  <place name="Home again" article="Finally," arrivalWinsGame="Y">
-    <description></description>
+  <place name="Home again" article="Your" arrivalWinsGame="Y">
+    <description>Boombert welcomes you in while playing soft and warm music over his speakers. The place looks clean for the first time this month. You [drop] a pile of vapes on him so large that he jumps. Using the elemental crystals, you fix the air fryer yourself because you want chicken nuggies. 
+    Every hero deserves his rest, so while Boombert is shouting at you, demanding to know how you got the money for all these vapes, you walk back into the bathroom and lock the door. Even though all your filth was scrubbed away from the tub, it'll still be nice to get some shuteye in there. </description>
     <travel direction="N">Road Home</travel>
   </place>
 

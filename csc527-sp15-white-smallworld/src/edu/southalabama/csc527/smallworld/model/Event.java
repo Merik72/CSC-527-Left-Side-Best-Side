@@ -122,7 +122,10 @@ public class Event {
     	String message = "";
         for(Item i : new ArrayList<>(f_itemsToSpawn)){
             world.addItem(i);
-            if(!(i.getLocation().equalsIgnoreCase("player") || world.getPlayer().getLocation().getName().equals(i.getLocation())))
+            if(i.getLocation().equalsIgnoreCase("player")) {
+            	world.addToMessage("You got " + i.getArticle() + " " + i.getName());
+            }
+            else if(!(world.getPlayer().getLocation().getName().equals(i.getLocation())))
             		message = message.concat(world.getPlace(i.getLocation()).getArticle() + " " + i.getLocation());
         }
         if(!(message.equals("") || f_retriggerable || (f_itemsToSpawn.isEmpty()))) {

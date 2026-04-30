@@ -2,9 +2,6 @@ package edu.southalabama.csc527.smallworld.textui.parser;
 
 import edu.southalabama.csc527.smallworld.controller.WorldController;
 import edu.southalabama.csc527.smallworld.model.Direction;
-import edu.southalabama.csc527.smallworld.model.Event;
-import edu.southalabama.csc527.smallworld.model.Inventory;
-import edu.southalabama.csc527.smallworld.model.Item;
 import static edu.southalabama.csc527.smallworld.textui.TextUtilities.*;
 
 /**
@@ -270,13 +267,14 @@ public final class UserCommandParser {
         helpMessage.append(LINESEP2);
         helpMessage.append("\"inventory\" or \"inv\" or \"i\" to show the players current inventory.");
         helpMessage.append(LINESEP2);
-        helpMessage.append("\"take <item name>\" picks up the item that has the specified name in the current room.");
+        helpMessage.append(LINESEP2);
+        helpMessage.append("\"take <item name|\"item name\">\" picks up the item that has the specified name in the current room.");
         helpMessage.append(LINESEP2);
         helpMessage.append("\"take\" picks up all the items that are in the current room");
         helpMessage.append(LINESEP2);
-        helpMessage.append("\"drop <item name>\" drops the specified item from the players inventory.");
+        helpMessage.append("\"drop <item name|\"item name\">\" drops the specified item from the players inventory.");
         helpMessage.append(LINESEP2);
-        helpMessage.append("\"use <item name>\" uses the specified item from the players inventory. " +
+        helpMessage.append("\"use <item name|\"item name\">\" uses the specified item from the players inventory. " +
                 "Some items may have different effects depending on where the player is located.");
         helpMessage.append(LINESEP2);
         helpMessage.append("\"points\" to show the players current points.");
