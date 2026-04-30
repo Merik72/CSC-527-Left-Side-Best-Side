@@ -18,23 +18,22 @@
     <description>You are in the bathroom</description>
     <travel direction="S">Bedroom</travel>
   </place>
-  <item name="Key" article="the" location="Player" takePoints="0" dropPoints="-10">
+  <item name="Tshirt" article="a" location="Bedroom" takePoints="51" dropPoints="0" />
+  <item name="Key" article="the" location="Living Room" takePoints="10" dropPoints="-10">
     <place neededToEnter="Y" blockedMsg="The bedroom is locked.">Bedroom</place>
-    <place takePoints="0" dropPoints="0">Living Room</place>
+    <place takePoints="10000000" dropPoints="0">Living Room</place>
   </item>
   <item name="Gun" article="a" location="Basement" takePoints="-37" dropPoints="1" />
-  <item name="Anger" article="your" location="player" takePoints="0" dropPoints="0" />
   <item name="Chocolate Pudding" article="the" location="Bathroom" takePoints="150" dropPoints="0">
-    <place takePoints="0" dropPoints="-2">Living Room</place>
+    <place takePoints="-18" dropPoints="-2">Living Room</place>
   </item>
-  <event name="Shoot gun" item="Gun" location="Basement" activationType="USE" triggered="R" consumeItem="N">
-    You go wacko crazy and shoot everywhere.
-    <description location="Bathroom">The toilet bowl. Because you shot a hole in bowl.</description>
-    <description location="Bedroom">There's a bullet hole in your bed.</description>
-  </event>
-  <event name="Get Mad" item="Anger" location="any" activationType="DROP" triggered="R" consumeItem="Y">
+  <item name="Anger" article="your" location="player" takePoints="0" dropPoints="0" />
+  <event name="Get Mad" item="Anger" location="any" activationType="USE" triggered="R" consumeItem="N">
     You make an angry face in the mirror. Grr!
-    <item name="Anger" article="your" location="player" takePoints="0" dropPoints="0" />
+    <event name="Get Mad" item="Anger" location="any" activationType="USE" triggered="R" consumeItem="N">
+      You make an even angrier face in the mirror! GRAHH!!!
+      <event name="Get Mad" item="Anger" location="any" activationType="USE" triggered="R" consumeItem="N">You get so mad you might die!!!!</event>
+    </event>
   </event>
   <event name="Spilled Pudding" item="Chocolate Pudding" location="Living Room" activationType="DROP" triggered="N" consumeItem="Y">
     Your fingers slip, and the Chocolate Pudding tumbles out of your hands, and the contents are suddenly freeflowing.
@@ -42,10 +41,15 @@
     <item name="Mess" article="a" location="Living Room" takePoints="-5" dropPoints="10" />
     <item name="Cleaning Products" article="various" location="Bathroom" takePoints="100" dropPoints="0" />
   </event>
-  <event name="Get Dressed" item="Tshirt" location="Bedroom" activationType="USE" triggered="Y" consumeItem="Y">
+  <event name="Shoot gun" item="Gun" location="Basement" activationType="USE" triggered="R" consumeItem="N">
+    You go wacko crazy and shoot everywhere.
+    <description location="Bathroom">The toilet bowl. Because you shot a hole in bowl.</description>
+    <description location="Bedroom">There's a bullet hole in your bed.</description>
+  </event>
+  <event name="Get Dressed" item="Tshirt" location="Bedroom" activationType="USE" triggered="N" consumeItem="Y">
     Shirt goes over your head, then head goes through the shirt. Now you're finally presentable for the day.
     <place neededToEnter="Y" blockedMsg="You need to get dressed first!">Living Room</place>
   </event>
-  <player location="Bedroom" />
+  <player location="Living Room" />
 </smallworld>
 

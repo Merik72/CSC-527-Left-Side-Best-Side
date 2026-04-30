@@ -269,7 +269,10 @@ public class WorldPersistence {
 		for (var item : event.getItemsToSpawn()) {
 			Element itemElement = makeItemElement(item);
 			eventElement.addContent(itemElement);
-			
+		}
+		for (var e : event.getEventsToUpdate()) {
+			Element eElement = createEventXML(world, e);
+			eventElement.addContent(eElement);
 		}
 		return eventElement;
 	}
