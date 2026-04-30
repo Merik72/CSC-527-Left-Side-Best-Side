@@ -379,6 +379,7 @@ public class WorldPersistence {
 		for(var subEventElement : subevents) {
 			Event event = makeEventFromElement(subEventElement, world);
 			e.addEventToUpdate(event);
+			populateEventFromElement(subEventElement, event, world);
 		}
 	}
 	
