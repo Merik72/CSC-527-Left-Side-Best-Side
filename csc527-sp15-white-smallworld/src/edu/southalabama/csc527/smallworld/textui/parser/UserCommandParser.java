@@ -276,6 +276,9 @@ public final class UserCommandParser {
         helpMessage.append(LINESEP2);
         helpMessage.append("\"drop <item name>\" drops the specified item from the players inventory.");
         helpMessage.append(LINESEP2);
+        helpMessage.append("\"use <item name>\" uses the specified item from the players inventory. " +
+                "Some items may have different effects depending on where the player is located.");
+        helpMessage.append(LINESEP2);
         helpMessage.append("\"points\" to show the players current points.");
 
         return helpMessage.toString();
